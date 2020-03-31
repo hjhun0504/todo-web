@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
   return (
     <div>
       <TodoAdd />
-      <TodoList />
+      <TodoList todos={todos} />
     </div>
   );
 };

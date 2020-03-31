@@ -1,14 +1,20 @@
 import React from 'react';
 import TodoListItem from './TodoListItem';
 
-const TodoList = (): JSX.Element => {
+import { TodoData } from '@interfaces/index';
+
+interface Props {
+  todos: TodoData[];
+}
+
+const TodoList = (props: Props): JSX.Element => {
+  const { todos } = props;
+
   return (
     <div>
-      <TodoListItem />
-      <TodoListItem />
-      <TodoListItem />
-      <TodoListItem />
-      <TodoListItem />
+      {todos.map((todo) => (
+        <TodoListItem key={todo.id} todo={todo} />
+      ))}
     </div>
   );
 };
