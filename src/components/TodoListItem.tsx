@@ -11,27 +11,27 @@ interface Props {
 const TodoListItem = (props: Props): JSX.Element => {
   const { todo } = props;
 
-  const [editTime, setEditTime] = useState<boolean>(false);
   const [time, setTime] = useState<string>('');
+  const [editmodeTime, setEditmodeTime] = useState<boolean>(false);
   const timeRef = React.createRef<HTMLInputElement>();
 
   // 목표시간을 클릭하면 목표시간 편집모드 활성화
-  const handleEditTime = (
+  const handleClickTime = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ): void => {
     event.stopPropagation();
     setTime(todo.targetTime.toString());
-    setEditTime(true);
+    setEditmodeTime(true);
   };
 
   // 투두 리스트(슬롯)을 클릭하면 목표시간 편집모드 비활성화
   const handleClickSlot = (): void => {
-    setEditTime(false);
+    setEditmodeTime(false);
   };
 
   useEffect(() => {
     timeRef.current?.focus();
-  }, [timeRef, editTime]);
+  }, [timeRef, editmodeTime]);
 
   return (
     <div className="TodoListItem" onClick={handleClickSlot}>
@@ -41,12 +41,12 @@ const TodoListItem = (props: Props): JSX.Element => {
       <div className="time">
         <div className="desc">목표시간(분)</div>
         <div
-          className={cn('target', { invisible: editTime })}
-          onClick={handleEditTime}
+          className={cn('target', { invisible: editmodeTime })}
+          onClick={handleClickTime}
         >
           {todo.targetTime}
         </div>
-        <div className={cn({ invisible: !editTime })}>
+        <div className={cn({ invisible: !editmodeTime })}>
           <input
             className="target_edit"
             type="text"
