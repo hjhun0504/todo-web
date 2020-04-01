@@ -6,13 +6,14 @@ import { TodoData } from '@interfaces/index';
 
 interface Props {
   todo: TodoData;
+  onEditTodoTime: (id: number, editedTime: number) => void;
 }
 
 const TodoListItem = (props: Props): JSX.Element => {
-  const { todo } = props;
+  const { todo, onEditTodoTime } = props;
 
-  const [time, setTime] = useState<string>('');
   const [editmodeTime, setEditmodeTime] = useState<boolean>(false);
+  const [editedTime, setEditedTime] = useState<string>('');
   const timeRef = React.createRef<HTMLInputElement>();
 
   // 목표시간을 클릭하면 목표시간 편집모드 활성화
@@ -20,8 +21,28 @@ const TodoListItem = (props: Props): JSX.Element => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ): void => {
     event.stopPropagation();
-    setTime(todo.targetTime.toString());
+    setEditedTime(todo.targetTime.toString());
     setEditmodeTime(true);
+  };
+
+  // 목표시간 수정 박스를 클릭했을 때
+  const handleClickEditTime = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>,
+  ): void => {
+    event.stopPropagation();
+  };
+
+  // 목표시간 수정 박스에서 키 입력이 있었을 때
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ): void => {
+    if (event.key === 'Enter') {
+      const time = parseInt(editedTime);
+      if (typeof time && time > 0) {
+        onEditTodoTime(todo.id, time);
+        setEditmodeTime(false);
+      }
+    }
   };
 
   // 투두 리스트(슬롯)을 클릭하면 목표시간 편집모드 비활성화
@@ -51,9 +72,11 @@ const TodoListItem = (props: Props): JSX.Element => {
             className="target_edit"
             type="text"
             maxLength={3}
-            value={time}
+            value={editedTime}
             ref={timeRef}
-            onChange={(event): void => setTime(event.target.value)}
+            onChange={(event): void => setEditedTime(event.target.value)}
+            onClick={handleClickEditTime}
+            onKeyPress={handleKeyPress}
           />
         </div>
       </div>
