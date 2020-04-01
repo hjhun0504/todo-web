@@ -11,28 +11,27 @@ interface Props {
 const TodoListItem = (props: Props): JSX.Element => {
   const { todo } = props;
 
-  const [editTargetTime, setEditTargetTime] = useState(false);
-  const [targetTime, setTargetTime] = useState(todo.targetTime);
+  const [editTime, setEditTime] = useState<boolean>(false);
+  const [time, setTime] = useState<string>('');
+  const timeRef = React.createRef<HTMLInputElement>();
 
-  const targetTimeRef = React.createRef<HTMLInputElement>();
-
-  const handleEditTargetTime = (
+  // 목표시간을 클릭하면 목표시간 편집모드 활성화
+  const handleEditTime = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ): void => {
     event.stopPropagation();
-    if (!editTargetTime) {
-      setTargetTime(todo.targetTime);
-    }
-    setEditTargetTime(true);
+    setTime(todo.targetTime.toString());
+    setEditTime(true);
   };
 
+  // 투두 리스트(슬롯)을 클릭하면 목표시간 편집모드 비활성화
   const handleClickSlot = (): void => {
-    setEditTargetTime(false);
+    setEditTime(false);
   };
 
   useEffect(() => {
-    targetTimeRef.current?.focus();
-  }, [targetTimeRef, editTargetTime]);
+    timeRef.current?.focus();
+  }, [timeRef, editTime]);
 
   return (
     <div className="TodoListItem" onClick={handleClickSlot}>
@@ -42,21 +41,19 @@ const TodoListItem = (props: Props): JSX.Element => {
       <div className="time">
         <div className="desc">목표시간(분)</div>
         <div
-          className={cn('target', { invisible: editTargetTime })}
-          onClick={handleEditTargetTime}
+          className={cn('target', { invisible: editTime })}
+          onClick={handleEditTime}
         >
           {todo.targetTime}
         </div>
-        <div className={cn({ invisible: !editTargetTime })}>
+        <div className={cn({ invisible: !editTime })}>
           <input
             className="target_edit"
             type="text"
             maxLength={3}
-            value={targetTime}
-            ref={targetTimeRef}
-            onChange={(event): void =>
-              setTargetTime(Number(event.target.value))
-            }
+            value={time}
+            ref={timeRef}
+            onChange={(event): void => setTime(event.target.value)}
           />
         </div>
       </div>
