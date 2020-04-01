@@ -12,6 +12,7 @@ const TodoListItem = (props: Props): JSX.Element => {
   const { todo } = props;
 
   const [editTargetTime, setEditTargetTime] = useState(false);
+  const [targetTime, setTargetTime] = useState(todo.targetTime);
 
   const targetTimeRef = React.createRef<HTMLInputElement>();
 
@@ -19,7 +20,10 @@ const TodoListItem = (props: Props): JSX.Element => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ): void => {
     event.stopPropagation();
-    setEditTargetTime(!editTargetTime);
+    if (!editTargetTime) {
+      setTargetTime(todo.targetTime);
+    }
+    setEditTargetTime(true);
   };
 
   const handleClickSlot = (): void => {
@@ -45,10 +49,14 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
         <div className={cn({ invisible: !editTargetTime })}>
           <input
+            className="target_edit"
             type="text"
             maxLength={3}
-            className="target_edit"
+            value={targetTime}
             ref={targetTimeRef}
+            onChange={(event): void =>
+              setTargetTime(Number(event.target.value))
+            }
           />
         </div>
       </div>
