@@ -1,24 +1,45 @@
 .TodoListItem {
+  $border-radius: 3px;
+  $list-height: 56px;
+
+  @mixin edit-box {
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid black;
+    border-radius: $border-radius;
+  }
+
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
+  height: $list-height;
   margin: 6px;
-  height: 56px;
-  border-radius: 3px;
   border: 1px solid #c2c2c2;
-  background: #ecf0f1;
+  border-radius: $border-radius;
+
   display: flex;
   align-items: center;
 
-  svg {
-    font-size: 16px;
-  }
-
   .content {
-    flex: 1;
+    $font-size: 20px;
+    $margin-sides: 7px;
+    $margin-top-bottom: 4px;
+
     min-width: 300px;
-    font-size: 20px;
+    padding: 7px;
+    flex: 1;
 
     .text {
-      margin: 10px;
+      font-size: $font-size;
+      padding: $margin-top-bottom $margin-sides;
+      cursor: pointer;
+    }
+
+    .text_edit {
+      @include edit-box();
+      width: 100%;
+      font-size: $font-size;
+      padding: $margin-top-bottom ($margin-sides - 1px);
+      margin-bottom: 1px;
     }
   }
 
@@ -28,34 +49,32 @@
     flex-direction: column;
     align-items: center;
     width: 80px;
-    height: 56px;
+    height: $list-height;
   }
 
   .time {
-    justify-content: space-between;
-    $margin: 5px;
+    $time-font-size: 26px;
+    $time-height: 32px;
+
+    justify-content: center;
 
     .desc {
-      margin-top: $margin;
       font-size: 12px;
-    }
-
-    .target,
-    .target_edit {
-      margin-bottom: $margin;
+      margin-bottom: 2px;
     }
 
     .target {
-      font-size: 30px;
-      font-weight: 500;
+      font-size: $time-font-size;
+      line-height: $time-height;
       cursor: pointer;
     }
 
     .target_edit {
+      @include edit-box();
+      font-size: $time-font-size;
       text-align: center;
-      font-size: 24px;
       width: 60px;
-      height: 30px;
+      height: $time-height;
     }
   }
 
