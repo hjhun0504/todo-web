@@ -10,35 +10,38 @@ const App = (): JSX.Element => {
 
   const handleAddTodo = useCallback(
     (text: string, targetTime: number): void => {
-      const updatedTodos = todos.concat({
-        id: nextId.current,
-        text,
-        targetTime,
-      });
-      setTodos(updatedTodos);
+      setTodos((todos) =>
+        todos.concat({
+          id: nextId.current,
+          text,
+          targetTime,
+        }),
+      );
       nextId.current++;
     },
-    [todos],
+    [],
   );
 
   const handleEditTodoText = useCallback(
     (id: number, editedText: string): void => {
-      const updatedTodos = todos.map((todo) =>
-        todo.id === id ? { ...todo, text: editedText } : todo,
+      setTodos((todos) =>
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, text: editedText } : todo,
+        ),
       );
-      setTodos(updatedTodos);
     },
-    [todos],
+    [],
   );
 
   const handleEditTodoTime = useCallback(
     (id: number, editedTime: number): void => {
-      const updatedTodos = todos.map((todo) =>
-        todo.id === id ? { ...todo, targetTime: editedTime } : todo,
+      setTodos((todos) =>
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, targetTime: editedTime } : todo,
+        ),
       );
-      setTodos(updatedTodos);
     },
-    [todos],
+    [],
   );
 
   return (
