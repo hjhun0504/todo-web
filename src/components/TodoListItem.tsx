@@ -33,15 +33,20 @@ const TodoListItem = (props: Props): JSX.Element => {
   };
 
   // 목표시간 수정 박스에서 키 입력이 있었을 때
-  const handleKeyPress = (
+  const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ): void => {
-    if (event.key === 'Enter') {
-      const time = parseInt(editedTime);
-      if (typeof time && time > 0) {
-        onEditTodoTime(todo.id, time);
+    switch (event.keyCode) {
+      case 13: // enter
+        const time = parseInt(editedTime);
+        if (typeof time && time > 0) {
+          onEditTodoTime(todo.id, time);
+          setEditmodeTime(false);
+        }
+        break;
+      case 27: // esc
         setEditmodeTime(false);
-      }
+        break;
     }
   };
 
@@ -76,7 +81,7 @@ const TodoListItem = (props: Props): JSX.Element => {
             ref={timeRef}
             onChange={(event): void => setEditedTime(event.target.value)}
             onClick={handleClickEditTime}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
           />
         </div>
       </div>
