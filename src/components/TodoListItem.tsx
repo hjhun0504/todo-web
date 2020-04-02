@@ -6,11 +6,12 @@ import { TodoData } from '@interfaces/index';
 
 interface Props {
   todo: TodoData;
+  onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
 }
 
 const TodoListItem = (props: Props): JSX.Element => {
-  const { todo, onEditTodoTime } = props;
+  const { todo, onEditTodoText, onEditTodoTime } = props;
 
   const [editmodeTime, setEditmodeTime] = useState<boolean>(false);
   const [editedTime, setEditedTime] = useState<string>('');

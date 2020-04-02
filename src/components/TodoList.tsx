@@ -5,11 +5,12 @@ import { TodoData } from '@interfaces/index';
 
 interface Props {
   todos: TodoData[];
+  onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
 }
 
 const TodoList = (props: Props): JSX.Element => {
-  const { todos, onEditTodoTime } = props;
+  const { todos, onEditTodoText, onEditTodoTime } = props;
 
   return (
     <div>
@@ -17,6 +18,7 @@ const TodoList = (props: Props): JSX.Element => {
         <TodoListItem
           key={todo.id}
           todo={todo}
+          onEditTodoText={onEditTodoText}
           onEditTodoTime={onEditTodoTime}
         />
       ))}

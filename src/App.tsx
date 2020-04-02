@@ -14,6 +14,13 @@ const App = (): JSX.Element => {
     nextId.current++;
   };
 
+  const handleEditTodoText = (id: number, editedText: string): void => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: editedText } : todo,
+    );
+    setTodos(updatedTodos);
+  };
+
   const handleEditTodoTime = (id: number, editedTime: number): void => {
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, targetTime: editedTime } : todo,
@@ -24,7 +31,11 @@ const App = (): JSX.Element => {
   return (
     <div>
       <TodoAdd onAddTodo={handleAddTodo} />
-      <TodoList todos={todos} onEditTodoTime={handleEditTodoTime} />
+      <TodoList
+        todos={todos}
+        onEditTodoText={handleEditTodoText}
+        onEditTodoTime={handleEditTodoTime}
+      />
     </div>
   );
 };
