@@ -3,7 +3,7 @@
   $list-height: 56px;
 
   @mixin edit-box {
-    background-color: #f0f0f0;
+    // background-color: #f0f0f0;
     box-sizing: border-box;
     outline: none;
     border: 1px solid black;
@@ -48,7 +48,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80px;
+    width: 90px;
     height: $list-height;
   }
 
@@ -94,7 +94,7 @@
       background: #3498db;
       color: white;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
     }
   }
