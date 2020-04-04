@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import './TodoListItem.scss';
 
+import ProgressBar from '@components/ProgressBar/ProgressBar';
+
 import { TodoData } from '@interfaces/index';
 
 interface Props {
@@ -88,24 +90,27 @@ const TodoListItem = (props: Props): JSX.Element => {
   return (
     <div className="TodoListItem" onClick={handleClickSlot}>
       <div className="content">
-        <div
-          className={cn('text', { invisible: editmodeText })}
-          onClick={handleClickText}
-        >
-          {todo.text}
+        <div className="editable-text">
+          <div
+            className={cn('text', { invisible: editmodeText })}
+            onClick={handleClickText}
+          >
+            {todo.text}
+          </div>
+          <div className={cn({ invisible: !editmodeText })}>
+            <input
+              name="text"
+              className="text_edit"
+              type="text"
+              value={editedText}
+              ref={textRef}
+              onChange={(event): void => setEditedText(event.target.value)}
+              onClick={handleClickEditBox}
+              onKeyDown={handleEditBoxKeyDown}
+            />
+          </div>
         </div>
-        <div className={cn({ invisible: !editmodeText })}>
-          <input
-            name="text"
-            className="text_edit"
-            type="text"
-            value={editedText}
-            ref={textRef}
-            onChange={(event): void => setEditedText(event.target.value)}
-            onClick={handleClickEditBox}
-            onKeyDown={handleEditBoxKeyDown}
-          />
-        </div>
+        <ProgressBar percent={30} />
       </div>
       <div className="time">
         <div className="desc">목표시간(분)</div>
