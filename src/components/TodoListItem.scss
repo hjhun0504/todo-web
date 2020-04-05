@@ -1,14 +1,6 @@
 .TodoListItem {
   $border-radius: 3px;
-  $list-height: 56px;
-
-  @mixin edit-box {
-    // background-color: #f0f0f0;
-    box-sizing: border-box;
-    outline: none;
-    border: 1px solid black;
-    border-radius: $border-radius;
-  }
+  $list-height: 70px;
 
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
   height: $list-height;
@@ -19,27 +11,31 @@
   display: flex;
   align-items: center;
 
-  .content {
-    $font-size: 20px;
-    $margin-sides: 7px;
-    $margin-top-bottom: 4px;
+  .edit-box {
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border-radius: $border-radius;
+  }
 
+  .edit-box:focus {
+    background-color: #f0f0f0;
+  }
+
+  .content {
     min-width: 300px;
-    padding: 7px;
     flex: 1;
+    height: inherit;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 7px;
 
     .text {
-      font-size: $font-size;
-      padding: $margin-top-bottom $margin-sides;
-      cursor: pointer;
-    }
-
-    .text_edit {
-      @include edit-box();
+      font-size: 20px;
       width: 100%;
-      font-size: $font-size;
-      padding: $margin-top-bottom ($margin-sides - 1px);
-      margin-bottom: 1px;
+      cursor: pointer;
     }
   }
 
@@ -70,7 +66,6 @@
     }
 
     .target_edit {
-      @include edit-box();
       font-size: $time-font-size;
       text-align: center;
       width: 60px;
