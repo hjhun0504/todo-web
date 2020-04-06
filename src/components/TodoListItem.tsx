@@ -21,7 +21,7 @@ const TodoListItem = (props: Props): JSX.Element => {
 
   return (
     <div className="TodoListItem">
-      <div className="content">
+      <div className="content column">
         <div className="text">
           <input
             name="text"
@@ -34,12 +34,12 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
         <ProgressBar percent={30} />
       </div>
-      <div className="time">
+      <div className="time column">
         <div className="desc">목표시간(분)</div>
         <div>
           <input
             name="time"
-            className="target_edit edit_box"
+            className="target edit-box"
             type="text"
             maxLength={3}
             value={time}
@@ -48,7 +48,7 @@ const TodoListItem = (props: Props): JSX.Element => {
           />
         </div>
       </div>
-      <div className="action">
+      <div className="action column">
         <button className="start">시작</button>
       </div>
     </div>
