@@ -30,6 +30,7 @@ const TodoListItem = (props: Props): JSX.Element => {
             value={text}
             ref={textRef}
             onChange={(event): void => setText(event.target.value)}
+            onBlur={(): void => setText(todo.text)}
           />
         </div>
         <ProgressBar percent={30} />
@@ -45,6 +46,7 @@ const TodoListItem = (props: Props): JSX.Element => {
             value={time}
             ref={timeRef}
             onChange={(event): void => setTime(event.target.value)}
+            onBlur={(): void => setTime(todo.targetTime.toString())}
           />
         </div>
       </div>
