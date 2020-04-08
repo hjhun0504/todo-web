@@ -11,6 +11,8 @@ interface Props {
   onEditTodoTime: (id: number, editedTime: number) => void;
 }
 
+let isEsc = false;
+
 const TodoListItem = (props: Props): JSX.Element => {
   const { todo, onEditTodoText, onEditTodoTime } = props;
 
@@ -22,13 +24,25 @@ const TodoListItem = (props: Props): JSX.Element => {
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ): void => {
+    // Enter가 입력되면 저장한다.
     if (event.keyCode === 13) {
       onEditTodoText(todo.id, text);
       textRef.current?.blur();
-    } else if (event.keyCode === 27) {
+    }
+    // Esc가 입력되면 수정중이던 내용을 버린다.
+    else if (event.keyCode === 27) {
       setText(todo.text);
+      isEsc = true;
       textRef.current?.blur();
     }
+  };
+
+  // Focus out이 되면 저장한다. Esc키로 인해 발생했으면 저장하지 않는다.
+  const handleFocusOut = (): void => {
+    if (!isEsc) {
+      onEditTodoText(todo.id, text);
+    }
+    isEsc = false;
   };
 
   return (
@@ -43,6 +57,7 @@ const TodoListItem = (props: Props): JSX.Element => {
             ref={textRef}
             onChange={(event): void => setText(event.target.value)}
             onKeyDown={handleKeyDown}
+            onBlur={handleFocusOut}
           />
         </div>
         <ProgressBar percent={30} />
