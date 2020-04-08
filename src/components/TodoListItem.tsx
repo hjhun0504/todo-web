@@ -19,6 +19,18 @@ const TodoListItem = (props: Props): JSX.Element => {
   const textRef = React.createRef<HTMLInputElement>();
   const timeRef = React.createRef<HTMLInputElement>();
 
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ): void => {
+    if (event.keyCode === 13) {
+      onEditTodoText(todo.id, text);
+      textRef.current?.blur();
+    } else if (event.keyCode === 27) {
+      setText(todo.text);
+      textRef.current?.blur();
+    }
+  };
+
   return (
     <div className="TodoListItem">
       <div className="content column">
@@ -30,7 +42,7 @@ const TodoListItem = (props: Props): JSX.Element => {
             value={text}
             ref={textRef}
             onChange={(event): void => setText(event.target.value)}
-            onBlur={(): void => setText(todo.text)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <ProgressBar percent={30} />
@@ -46,7 +58,6 @@ const TodoListItem = (props: Props): JSX.Element => {
             value={time}
             ref={timeRef}
             onChange={(event): void => setTime(event.target.value)}
-            onBlur={(): void => setTime(todo.targetTime.toString())}
           />
         </div>
       </div>
