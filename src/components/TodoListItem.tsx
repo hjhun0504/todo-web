@@ -26,21 +26,44 @@ const TodoListItem = (props: Props): JSX.Element => {
   ): void => {
     // Enter가 입력되면 저장한다.
     if (event.keyCode === 13) {
-      onEditTodoText(todo.id, text);
-      textRef.current?.blur();
+      // 텍스트인 경우
+      if (event.currentTarget.name === 'text') {
+        onEditTodoText(todo.id, text);
+        textRef.current?.blur();
+      }
+      // 목표시간인 경우
+      else if (event.currentTarget.name === 'time') {
+        const parsedTime = parseInt(time);
+        if (parsedTime && parsedTime > 0) {
+          setTime(parsedTime.toString());
+          onEditTodoTime(todo.id, parsedTime);
+        } else {
+          setTime(todo.targetTime.toString());
+        }
+        timeRef.current?.blur();
+      }
     }
     // Esc가 입력되면 수정중이던 내용을 버린다.
     else if (event.keyCode === 27) {
-      setText(todo.text);
       isEsc = true;
-      textRef.current?.blur();
+      if (event.currentTarget.name === 'text') {
+        setText(todo.text);
+        textRef.current?.blur();
+      } else if (event.currentTarget.name === 'time') {
+        setTime(todo.targetTime.toString());
+        timeRef.current?.blur();
+      }
     }
   };
 
   // Focus out이 되면 저장한다. Esc키로 인해 발생했으면 저장하지 않는다.
-  const handleFocusOut = (): void => {
+  const handleFocusOut = (event: React.FocusEvent<HTMLInputElement>): void => {
     if (!isEsc) {
-      onEditTodoText(todo.id, text);
+      if (event.currentTarget.name === 'text') {
+        onEditTodoText(todo.id, text);
+      } else if (event.currentTarget.name === 'time') {
+        onEditTodoTime(todo.id, Number(time));
+      }
     }
     isEsc = false;
   };
@@ -73,6 +96,8 @@ const TodoListItem = (props: Props): JSX.Element => {
             value={time}
             ref={timeRef}
             onChange={(event): void => setTime(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleFocusOut}
           />
         </div>
       </div>
