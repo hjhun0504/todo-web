@@ -21,6 +21,17 @@ const TodoListItem = (props: Props): JSX.Element => {
   const textRef = React.createRef<HTMLInputElement>();
   const timeRef = React.createRef<HTMLInputElement>();
 
+  // 입력된 time 값을 정수로 변환했을때 0보다 큰 값이면 저장하고, 아니면 이전 값으로 돌린다.
+  const validateTimeAndSave = (): void => {
+    const parsedTime = parseInt(time);
+    if (parsedTime && parsedTime > 0) {
+      setTime(parsedTime.toString());
+      onEditTodoTime(todo.id, parsedTime);
+    } else {
+      setTime(todo.targetTime.toString());
+    }
+  };
+
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ): void => {
@@ -33,13 +44,7 @@ const TodoListItem = (props: Props): JSX.Element => {
       }
       // 목표시간인 경우
       else if (event.currentTarget.name === 'time') {
-        const parsedTime = parseInt(time);
-        if (parsedTime && parsedTime > 0) {
-          setTime(parsedTime.toString());
-          onEditTodoTime(todo.id, parsedTime);
-        } else {
-          setTime(todo.targetTime.toString());
-        }
+        validateTimeAndSave();
         timeRef.current?.blur();
       }
     }
@@ -62,7 +67,7 @@ const TodoListItem = (props: Props): JSX.Element => {
       if (event.currentTarget.name === 'text') {
         onEditTodoText(todo.id, text);
       } else if (event.currentTarget.name === 'time') {
-        onEditTodoTime(todo.id, Number(time));
+        validateTimeAndSave();
       }
     }
     isEsc = false;
