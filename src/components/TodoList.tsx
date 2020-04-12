@@ -8,10 +8,17 @@ interface Props {
   onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
   onStartTodo: (id: number) => void;
+  onFinishTodo: (id: number) => void;
 }
 
 const TodoList = (props: Props): JSX.Element => {
-  const { todos, onEditTodoText, onEditTodoTime, onStartTodo } = props;
+  const {
+    todos,
+    onEditTodoText,
+    onEditTodoTime,
+    onStartTodo,
+    onFinishTodo,
+  } = props;
 
   return (
     <div>
@@ -22,6 +29,7 @@ const TodoList = (props: Props): JSX.Element => {
           onEditTodoText={onEditTodoText}
           onEditTodoTime={onEditTodoTime}
           onStartTodo={onStartTodo}
+          onFinishTodo={onFinishTodo}
         />
       ))}
     </div>

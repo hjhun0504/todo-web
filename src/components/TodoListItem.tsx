@@ -10,12 +10,19 @@ interface Props {
   onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
   onStartTodo: (id: number) => void;
+  onFinishTodo: (id: number) => void;
 }
 
 let isEsc = false;
 
 const TodoListItem = (props: Props): JSX.Element => {
-  const { todo, onEditTodoText, onEditTodoTime, onStartTodo } = props;
+  const {
+    todo,
+    onEditTodoText,
+    onEditTodoTime,
+    onStartTodo,
+    onFinishTodo,
+  } = props;
 
   const [text, setText] = useState<string>(todo.text);
   const [time, setTime] = useState<string>(todo.targetTime.toString());
@@ -71,8 +78,52 @@ const TodoListItem = (props: Props): JSX.Element => {
         validateTimeAndSave();
       }
     }
+
     isEsc = false;
   };
+
+  const getElapsedMinute = (): string => {
+    if (todo.startTime && todo.finishTime) {
+      const elapsedMinute = Math.floor(
+        (todo.finishTime.getTime() - todo.startTime.getTime()) / (1000 * 60),
+      );
+      if (elapsedMinute > 1) {
+        return elapsedMinute.toString();
+      } else {
+        return '1';
+      }
+    } else {
+      return '-1';
+    }
+  };
+
+  let rightmostColumn;
+  if (!todo.startTime) {
+    rightmostColumn = (
+      <div className="action column">
+        <button className="start" onClick={(): void => onStartTodo(todo.id)}>
+          시작
+        </button>
+      </div>
+    );
+  } else {
+    if (!todo.finishTime) {
+      rightmostColumn = (
+        <div className="action column">
+          <button className="start" onClick={(): void => onFinishTodo(todo.id)}>
+            종료
+          </button>
+        </div>
+      );
+    } else {
+      rightmostColumn = (
+        <div className="time column">
+          <div className="desc">완료시간(분)</div>
+          <div className="actual">{getElapsedMinute()}</div>
+        </div>
+      );
+    }
+  }
 
   return (
     <div className="TodoListItem">
@@ -107,11 +158,7 @@ const TodoListItem = (props: Props): JSX.Element => {
           />
         </div>
       </div>
-      <div className="action column">
-        <button className="start" onClick={(): void => onStartTodo(todo.id)}>
-          시작
-        </button>
-      </div>
+      {rightmostColumn}
     </div>
   );
 };
