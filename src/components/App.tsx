@@ -44,6 +44,14 @@ const App = (): JSX.Element => {
     [],
   );
 
+  const handleStartTodo = useCallback((id: number): void => {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, startTime: Date.now() } : todo,
+      ),
+    );
+  }, []);
+
   return (
     <div>
       <TodoAdd onAddTodo={handleAddTodo} />
@@ -51,6 +59,7 @@ const App = (): JSX.Element => {
         todos={todos}
         onEditTodoText={handleEditTodoText}
         onEditTodoTime={handleEditTodoTime}
+        onStartTodo={handleStartTodo}
       />
     </div>
   );

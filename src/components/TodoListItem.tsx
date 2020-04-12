@@ -9,12 +9,13 @@ interface Props {
   todo: TodoData;
   onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
+  onStartTodo: (id: number) => void;
 }
 
 let isEsc = false;
 
 const TodoListItem = (props: Props): JSX.Element => {
-  const { todo, onEditTodoText, onEditTodoTime } = props;
+  const { todo, onEditTodoText, onEditTodoTime, onStartTodo } = props;
 
   const [text, setText] = useState<string>(todo.text);
   const [time, setTime] = useState<string>(todo.targetTime.toString());
@@ -107,7 +108,9 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
       </div>
       <div className="action column">
-        <button className="start">시작</button>
+        <button className="start" onClick={(): void => onStartTodo(todo.id)}>
+          시작
+        </button>
       </div>
     </div>
   );
