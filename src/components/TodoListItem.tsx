@@ -97,6 +97,13 @@ const TodoListItem = (props: Props): JSX.Element => {
     }
   };
 
+  // 프로그레스 바
+  let progressBar = <></>;
+  if (todo.startTime && !todo.finishTime) {
+    progressBar = <ProgressBar percent={30} />;
+  }
+
+  // 맨 오른쪽 메뉴(컬럼)
   let rightmostColumn;
   if (!todo.startTime) {
     rightmostColumn = (
@@ -140,7 +147,7 @@ const TodoListItem = (props: Props): JSX.Element => {
             onBlur={handleFocusOut}
           />
         </div>
-        <ProgressBar percent={30} />
+        {progressBar}
       </div>
       <div className="time column">
         <div className="desc">목표시간(분)</div>
