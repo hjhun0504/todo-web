@@ -20,11 +20,14 @@ enum DescType {
   actual = '완료',
 }
 
-const timeColumnMaker = (type: DescType, time: number): JSX.Element => {
+const timeColumnMaker = (
+  desc: DescType,
+  content: number | JSX.Element,
+): JSX.Element => {
   return (
     <div className="time column">
-      <div className="desc">{type}시간(분)</div>
-      <div className="time-text">{time}</div>
+      <div className="desc">{desc}시간(분)</div>
+      <div className="time-text">{content}</div>
     </div>
   );
 };
@@ -124,23 +127,19 @@ const TodoListItem = (props: Props): JSX.Element => {
   // 목표시간
   let timeColumn;
   if (!todo.finishTime) {
-    timeColumn = (
-      <div className="time column">
-        <div className="desc">목표시간(분)</div>
-        <div>
-          <input
-            name="time"
-            className="target edit-box"
-            type="text"
-            maxLength={3}
-            value={time}
-            ref={timeRef}
-            onChange={(event): void => setTime(event.target.value)}
-            onKeyDown={handleKeyDown}
-            onBlur={handleFocusOut}
-          />
-        </div>
-      </div>
+    timeColumn = timeColumnMaker(
+      DescType.target,
+      <input
+        name="time"
+        className="target edit-box"
+        type="text"
+        maxLength={3}
+        value={time}
+        ref={timeRef}
+        onChange={(event): void => setTime(event.target.value)}
+        onKeyDown={handleKeyDown}
+        onBlur={handleFocusOut}
+      />,
     );
   } else {
     timeColumn = timeColumnMaker(DescType.target, todo.targetMinutes);
