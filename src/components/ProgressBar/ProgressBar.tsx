@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import cn from 'classnames';
 import './ProgressBar.scss';
 
 interface FillerProps {
   percent: number;
+  exceed: boolean;
 }
 
 const Filler = (props: FillerProps): JSX.Element => {
-  const { percent } = props;
+  const { percent, exceed } = props;
 
-  return <div className="filler" style={{ width: `${percent}%` }} />;
+  return (
+    <div
+      className={cn('filler', { exceed })}
+      style={{ width: `${percent}%` }}
+    />
+  );
 };
 
 interface Props {
@@ -20,6 +27,7 @@ const ProgressBar = (props: Props): JSX.Element => {
   const { targetTime, targetSeconds } = props;
   const [timeLeft, setTimeLeft] = useState<string>();
   const [percent, setPercent] = useState<number>(100);
+  const [exceed, setExceed] = useState<boolean>(false);
 
   const getLeftSeconds = (): number => {
     const currentTime = new Date();
@@ -27,11 +35,18 @@ const ProgressBar = (props: Props): JSX.Element => {
   };
 
   const getTimeString = (seconds: number): string => {
+    let time;
     if (seconds >= 60) {
       const minute = Math.round(seconds / 60);
-      return `${minute}분`;
+      time = `${Math.abs(minute)}분`;
     } else {
-      return `${seconds}초`;
+      time = `${Math.abs(seconds)}초`;
+    }
+
+    if (seconds >= 0) {
+      return `${time} 남음`;
+    } else {
+      return `${time} 초과`;
     }
   };
 
@@ -39,16 +54,23 @@ const ProgressBar = (props: Props): JSX.Element => {
     const loop = setInterval(() => {
       const seconds = getLeftSeconds();
       setTimeLeft(getTimeString(seconds));
-      setPercent((seconds / targetSeconds) * 100);
+      if (seconds > 0) {
+        setPercent((seconds / targetSeconds) * 100);
+      } else {
+        if (!exceed) {
+          setPercent(100);
+          setExceed(true);
+        }
+      }
     }, 1000);
     return (): void => clearInterval(loop);
   }, []);
 
   return (
     <div className="ProgressBar">
-      <Filler percent={percent} />
+      <Filler percent={percent} exceed={exceed} />
       <div className="time-left">
-        {timeLeft ? timeLeft : getTimeString(getLeftSeconds())} 남음
+        {timeLeft ? timeLeft : getTimeString(getLeftSeconds())}
       </div>
     </div>
   );
