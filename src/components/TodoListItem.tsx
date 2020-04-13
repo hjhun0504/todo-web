@@ -13,6 +13,15 @@ interface Props {
   onFinishTodo: (id: number) => void;
 }
 
+const getElapsedMinute = (startTime: number, finishTime: number): string => {
+  const elapsedMinute = Math.floor((finishTime - startTime) / (1000 * 60));
+  if (elapsedMinute > 1) {
+    return elapsedMinute.toString();
+  } else {
+    return '1';
+  }
+};
+
 let isEsc = false;
 
 const TodoListItem = (props: Props): JSX.Element => {
@@ -82,21 +91,6 @@ const TodoListItem = (props: Props): JSX.Element => {
     isEsc = false;
   };
 
-  const getElapsedMinute = (): string => {
-    if (todo.startTime && todo.finishTime) {
-      const elapsedMinute = Math.floor(
-        (todo.finishTime.getTime() - todo.startTime.getTime()) / (1000 * 60),
-      );
-      if (elapsedMinute > 1) {
-        return elapsedMinute.toString();
-      } else {
-        return '1';
-      }
-    } else {
-      return '-1';
-    }
-  };
-
   // 프로그레스 바
   let progressBar = <></>;
   if (todo.startTime && !todo.finishTime) {
@@ -126,7 +120,12 @@ const TodoListItem = (props: Props): JSX.Element => {
       rightmostColumn = (
         <div className="time column">
           <div className="desc">완료시간(분)</div>
-          <div className="actual">{getElapsedMinute()}</div>
+          <div className="actual">
+            {getElapsedMinute(
+              todo.startTime.getTime(),
+              todo.finishTime.getTime(),
+            )}
+          </div>
         </div>
       );
     }
