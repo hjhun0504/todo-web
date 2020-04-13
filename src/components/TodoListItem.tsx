@@ -22,6 +22,20 @@ const getElapsedMinute = (startTime: number, finishTime: number): string => {
   }
 };
 
+enum DescType {
+  target = '목표',
+  actual = '완료',
+}
+
+const timeColumnMaker = (type: DescType, time: string): JSX.Element => {
+  return (
+    <div className="time column">
+      <div className="desc">{type}시간(분)</div>
+      <div className="time-text">{time}</div>
+    </div>
+  );
+};
+
 let isEsc = false;
 
 const TodoListItem = (props: Props): JSX.Element => {
@@ -128,11 +142,9 @@ const TodoListItem = (props: Props): JSX.Element => {
       </div>
     );
   } else {
-    timeColumn = (
-      <div className="time column">
-        <div className="desc">목표시간(분)</div>
-        <div className="time-text">{todo.targetMinutes}</div>
-      </div>
+    timeColumn = timeColumnMaker(
+      DescType.target,
+      todo.targetMinutes.toString(),
     );
   }
 
@@ -156,17 +168,11 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
       );
     } else {
-      rightmostColumn = (
-        <div className="time column">
-          <div className="desc">완료시간(분)</div>
-          <div className="time-text">
-            {getElapsedMinute(
-              todo.startTime.getTime(),
-              todo.finishTime.getTime(),
-            )}
-          </div>
-        </div>
+      const elapsedMinute = getElapsedMinute(
+        todo.startTime.getTime(),
+        todo.finishTime.getTime(),
       );
+      rightmostColumn = timeColumnMaker(DescType.actual, elapsedMinute);
     }
   }
 
