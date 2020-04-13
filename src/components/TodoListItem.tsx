@@ -94,7 +94,16 @@ const TodoListItem = (props: Props): JSX.Element => {
   // 프로그레스 바
   let progressBar = <></>;
   if (todo.startTime && !todo.finishTime) {
-    progressBar = <ProgressBar percent={30} />;
+    // 목표시간 계산
+    const targetTime = new Date(
+      todo.startTime.getTime() + todo.targetTime * 1000 * 60,
+    );
+    progressBar = (
+      <ProgressBar
+        targetTime={targetTime}
+        targetSeconds={todo.targetTime * 60}
+      />
+    );
   }
 
   // 맨 오른쪽 메뉴(컬럼)
