@@ -5,14 +5,6 @@ import ProgressBar from '@components/ProgressBar/ProgressBar';
 
 import { TodoData } from '@interfaces/index';
 
-interface Props {
-  todo: TodoData;
-  onEditTodoText: (id: number, editedText: string) => void;
-  onEditTodoTime: (id: number, editedTime: number) => void;
-  onStartTodo: (id: number) => void;
-  onFinishTodo: (id: number) => void;
-}
-
 const getElapsedMinutes = (startTime: Date, finishTime: Date): number => {
   const elapsedMs = finishTime.getTime() - startTime.getTime();
   const elapsedMinutes = Math.floor(elapsedMs / (1000 * 60));
@@ -38,6 +30,14 @@ const timeColumnMaker = (type: DescType, time: number): JSX.Element => {
 };
 
 let isEsc = false;
+
+interface Props {
+  todo: TodoData;
+  onEditTodoText: (id: number, editedText: string) => void;
+  onEditTodoTime: (id: number, editedTime: number) => void;
+  onStartTodo: (id: number) => void;
+  onFinishTodo: (id: number) => void;
+}
 
 const TodoListItem = (props: Props): JSX.Element => {
   const {
