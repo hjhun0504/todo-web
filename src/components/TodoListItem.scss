@@ -68,7 +68,7 @@
   .action {
     justify-content: center;
 
-    .start {
+    @mixin button($background) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -78,11 +78,19 @@
       border-radius: 3px;
       width: 64px;
       height: 38px;
-      background: #3498db;
+      background: $background;
       color: white;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 500;
       cursor: pointer;
+    }
+
+    .start {
+      @include button(#3498db);
+    }
+
+    .end {
+      @include button(#e74c3c);
     }
   }
 }

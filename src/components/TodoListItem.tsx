@@ -120,7 +120,7 @@ const TodoListItem = (props: Props): JSX.Element => {
     if (!todo.finishTime) {
       rightmostColumn = (
         <div className="action column">
-          <button className="start" onClick={(): void => onFinishTodo(todo.id)}>
+          <button className="end" onClick={(): void => onFinishTodo(todo.id)}>
             종료
           </button>
         </div>
