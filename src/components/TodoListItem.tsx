@@ -106,7 +106,37 @@ const TodoListItem = (props: Props): JSX.Element => {
     );
   }
 
-  // 맨 오른쪽 메뉴(컬럼)
+  // 목표시간
+  let timeColumn;
+  if (!todo.finishTime) {
+    timeColumn = (
+      <div className="time column">
+        <div className="desc">목표시간(분)</div>
+        <div>
+          <input
+            name="time"
+            className="target edit-box"
+            type="text"
+            maxLength={3}
+            value={time}
+            ref={timeRef}
+            onChange={(event): void => setTime(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleFocusOut}
+          />
+        </div>
+      </div>
+    );
+  } else {
+    timeColumn = (
+      <div className="time column">
+        <div className="desc">목표시간(분)</div>
+        <div className="time-text">{todo.targetMinutes}</div>
+      </div>
+    );
+  }
+
+  // 맨 오른쪽 메뉴
   let rightmostColumn;
   if (!todo.startTime) {
     rightmostColumn = (
@@ -129,7 +159,7 @@ const TodoListItem = (props: Props): JSX.Element => {
       rightmostColumn = (
         <div className="time column">
           <div className="desc">완료시간(분)</div>
-          <div className="actual">
+          <div className="time-text">
             {getElapsedMinute(
               todo.startTime.getTime(),
               todo.finishTime.getTime(),
@@ -157,22 +187,7 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
         {progressBar}
       </div>
-      <div className="time column">
-        <div className="desc">목표시간(분)</div>
-        <div>
-          <input
-            name="time"
-            className="target edit-box"
-            type="text"
-            maxLength={3}
-            value={time}
-            ref={timeRef}
-            onChange={(event): void => setTime(event.target.value)}
-            onKeyDown={handleKeyDown}
-            onBlur={handleFocusOut}
-          />
-        </div>
-      </div>
+      {timeColumn}
       {rightmostColumn}
     </div>
   );
