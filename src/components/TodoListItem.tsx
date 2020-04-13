@@ -13,12 +13,13 @@ interface Props {
   onFinishTodo: (id: number) => void;
 }
 
-const getElapsedMinutes = (startTime: number, finishTime: number): string => {
-  const elapsedMinute = Math.floor((finishTime - startTime) / (1000 * 60));
-  if (elapsedMinute > 1) {
-    return elapsedMinute.toString();
+const getElapsedMinutes = (startTime: Date, finishTime: Date): number => {
+  const elapsedMs = finishTime.getTime() - startTime.getTime();
+  const elapsedMinutes = Math.floor(elapsedMs / (1000 * 60));
+  if (elapsedMinutes >= 1) {
+    return elapsedMinutes;
   } else {
-    return '1';
+    return 1;
   }
 };
 
@@ -27,7 +28,7 @@ enum DescType {
   actual = '완료',
 }
 
-const timeColumnMaker = (type: DescType, time: string): JSX.Element => {
+const timeColumnMaker = (type: DescType, time: number): JSX.Element => {
   return (
     <div className="time column">
       <div className="desc">{type}시간(분)</div>
@@ -142,10 +143,7 @@ const TodoListItem = (props: Props): JSX.Element => {
       </div>
     );
   } else {
-    timeColumn = timeColumnMaker(
-      DescType.target,
-      todo.targetMinutes.toString(),
-    );
+    timeColumn = timeColumnMaker(DescType.target, todo.targetMinutes);
   }
 
   // 맨 오른쪽 메뉴
@@ -168,10 +166,7 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
       );
     } else {
-      const elapsedMinute = getElapsedMinutes(
-        todo.startTime.getTime(),
-        todo.finishTime.getTime(),
-      );
+      const elapsedMinute = getElapsedMinutes(todo.startTime, todo.finishTime);
       rightmostColumn = timeColumnMaker(DescType.actual, elapsedMinute);
     }
   }
