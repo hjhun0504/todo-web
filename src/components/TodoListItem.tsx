@@ -5,23 +5,14 @@ import ProgressBar from '@components/ProgressBar/ProgressBar';
 
 import { TodoData } from '@interfaces/index';
 
-const getElapsedMinutes = (startTime: Date, finishTime: Date): number => {
-  const elapsedMs = finishTime.getTime() - startTime.getTime();
-  const elapsedMinutes = Math.floor(elapsedMs / (1000 * 60));
-  if (elapsedMinutes >= 1) {
-    return elapsedMinutes;
-  } else {
-    return 1;
-  }
-};
-
-enum DescType {
+// time column maker
+enum TimeType {
   target = '목표',
   actual = '완료',
 }
 
 const timeColumnMaker = (
-  desc: DescType,
+  desc: TimeType,
   content: number | JSX.Element,
 ): JSX.Element => {
   return (
@@ -32,6 +23,38 @@ const timeColumnMaker = (
   );
 };
 
+// action column maker
+enum ActionType {
+  start = 'start',
+  finish = 'finish',
+}
+
+const actionColumnMaker = (
+  type: ActionType,
+  text: string,
+  onClick: () => void,
+): JSX.Element => {
+  return (
+    <div className="action column">
+      <button className={type} onClick={onClick}>
+        {text}
+      </button>
+    </div>
+  );
+};
+
+// 실제 걸린시간(분) 계산하는 함수
+const getElapsedMinutes = (startTime: Date, finishTime: Date): number => {
+  const elapsedMs = finishTime.getTime() - startTime.getTime();
+  const elapsedMinutes = Math.floor(elapsedMs / (1000 * 60));
+  if (elapsedMinutes >= 1) {
+    return elapsedMinutes;
+  } else {
+    return 1;
+  }
+};
+
+// esc키가 눌렸는지 체크하는 변수
 let isEsc = false;
 
 interface Props {
@@ -128,7 +151,7 @@ const TodoListItem = (props: Props): JSX.Element => {
   let timeColumn;
   if (!todo.finishTime) {
     timeColumn = timeColumnMaker(
-      DescType.target,
+      TimeType.target,
       <input
         name="time"
         className="target edit-box"
@@ -142,31 +165,23 @@ const TodoListItem = (props: Props): JSX.Element => {
       />,
     );
   } else {
-    timeColumn = timeColumnMaker(DescType.target, todo.targetMinutes);
+    timeColumn = timeColumnMaker(TimeType.target, todo.targetMinutes);
   }
 
   // 맨 오른쪽 메뉴
   let rightmostColumn;
   if (!todo.startTime) {
-    rightmostColumn = (
-      <div className="action column">
-        <button className="start" onClick={(): void => onStartTodo(todo.id)}>
-          시작
-        </button>
-      </div>
+    rightmostColumn = actionColumnMaker(ActionType.start, '시작', (): void =>
+      onStartTodo(todo.id),
     );
   } else {
     if (!todo.finishTime) {
-      rightmostColumn = (
-        <div className="action column">
-          <button className="end" onClick={(): void => onFinishTodo(todo.id)}>
-            종료
-          </button>
-        </div>
+      rightmostColumn = actionColumnMaker(ActionType.finish, '종료', (): void =>
+        onFinishTodo(todo.id),
       );
     } else {
       const elapsedMinute = getElapsedMinutes(todo.startTime, todo.finishTime);
-      rightmostColumn = timeColumnMaker(DescType.actual, elapsedMinute);
+      rightmostColumn = timeColumnMaker(TimeType.actual, elapsedMinute);
     }
   }
 
