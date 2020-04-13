@@ -1,7 +1,7 @@
 export interface TodoData {
   id: number;
   text: string;
-  targetTime: number;
+  targetMinutes: number;
   startTime?: Date;
   finishTime?: Date;
 }

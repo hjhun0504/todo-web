@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
         todos.concat({
           id: nextId.current,
           text,
-          targetTime,
+          targetMinutes: targetTime,
         }),
       );
       nextId.current++;
@@ -37,7 +37,7 @@ const App = (): JSX.Element => {
     (id: number, editedTime: number): void => {
       setTodos((todos) =>
         todos.map((todo) =>
-          todo.id === id ? { ...todo, targetTime: editedTime } : todo,
+          todo.id === id ? { ...todo, targetMinutes: editedTime } : todo,
         ),
       );
     },

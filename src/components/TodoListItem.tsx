@@ -34,7 +34,7 @@ const TodoListItem = (props: Props): JSX.Element => {
   } = props;
 
   const [text, setText] = useState<string>(todo.text);
-  const [time, setTime] = useState<string>(todo.targetTime.toString());
+  const [time, setTime] = useState<string>(todo.targetMinutes.toString());
   const textRef = React.createRef<HTMLInputElement>();
   const timeRef = React.createRef<HTMLInputElement>();
 
@@ -45,7 +45,7 @@ const TodoListItem = (props: Props): JSX.Element => {
       setTime(parsedTime.toString());
       onEditTodoTime(todo.id, parsedTime);
     } else {
-      setTime(todo.targetTime.toString());
+      setTime(todo.targetMinutes.toString());
     }
   };
 
@@ -72,7 +72,7 @@ const TodoListItem = (props: Props): JSX.Element => {
         setText(todo.text);
         textRef.current?.blur();
       } else if (event.currentTarget.name === 'time') {
-        setTime(todo.targetTime.toString());
+        setTime(todo.targetMinutes.toString());
         timeRef.current?.blur();
       }
     }
@@ -96,12 +96,12 @@ const TodoListItem = (props: Props): JSX.Element => {
   if (todo.startTime && !todo.finishTime) {
     // 목표시간 계산
     const targetTime = new Date(
-      todo.startTime.getTime() + todo.targetTime * 1000 * 60,
+      todo.startTime.getTime() + todo.targetMinutes * 1000 * 60,
     );
     progressBar = (
       <ProgressBar
         targetTime={targetTime}
-        targetSeconds={todo.targetTime * 60}
+        targetSeconds={todo.targetMinutes * 60}
       />
     );
   }
