@@ -13,7 +13,7 @@ interface Props {
   onFinishTodo: (id: number) => void;
 }
 
-const getElapsedMinute = (startTime: number, finishTime: number): string => {
+const getElapsedMinutes = (startTime: number, finishTime: number): string => {
   const elapsedMinute = Math.floor((finishTime - startTime) / (1000 * 60));
   if (elapsedMinute > 1) {
     return elapsedMinute.toString();
@@ -168,7 +168,7 @@ const TodoListItem = (props: Props): JSX.Element => {
         </div>
       );
     } else {
-      const elapsedMinute = getElapsedMinute(
+      const elapsedMinute = getElapsedMinutes(
         todo.startTime.getTime(),
         todo.finishTime.getTime(),
       );
