@@ -64,7 +64,7 @@ const ProgressBar = (props: Props): JSX.Element => {
       }
     }, 1000);
     return (): void => clearInterval(loop);
-  }, []);
+  }, [targetTime]);
 
   return (
     <div className="ProgressBar">
