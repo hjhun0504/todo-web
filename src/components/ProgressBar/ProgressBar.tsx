@@ -54,7 +54,10 @@ const ProgressBar = (props: Props): JSX.Element => {
     const loop = setInterval(() => {
       const seconds = getLeftSeconds();
       setTimeLeft(getTimeString(seconds));
-      if (seconds > 0) {
+      if (seconds >= 0) {
+        if (exceed) {
+          setExceed(false);
+        }
         setPercent((seconds / targetSeconds) * 100);
       } else {
         if (!exceed) {
