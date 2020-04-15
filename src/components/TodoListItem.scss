@@ -23,6 +23,13 @@
     background-color: #f0f0f0;
   }
 
+  .content {
+    .finish {
+      color: #7f8c8d;
+      text-decoration: line-through;
+    }
+  }
+
   // column common style
   .column {
     height: inherit;

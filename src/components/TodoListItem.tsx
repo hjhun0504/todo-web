@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cn from 'classnames';
 import './TodoListItem.scss';
 
 import ProgressBar from '@components/ProgressBar/ProgressBar';
@@ -188,18 +189,16 @@ const TodoListItem = (props: Props): JSX.Element => {
   return (
     <div className="TodoListItem">
       <div className="content column">
-        <div className="text">
-          <input
-            name="text"
-            className="text edit-box"
-            type="text"
-            value={text}
-            ref={textRef}
-            onChange={(event): void => setText(event.target.value)}
-            onKeyDown={handleKeyDown}
-            onBlur={handleFocusOut}
-          />
-        </div>
+        <input
+          name="text"
+          className={cn('text', 'edit-box', { finish: todo.finishTime })}
+          type="text"
+          value={text}
+          ref={textRef}
+          onChange={(event): void => setText(event.target.value)}
+          onKeyDown={handleKeyDown}
+          onBlur={handleFocusOut}
+        />
         {progressBar}
       </div>
       {timeColumn}
