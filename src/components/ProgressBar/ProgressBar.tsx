@@ -36,7 +36,7 @@ const ProgressBar = (props: Props): JSX.Element => {
 
   const getTimeString = (seconds: number): string => {
     let time;
-    if (seconds >= 60) {
+    if (Math.abs(seconds) >= 60) {
       const minute = Math.round(seconds / 60);
       time = `${Math.abs(minute)}분`;
     } else {
