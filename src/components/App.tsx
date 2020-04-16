@@ -2,7 +2,10 @@ import React, { useState, useRef, useCallback } from 'react';
 import TodoAdd from '@components/TodoAdd';
 import TodoList from '@components/TodoList';
 
+import './App.scss';
+
 import { todoDummy } from '~/fakeData';
+import Header from './Header/Header';
 
 const App = (): JSX.Element => {
   const [todos, setTodos] = useState(todoDummy);
@@ -62,14 +65,17 @@ const App = (): JSX.Element => {
 
   return (
     <div>
-      <TodoAdd onAddTodo={handleAddTodo} />
-      <TodoList
-        todos={todos}
-        onEditTodoText={handleEditTodoText}
-        onEditTodoTime={handleEditTodoTime}
-        onStartTodo={handleStartTodo}
-        onFinishTodo={handleFinishTodo}
-      />
+      <Header />
+      <section className="Section">
+        <TodoList
+          todos={todos}
+          onEditTodoText={handleEditTodoText}
+          onEditTodoTime={handleEditTodoTime}
+          onStartTodo={handleStartTodo}
+          onFinishTodo={handleFinishTodo}
+        />
+        <TodoAdd onAddTodo={handleAddTodo} />
+      </section>
     </div>
   );
 };

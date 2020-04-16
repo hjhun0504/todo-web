@@ -1,6 +1,8 @@
 import React from 'react';
 import TodoListItem from './TodoListItem';
 
+import './TodoList.scss';
+
 import { TodoData } from '@interfaces/index';
 
 interface Props {
@@ -21,7 +23,7 @@ const TodoList = (props: Props): JSX.Element => {
   } = props;
 
   return (
-    <div>
+    <div className="TodoList">
       {todos.map((todo) => (
         <TodoListItem
           key={todo.id}
