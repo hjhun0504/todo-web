@@ -1,7 +1,9 @@
+@import '../../styles/variables.scss';
+
 .Header {
   position: fixed;
   top: 0px;
   width: 100%;
-  height: 38px;
+  height: $header-height;
   background: royalblue;
 }
