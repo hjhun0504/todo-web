@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 .TodoListItem {
   $border-radius: 3px;
   $list-height: 70px;
@@ -5,17 +7,13 @@
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
   height: $list-height;
   margin-bottom: 6px;
-  border: 1px solid #c2c2c2;
+  border: $todo-list-border;
   border-radius: $border-radius;
 
   display: flex;
   align-items: center;
 
-  // edit box
   .edit-box {
-    box-sizing: border-box;
-    outline: none;
-    border: none;
     border-radius: $border-radius;
   }
 
@@ -76,10 +74,6 @@
     justify-content: center;
 
     @mixin button($background) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
       width: 64px;
       height: 38px;
       background: $background;
