@@ -1,11 +1,10 @@
 import React, { useState, useRef, useCallback } from 'react';
-import TodoAdd from '@components/TodoAdd';
-import TodoList from '@components/TodoList';
+import Header from '@components/Header/Header';
+import TodoList from '@components/TodoList/TodoList';
+import TodoAdd from '@components/TodoAdd/TodoAdd';
 
 import './App.scss';
-
 import { todoDummy } from '~/fakeData';
-import Header from './Header/Header';
 
 const App = (): JSX.Element => {
   const [todos, setTodos] = useState(todoDummy);

@@ -1,8 +1,7 @@
 import React from 'react';
-import TodoListItem from './TodoListItem';
+import TodoListItem from '@components/TodoList/TodoListItem/TodoListItem';
 
 import './TodoList.scss';
-
 import { TodoData } from '@interfaces/index';
 
 interface Props {

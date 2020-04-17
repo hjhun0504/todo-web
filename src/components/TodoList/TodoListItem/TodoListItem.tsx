@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import cn from 'classnames';
-import './TodoListItem.scss';
-
 import ProgressBar from '@components/ProgressBar/ProgressBar';
+import cn from 'classnames';
 
+import './TodoListItem.scss';
 import { TodoData } from '@interfaces/index';
 
 // time column maker
