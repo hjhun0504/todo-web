@@ -6,4 +6,24 @@
   width: 100%;
   height: $header-height;
   background: royalblue;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .search {
+    width: 230px;
+    height: 30px;
+    padding-left: 36px;
+    font-size: 14px;
+  }
+
+  .icon {
+    font-size: 18px;
+    color: #2980b9;
+    position: absolute;
+    margin-left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
