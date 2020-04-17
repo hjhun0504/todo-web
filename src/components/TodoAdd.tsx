@@ -38,7 +38,7 @@ const TodoAdd = (props: Props): JSX.Element => {
     return (
       <div className="TodoAdd">
         <div className="add-button" onClick={(): void => setAddMode(true)}>
-          <AiOutlinePlus />
+          <AiOutlinePlus className="add-icon" />
           <div>할 일 추가</div>
         </div>
       </div>
@@ -68,7 +68,10 @@ const TodoAdd = (props: Props): JSX.Element => {
           <button className="submit" type="submit" onClick={handleSubmit}>
             할 일 추가
           </button>
-          <MdClose className="close" onClick={(): void => setAddMode(false)} />
+          <MdClose
+            className="close-icon"
+            onClick={(): void => setAddMode(false)}
+          />
         </div>
       </form>
     </div>

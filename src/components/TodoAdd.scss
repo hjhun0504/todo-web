@@ -10,10 +10,11 @@
     height: 40px;
     cursor: pointer;
 
-    svg {
+    .add-icon {
+      color: #3498db;
       font-size: 18px;
       margin-bottom: 4px;
-      margin-right: 4px;
+      margin-right: 3px;
     }
   }
 
@@ -60,7 +61,7 @@
         height: 34px;
       }
 
-      .close {
+      .close-icon {
         margin-left: 5px;
         font-size: 22px;
         color: #7f8c8d;
