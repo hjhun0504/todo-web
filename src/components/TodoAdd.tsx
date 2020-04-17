@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { GoPlus } from 'react-icons/go';
 import { MdClose } from 'react-icons/md';
 
 import './TodoAdd.scss';
@@ -38,7 +38,7 @@ const TodoAdd = (props: Props): JSX.Element => {
     return (
       <div className="TodoAdd">
         <div className="add-button" onClick={(): void => setAddMode(true)}>
-          <AiOutlinePlus className="add-icon" />
+          <GoPlus className="add-icon" />
           <div>할 일 추가</div>
         </div>
       </div>
