@@ -16,6 +16,12 @@ const TodoAdd = (props: Props): JSX.Element => {
   let textRef: HTMLInputElement | null = null;
   let timeRef: HTMLInputElement | null = null;
 
+  const disableAddMode = (): void => {
+    setAddMode(false);
+    setText('');
+    setTargetTime('');
+  };
+
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ): void => {
@@ -37,14 +43,18 @@ const TodoAdd = (props: Props): JSX.Element => {
     };
   };
 
-  const handleTextInputKeyDown = (
+  const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ): void => {
-    // enter
-    if (event.keyCode === 13) {
+    // Enter가 입력되었을 때, text 인풋이고 내용이 있으면 time 인풋을 포커스한다.
+    if (event.keyCode === 13 && event.currentTarget.name === 'text') {
       if (text) {
         timeRef?.focus();
       }
+    }
+    // Esc가 입력되면 addMode를 비활성화 한다.
+    else if (event.keyCode === 27) {
+      disableAddMode();
     }
   };
 
@@ -72,6 +82,7 @@ const TodoAdd = (props: Props): JSX.Element => {
         <div className="todo-input">
           <input
             className="text edit-box"
+            name="text"
             type="text"
             value={text}
             placeholder="할 일"
@@ -79,7 +90,7 @@ const TodoAdd = (props: Props): JSX.Element => {
               textRef = input;
             }}
             onChange={handleOnChange(setText)}
-            onKeyDown={handleTextInputKeyDown}
+            onKeyDown={handleKeyDown}
           ></input>
           <input
             className="time edit-box"
@@ -90,6 +101,7 @@ const TodoAdd = (props: Props): JSX.Element => {
             ref={(input): void => {
               timeRef = input;
             }}
+            onKeyDown={handleKeyDown}
           ></input>
         </div>
         <div className="form-action">
@@ -101,10 +113,7 @@ const TodoAdd = (props: Props): JSX.Element => {
           >
             할 일 추가
           </button>
-          <MdClose
-            className="close-icon"
-            onClick={(): void => setAddMode(false)}
-          />
+          <MdClose className="close-icon" onClick={disableAddMode} />
         </div>
       </form>
     </div>
