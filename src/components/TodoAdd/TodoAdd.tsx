@@ -14,6 +14,7 @@ const TodoAdd = (props: Props): JSX.Element => {
   const [targetTime, setTargetTime] = useState<string>('');
   const { onAddTodo } = props;
   let textRef: HTMLInputElement | null = null;
+  let timeRef: HTMLInputElement | null = null;
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -24,6 +25,7 @@ const TodoAdd = (props: Props): JSX.Element => {
       onAddTodo(text, Number(targetTime));
       setText('');
       setTargetTime('');
+      textRef?.focus();
     }
   };
 
@@ -33,6 +35,17 @@ const TodoAdd = (props: Props): JSX.Element => {
     return (event: React.ChangeEvent<HTMLInputElement>): void => {
       dispatch(event.target.value);
     };
+  };
+
+  const handleTextInputKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ): void => {
+    // enter
+    if (event.keyCode === 13) {
+      if (text) {
+        timeRef?.focus();
+      }
+    }
   };
 
   // 편집모드로 전환시 text box 포커스
@@ -61,11 +74,12 @@ const TodoAdd = (props: Props): JSX.Element => {
             className="text edit-box"
             type="text"
             value={text}
-            onChange={handleOnChange(setText)}
             placeholder="할 일"
             ref={(input): void => {
               textRef = input;
             }}
+            onChange={handleOnChange(setText)}
+            onKeyDown={handleTextInputKeyDown}
           ></input>
           <input
             className="time edit-box"
@@ -73,6 +87,9 @@ const TodoAdd = (props: Props): JSX.Element => {
             value={targetTime}
             onChange={handleOnChange(setTargetTime)}
             placeholder="목표시간(분)"
+            ref={(input): void => {
+              timeRef = input;
+            }}
           ></input>
         </div>
         <div className="form-action">
