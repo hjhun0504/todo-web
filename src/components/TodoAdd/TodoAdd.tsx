@@ -28,10 +28,15 @@ const TodoAdd = (props: Props): JSX.Element => {
     event.preventDefault();
 
     if (text && targetTime) {
-      onAddTodo(text, Number(targetTime));
-      setText('');
-      setTargetTime('');
-      textRef?.focus();
+      const parsedTime = parseInt(targetTime);
+      if (parsedTime && parsedTime > 0) {
+        onAddTodo(text, Number(targetTime));
+        setText('');
+        setTargetTime('');
+        textRef?.focus();
+      } else {
+        console.log('목표시간을 숫자로 입력해주세요!');
+      }
     }
   };
 
