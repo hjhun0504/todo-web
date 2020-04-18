@@ -1175,6 +1175,11 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@popperjs/core@^2.3.2":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.3.3.tgz#8731722aeb7330e8fd9eb5d424be6b98dea7d6da"
+  integrity sha512-yEvVC8RfhRPkD9TUn7cFcLcgoJePgZRAOR7T21rcRY5I8tpuhzeWfGa7We7tB14fe9R7wENdqUABcMdwD4SQLw==
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
@@ -1324,6 +1329,14 @@
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-7.2.1.tgz#2ad4e844175a3738cb9e7064be5ea070b8863a1c"
   integrity sha512-oZ0Ib5I4Z2pUEcoo95cT1cr6slco9WY7yiPpG+RGNkj8YcYgJnM7pXmYmorNOReh8MIGcKSqXyeGjxnr8YiZbA==
+
+"@tippyjs/react@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@tippyjs/react/-/react-4.0.1.tgz#87b95363fe6ea69b42b1da43d9c158a8b5dd5027"
+  integrity sha512-lODKpp5DbyT89CPbhvzA0q3XyXga6UtVfLH8Y7ncqjnwovO5KWOiJ+V14MC1ytN+6JjhovDTisr/udq9NR632A==
+  dependencies:
+    prop-types "^15.6.2"
+    tippy.js "^6.2.0"
 
 "@types/babel__core@^7.1.0":
   version "7.1.6"
@@ -10381,6 +10394,13 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tippy.js@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.2.0.tgz#b6c35dc15a9eb7fe91a562d65469c1a3277f26f6"
+  integrity sha512-xb7xq4vSkrhZHvbRx7l8otFL7z2id+U0VPDX+MHXa8B/4PtJ/nvap6/peLHjMk45VmRIvEhF0KFoqviJ6EEtug==
+  dependencies:
+    "@popperjs/core" "^2.3.2"
 
 tmp@^0.0.33:
   version "0.0.33"
