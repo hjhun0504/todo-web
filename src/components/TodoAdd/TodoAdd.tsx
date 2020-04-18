@@ -13,7 +13,7 @@ const TodoAdd = (props: Props): JSX.Element => {
   const [text, setText] = useState<string>('');
   const [targetTime, setTargetTime] = useState<string>('');
   const { onAddTodo } = props;
-  const textRef = React.createRef<HTMLInputElement>();
+  let textRef: HTMLInputElement | null = null;
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -36,9 +36,9 @@ const TodoAdd = (props: Props): JSX.Element => {
   };
 
   // 편집모드로 전환시 text box 포커스
-  useEffect(() => {
+  useEffect((): void => {
     if (addMode) {
-      textRef.current?.focus();
+      textRef?.focus();
     }
   }, [addMode, textRef]);
 
@@ -63,7 +63,9 @@ const TodoAdd = (props: Props): JSX.Element => {
             value={text}
             onChange={handleOnChange(setText)}
             placeholder="할 일"
-            ref={textRef}
+            ref={(input): void => {
+              textRef = input;
+            }}
           ></input>
           <input
             className="time edit-box"
