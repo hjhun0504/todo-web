@@ -107,6 +107,7 @@ const TodoAdd = (props: Props): JSX.Element => {
           ></input>
           <Tippy
             visible={timeTooltip}
+            onClickOutside={(): void => setTimeTooltip(false)}
             content="목표시간을 숫자로 입력해주세요!"
           >
             <input
