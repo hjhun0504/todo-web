@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoPlus } from 'react-icons/go';
 import { MdClose } from 'react-icons/md';
 
@@ -13,6 +13,7 @@ const TodoAdd = (props: Props): JSX.Element => {
   const [text, setText] = useState<string>('');
   const [targetTime, setTargetTime] = useState<string>('');
   const { onAddTodo } = props;
+  const textRef = React.createRef<HTMLInputElement>();
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -33,6 +34,13 @@ const TodoAdd = (props: Props): JSX.Element => {
       dispatch(event.target.value);
     };
   };
+
+  // 편집모드로 전환시 text box 포커스
+  useEffect(() => {
+    if (addMode) {
+      textRef.current?.focus();
+    }
+  }, [addMode, textRef]);
 
   if (!addMode) {
     return (
@@ -55,6 +63,7 @@ const TodoAdd = (props: Props): JSX.Element => {
             value={text}
             onChange={handleOnChange(setText)}
             placeholder="할 일"
+            ref={textRef}
           ></input>
           <input
             className="time edit-box"
