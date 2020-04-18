@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+
 import { GoPlus } from 'react-icons/go';
 import { MdClose } from 'react-icons/md';
 
@@ -12,14 +15,20 @@ const TodoAdd = (props: Props): JSX.Element => {
   const [addMode, setAddMode] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
   const [targetTime, setTargetTime] = useState<string>('');
+  const [timeTooltip, setTimeTooltip] = useState<boolean>(false);
   const { onAddTodo } = props;
   let textRef: HTMLInputElement | null = null;
   let timeRef: HTMLInputElement | null = null;
 
-  const disableAddMode = (): void => {
-    setAddMode(false);
+  const resetForm = (): void => {
     setText('');
     setTargetTime('');
+    setTimeTooltip(false);
+  };
+
+  const disableAddMode = (): void => {
+    setAddMode(false);
+    resetForm();
   };
 
   const handleSubmit = (
@@ -31,11 +40,10 @@ const TodoAdd = (props: Props): JSX.Element => {
       const parsedTime = parseInt(targetTime);
       if (parsedTime && parsedTime > 0) {
         onAddTodo(text, Number(targetTime));
-        setText('');
-        setTargetTime('');
+        resetForm();
         textRef?.focus();
       } else {
-        console.log('목표시간을 숫자로 입력해주세요!');
+        setTimeTooltip(true);
       }
     }
   };
@@ -97,17 +105,23 @@ const TodoAdd = (props: Props): JSX.Element => {
             onChange={handleOnChange(setText)}
             onKeyDown={handleKeyDown}
           ></input>
-          <input
-            className="time edit-box"
-            type="text"
-            value={targetTime}
-            onChange={handleOnChange(setTargetTime)}
-            placeholder="목표시간(분)"
-            ref={(input): void => {
-              timeRef = input;
-            }}
-            onKeyDown={handleKeyDown}
-          ></input>
+          <Tippy
+            visible={timeTooltip}
+            content="목표시간을 숫자로 입력해주세요!"
+          >
+            <input
+              className="time edit-box"
+              type="text"
+              value={targetTime}
+              onChange={handleOnChange(setTargetTime)}
+              placeholder="목표시간(분)"
+              ref={(input): void => {
+                timeRef = input;
+              }}
+              maxLength={3}
+              onKeyDown={handleKeyDown}
+            ></input>
+          </Tippy>
         </div>
         <div className="form-action">
           <button
