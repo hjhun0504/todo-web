@@ -36,8 +36,7 @@
       .text,
       .time {
         font-size: 16px;
-        margin-left: 7px;
-        margin-right: 7px;
+        padding: 7px;
       }
 
       .text {
@@ -46,7 +45,7 @@
       }
 
       .time {
-        width: 120px;
+        width: 100px;
       }
     }
 
