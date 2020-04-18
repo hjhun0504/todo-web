@@ -8,7 +8,7 @@ import { todoDummy } from '~/fakeData';
 
 const App = (): JSX.Element => {
   const [todos, setTodos] = useState(todoDummy);
-  const nextId = useRef(4);
+  const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
     (text: string, targetTime: number): void => {
