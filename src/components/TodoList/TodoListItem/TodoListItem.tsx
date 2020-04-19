@@ -97,6 +97,8 @@ const TodoListItem = (props: Props): JSX.Element => {
   ): void => {
     event.preventDefault();
     onContextMenu(todo.id, event.clientX, event.clientY);
+    textRef.current?.blur();
+    timeRef.current?.blur();
   };
 
   const handleKeyDown = (
