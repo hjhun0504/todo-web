@@ -21,7 +21,7 @@ const SidebarItem = (props: Props): JSX.Element => {
   }
 
   return (
-    <div>
+    <div className="SidebarItem">
       {svgIcon}
       <span>{text}</span>
     </div>
