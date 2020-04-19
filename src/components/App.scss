@@ -1,12 +1,18 @@
 @import '../styles/variables.scss';
 
-.Main {
-  margin-top: $header-height + 6px;
+.App {
   display: flex;
+  height: 100vh;
 
-  .section {
+  .main {
+    margin-top: $header-height;
+    display: flex;
     flex: 1;
-    margin-left: 6px;
-    margin-right: 6px;
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
   }
 }

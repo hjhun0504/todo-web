@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback } from 'react';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import TodoList from '@components/TodoList/TodoList';
-import TodoAdd from '@components/TodoAdd/TodoAdd';
 
 import './App.scss';
 import { todoDummy } from '~/fakeData';
@@ -64,9 +63,9 @@ const App = (): JSX.Element => {
   }, []);
 
   return (
-    <div>
+    <div className="App">
       <Header />
-      <main className="Main">
+      <main className="main">
         <Sidebar />
         <section className="section">
           <TodoList
@@ -75,8 +74,8 @@ const App = (): JSX.Element => {
             onEditTodoTime={handleEditTodoTime}
             onStartTodo={handleStartTodo}
             onFinishTodo={handleFinishTodo}
+            onAddTodo={handleAddTodo}
           />
-          <TodoAdd onAddTodo={handleAddTodo} />
         </section>
       </main>
     </div>

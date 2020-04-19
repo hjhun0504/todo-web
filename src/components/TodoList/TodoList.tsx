@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoListItem from '@components/TodoList/TodoListItem/TodoListItem';
+import TodoAdd from '@components/TodoList/TodoAdd/TodoAdd';
 
 import './TodoList.scss';
 import { TodoData } from '@interfaces/index';
@@ -10,6 +11,7 @@ interface Props {
   onEditTodoTime: (id: number, editedTime: number) => void;
   onStartTodo: (id: number) => void;
   onFinishTodo: (id: number) => void;
+  onAddTodo: (text: string, targetTime: number) => void;
 }
 
 const TodoList = (props: Props): JSX.Element => {
@@ -19,6 +21,7 @@ const TodoList = (props: Props): JSX.Element => {
     onEditTodoTime,
     onStartTodo,
     onFinishTodo,
+    onAddTodo,
   } = props;
 
   return (
@@ -33,6 +36,7 @@ const TodoList = (props: Props): JSX.Element => {
           onFinishTodo={onFinishTodo}
         />
       ))}
+      <TodoAdd onAddTodo={onAddTodo} />
     </div>
   );
 };
