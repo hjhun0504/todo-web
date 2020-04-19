@@ -1,7 +1,12 @@
 @import '../styles/variables.scss';
 
-.Section {
+.Main {
   margin-top: $header-height + 6px;
-  margin-left: 6px;
-  margin-right: 6px;
+  display: flex;
+
+  .section {
+    flex: 1;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
 }

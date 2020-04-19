@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import Header from '@components/Header/Header';
+import Sidebar from '@components/Sidebar/Sidebar';
 import TodoList from '@components/TodoList/TodoList';
 import TodoAdd from '@components/TodoAdd/TodoAdd';
 
@@ -65,16 +66,19 @@ const App = (): JSX.Element => {
   return (
     <div>
       <Header />
-      <section className="Section">
-        <TodoList
-          todos={todos}
-          onEditTodoText={handleEditTodoText}
-          onEditTodoTime={handleEditTodoTime}
-          onStartTodo={handleStartTodo}
-          onFinishTodo={handleFinishTodo}
-        />
-        <TodoAdd onAddTodo={handleAddTodo} />
-      </section>
+      <main className="Main">
+        <Sidebar />
+        <section className="section">
+          <TodoList
+            todos={todos}
+            onEditTodoText={handleEditTodoText}
+            onEditTodoTime={handleEditTodoTime}
+            onStartTodo={handleStartTodo}
+            onFinishTodo={handleFinishTodo}
+          />
+          <TodoAdd onAddTodo={handleAddTodo} />
+        </section>
+      </main>
     </div>
   );
 };
