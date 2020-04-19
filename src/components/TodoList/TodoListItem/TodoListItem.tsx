@@ -63,6 +63,7 @@ interface Props {
   onEditTodoTime: (id: number, editedTime: number) => void;
   onStartTodo: (id: number) => void;
   onFinishTodo: (id: number) => void;
+  onContextMenu: (id: number, posX: number, posY: number) => void;
 }
 
 const TodoListItem = (props: Props): JSX.Element => {
@@ -72,6 +73,7 @@ const TodoListItem = (props: Props): JSX.Element => {
     onEditTodoTime,
     onStartTodo,
     onFinishTodo,
+    onContextMenu,
   } = props;
 
   const [text, setText] = useState<string>(todo.text);
@@ -88,6 +90,13 @@ const TodoListItem = (props: Props): JSX.Element => {
     } else {
       setTime(todo.targetMinutes.toString());
     }
+  };
+
+  const handleContextMenu = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ): void => {
+    event.preventDefault();
+    onContextMenu(todo.id, event.clientX, event.clientY);
   };
 
   const handleKeyDown = (
@@ -186,7 +195,7 @@ const TodoListItem = (props: Props): JSX.Element => {
   }
 
   return (
-    <div className="TodoListItem">
+    <div className="TodoListItem" onContextMenu={handleContextMenu}>
       <div className="content column">
         <input
           name="text"

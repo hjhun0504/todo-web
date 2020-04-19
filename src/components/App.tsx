@@ -2,12 +2,21 @@ import React, { useState, useRef, useCallback } from 'react';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import TodoList from '@components/TodoList/TodoList';
+import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
 
 import './App.scss';
 import { todoDummy } from '~/fakeData';
 
 const App = (): JSX.Element => {
   const [todos, setTodos] = useState(todoDummy);
+
+  const contextMenuDisable = {
+    id: -1,
+    active: false,
+    posX: 0,
+    posY: 0,
+  };
+  const [contextMenu, setContextMenu] = useState(contextMenuDisable);
   const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
@@ -62,8 +71,20 @@ const App = (): JSX.Element => {
     );
   }, []);
 
+  const handleTodoContextMenu = (
+    id: number,
+    posX: number,
+    posY: number,
+  ): void => {
+    setContextMenu({ id, active: true, posX, posY });
+  };
+
+  const handleOnClick = (): void => {
+    setContextMenu(contextMenuDisable);
+  };
+
   return (
-    <div className="App">
+    <div className="App" onClick={handleOnClick}>
       <Header />
       <main className="main">
         <Sidebar />
@@ -75,9 +96,16 @@ const App = (): JSX.Element => {
             onStartTodo={handleStartTodo}
             onFinishTodo={handleFinishTodo}
             onAddTodo={handleAddTodo}
+            onContextMenu={handleTodoContextMenu}
           />
         </section>
       </main>
+      <TodoContextMenu
+        id={contextMenu.id}
+        active={contextMenu.active}
+        posX={contextMenu.posX}
+        posY={contextMenu.posY}
+      />
     </div>
   );
 };

@@ -12,6 +12,7 @@ interface Props {
   onStartTodo: (id: number) => void;
   onFinishTodo: (id: number) => void;
   onAddTodo: (text: string, targetTime: number) => void;
+  onContextMenu: (id: number, posX: number, posY: number) => void;
 }
 
 const TodoList = (props: Props): JSX.Element => {
@@ -22,6 +23,7 @@ const TodoList = (props: Props): JSX.Element => {
     onStartTodo,
     onFinishTodo,
     onAddTodo,
+    onContextMenu,
   } = props;
 
   return (
@@ -34,6 +36,7 @@ const TodoList = (props: Props): JSX.Element => {
           onEditTodoTime={onEditTodoTime}
           onStartTodo={onStartTodo}
           onFinishTodo={onFinishTodo}
+          onContextMenu={onContextMenu}
         />
       ))}
       <TodoAdd onAddTodo={onAddTodo} />
