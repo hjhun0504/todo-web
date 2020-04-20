@@ -15,6 +15,7 @@ interface Props {
   onAddTodo: (text: string, targetTime: number) => void;
   onReorderTodo: (sourceIndex: number, destinationIndex: number) => void;
   onContextMenu: (id: number, posX: number, posY: number) => void;
+  onCloseContextMenu: () => void;
 }
 
 const TodoList = (props: Props): JSX.Element => {
@@ -27,6 +28,7 @@ const TodoList = (props: Props): JSX.Element => {
     onAddTodo,
     onReorderTodo,
     onContextMenu,
+    onCloseContextMenu,
   } = props;
 
   const handleDragEnd = (result: DropResult): void => {
@@ -40,7 +42,10 @@ const TodoList = (props: Props): JSX.Element => {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
+    <DragDropContext
+      onDragStart={(): void => onCloseContextMenu()}
+      onDragEnd={handleDragEnd}
+    >
       <div className="TodoList">
         <Droppable droppableId="todo">
           {(provided): JSX.Element => (

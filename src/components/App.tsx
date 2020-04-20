@@ -103,12 +103,12 @@ const App = (): JSX.Element => {
     setContextMenu({ id, active: true, posX, posY });
   };
 
-  const handleOnClick = (): void => {
+  const closeContextMenu = (): void => {
     setContextMenu(contextMenuDisable);
   };
 
   return (
-    <div className="App" onClick={handleOnClick}>
+    <div className="App" onClick={closeContextMenu}>
       <Header />
       <main className="main">
         <Sidebar />
@@ -122,6 +122,7 @@ const App = (): JSX.Element => {
             onAddTodo={handleAddTodo}
             onReorderTodo={handleReorderTodo}
             onContextMenu={handleTodoContextMenu}
+            onCloseContextMenu={closeContextMenu}
           />
         </section>
       </main>
