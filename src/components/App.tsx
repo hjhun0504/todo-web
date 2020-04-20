@@ -1,74 +1,79 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useReducer, useState, useRef, useCallback } from 'react';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import TodoList from '@components/TodoList/TodoList';
 import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
 
 import './App.scss';
+import { TodoData } from '@interfaces/index';
 import { todoDummy } from '~/fakeData';
 
-const App = (): JSX.Element => {
-  const [todos, setTodos] = useState(todoDummy);
+type Action =
+  | { type: 'add'; todo: TodoData }
+  | { type: 'edit_text'; id: number; text: string }
+  | { type: 'edit_time'; id: number; time: number }
+  | { type: 'start' | 'finish'; id: number };
 
-  const contextMenuDisable = {
-    id: -1,
-    active: false,
-    posX: 0,
-    posY: 0,
-  };
+const todoReducer = (todos: TodoData[], action: Action): TodoData[] => {
+  switch (action.type) {
+    case 'add':
+      return todos.concat(action.todo);
+    case 'edit_text':
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, text: action.text } : todo,
+      );
+    case 'edit_time':
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, targetMinutes: action.time } : todo,
+      );
+    case 'start':
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, startTime: new Date() } : todo,
+      );
+    case 'finish':
+      return todos.map((todo) =>
+        todo.id === action.id ? { ...todo, finishTime: new Date() } : todo,
+      );
+  }
+};
+
+const contextMenuDisable = {
+  id: -1,
+  active: false,
+  posX: 0,
+  posY: 0,
+};
+
+const App = (): JSX.Element => {
+  const [todos, dispatch] = useReducer(todoReducer, todoDummy);
   const [contextMenu, setContextMenu] = useState(contextMenuDisable);
   const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
-    (text: string, targetTime: number): void => {
-      setTodos((todos) =>
-        todos.concat({
-          id: nextId.current,
-          text,
-          targetMinutes: targetTime,
-        }),
-      );
+    (text: string, targetMinutes: number): void => {
+      dispatch({
+        type: 'add',
+        todo: { id: nextId.current, text, targetMinutes },
+      });
       nextId.current++;
     },
     [],
   );
 
-  const handleEditTodoText = useCallback(
-    (id: number, editedText: string): void => {
-      setTodos((todos) =>
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, text: editedText } : todo,
-        ),
-      );
-    },
-    [],
-  );
+  const handleEditTodoText = useCallback((id: number, text: string): void => {
+    dispatch({ type: 'edit_text', id, text });
+  }, []);
 
-  const handleEditTodoTime = useCallback(
-    (id: number, editedTime: number): void => {
-      setTodos((todos) =>
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, targetMinutes: editedTime } : todo,
-        ),
-      );
-    },
-    [],
-  );
+  const handleEditTodoTime = useCallback((id: number, time: number): void => {
+    dispatch({ type: 'edit_time', id, time });
+  }, []);
 
   const handleStartTodo = useCallback((id: number): void => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, startTime: new Date() } : todo,
-      ),
-    );
+    dispatch({ type: 'start', id });
   }, []);
 
   const handleFinishTodo = useCallback((id: number): void => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, finishTime: new Date() } : todo,
-      ),
-    );
+    dispatch({ type: 'finish', id });
   }, []);
 
   const handleTodoContextMenu = (
