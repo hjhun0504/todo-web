@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import ProgressBar from '@components/ProgressBar/ProgressBar';
 import cn from 'classnames';
 
@@ -58,6 +59,7 @@ const getElapsedMinutes = (startTime: Date, finishTime: Date): number => {
 let isEsc = false;
 
 interface Props {
+  index: number;
   todo: TodoData;
   onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
@@ -68,6 +70,7 @@ interface Props {
 
 const TodoListItem = (props: Props): JSX.Element => {
   const {
+    index,
     todo,
     onEditTodoText,
     onEditTodoTime,
@@ -159,7 +162,7 @@ const TodoListItem = (props: Props): JSX.Element => {
   }
 
   // 목표시간
-  let timeColumn;
+  let timeColumn = <></>;
   if (!todo.finishTime) {
     timeColumn = timeColumnMaker(
       TimeType.target,
@@ -180,7 +183,7 @@ const TodoListItem = (props: Props): JSX.Element => {
   }
 
   // 맨 오른쪽 메뉴
-  let rightmostColumn;
+  let rightmostColumn = <></>;
   if (!todo.startTime) {
     rightmostColumn = actionColumnMaker(ActionType.start, '시작', (): void =>
       onStartTodo(todo.id),
@@ -197,23 +200,33 @@ const TodoListItem = (props: Props): JSX.Element => {
   }
 
   return (
-    <div className="TodoListItem" onContextMenu={handleContextMenu}>
-      <div className="content column">
-        <input
-          name="text"
-          className={cn('text', 'edit-box', { finish: todo.finishTime })}
-          type="text"
-          value={text}
-          ref={textRef}
-          onChange={(event): void => setText(event.target.value)}
-          onKeyDown={handleKeyDown}
-          onBlur={handleFocusOut}
-        />
-        {progressBar}
-      </div>
-      {timeColumn}
-      {rightmostColumn}
-    </div>
+    <Draggable draggableId={todo.id.toString()} index={index}>
+      {(provided): JSX.Element => (
+        <div
+          className="TodoListItem"
+          onContextMenu={handleContextMenu}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <div className="content column">
+            <input
+              name="text"
+              className={cn('text', 'edit-box', { finish: todo.finishTime })}
+              type="text"
+              value={text}
+              ref={textRef}
+              onChange={(event): void => setText(event.target.value)}
+              onKeyDown={handleKeyDown}
+              onBlur={handleFocusOut}
+            />
+            {progressBar}
+          </div>
+          {timeColumn}
+          {rightmostColumn}
+        </div>
+      )}
+    </Draggable>
   );
 };
 

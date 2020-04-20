@@ -12,7 +12,8 @@ type Action =
   | { type: 'add'; todo: TodoData }
   | { type: 'edit_text'; id: number; text: string }
   | { type: 'edit_time'; id: number; time: number }
-  | { type: 'start' | 'finish' | 'delete'; id: number };
+  | { type: 'start' | 'finish' | 'delete'; id: number }
+  | { type: 'reorder'; sourceIndex: number; destinationIndex: number };
 
 const todoReducer = (todos: TodoData[], action: Action): TodoData[] => {
   switch (action.type) {
@@ -36,6 +37,11 @@ const todoReducer = (todos: TodoData[], action: Action): TodoData[] => {
       );
     case 'delete':
       return todos.filter((todo) => todo.id !== action.id);
+    case 'reorder':
+      const result = Array.from(todos);
+      const [moved] = result.splice(action.sourceIndex, 1);
+      result.splice(action.destinationIndex, 0, moved);
+      return result;
   }
 };
 
@@ -82,6 +88,13 @@ const App = (): JSX.Element => {
     dispatch({ type: 'delete', id });
   }, []);
 
+  const handleReorderTodo = useCallback(
+    (sourceIndex: number, destinationIndex: number): void => {
+      dispatch({ type: 'reorder', sourceIndex, destinationIndex });
+    },
+    [],
+  );
+
   const handleTodoContextMenu = (
     id: number,
     posX: number,
@@ -107,6 +120,7 @@ const App = (): JSX.Element => {
             onStartTodo={handleStartTodo}
             onFinishTodo={handleFinishTodo}
             onAddTodo={handleAddTodo}
+            onReorderTodo={handleReorderTodo}
             onContextMenu={handleTodoContextMenu}
           />
         </section>
