@@ -12,7 +12,7 @@ type Action =
   | { type: 'add'; todo: TodoData }
   | { type: 'edit_text'; id: number; text: string }
   | { type: 'edit_time'; id: number; time: number }
-  | { type: 'start' | 'finish'; id: number };
+  | { type: 'start' | 'finish' | 'delete'; id: number };
 
 const todoReducer = (todos: TodoData[], action: Action): TodoData[] => {
   switch (action.type) {
@@ -34,6 +34,8 @@ const todoReducer = (todos: TodoData[], action: Action): TodoData[] => {
       return todos.map((todo) =>
         todo.id === action.id ? { ...todo, finishTime: new Date() } : todo,
       );
+    case 'delete':
+      return todos.filter((todo) => todo.id !== action.id);
   }
 };
 
@@ -76,6 +78,10 @@ const App = (): JSX.Element => {
     dispatch({ type: 'finish', id });
   }, []);
 
+  const handleDeleteTodo = useCallback((id: number): void => {
+    dispatch({ type: 'delete', id });
+  }, []);
+
   const handleTodoContextMenu = (
     id: number,
     posX: number,
@@ -110,6 +116,7 @@ const App = (): JSX.Element => {
         active={contextMenu.active}
         posX={contextMenu.posX}
         posY={contextMenu.posY}
+        onDeleteTodo={handleDeleteTodo}
       />
     </div>
   );
