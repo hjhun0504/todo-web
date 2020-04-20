@@ -1,6 +1,8 @@
 import React from 'react';
 import './TodoContextMenu.scss';
 
+import { FaRegTrashAlt } from 'react-icons/fa';
+
 interface Props {
   id: number;
   active: boolean;
@@ -16,7 +18,10 @@ const TodoContextMenu = (props: Props): JSX.Element => {
       className="TodoContextMenu"
       style={{ display: active ? '' : 'none', left: posX, top: posY }}
     >
-      <div className="item">삭제</div>
+      <div className="item">
+        <FaRegTrashAlt />
+        <span>작업 삭제</span>
+      </div>
     </div>
   );
 };
