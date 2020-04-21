@@ -3,15 +3,15 @@ import { TodoData } from '@interfaces/index';
 export const todoDummy: TodoData[] = [
   {
     id: 0,
-    text: '오른쪽 시작 버튼을 눌러 작업을 시작하세요',
+    text: '오른쪽 시작 버튼을 눌러 작업을 시작하세요.',
     targetMinutes: 5,
   },
   {
     id: 1,
-    text: '할 일이나 목표시간을 클릭해 변경할 수 있습니다.',
+    text: '할 일이나 목표 시간을 클릭해 변경할 수 있습니다.',
     targetMinutes: 5,
   },
-  { id: 2, text: '작업을 드래그 해서 순서를 바꿔보세요.', targetMinutes: 30 },
+  { id: 2, text: '작업을 드래그해서 순서를 바꿔보세요.', targetMinutes: 30 },
   { id: 3, text: '작업 삭제는 우클릭으로 할 수 있습니다!', targetMinutes: 10 },
   {
     id: 4,

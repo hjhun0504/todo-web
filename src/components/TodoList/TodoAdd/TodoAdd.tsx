@@ -83,7 +83,7 @@ const TodoAdd = (props: Props): JSX.Element => {
       <div className="TodoAdd">
         <div className="add-button" onClick={(): void => setAddMode(true)}>
           <GoPlus className="add-icon" />
-          <div>할 일 추가</div>
+          <div>작업 추가</div>
         </div>
       </div>
     );
@@ -131,7 +131,7 @@ const TodoAdd = (props: Props): JSX.Element => {
             disabled={Boolean(!text) || Boolean(!targetTime)}
             onClick={handleSubmit}
           >
-            할 일 추가
+            작업 추가
           </button>
           <MdClose className="close-icon" onClick={disableAddMode} />
         </div>
