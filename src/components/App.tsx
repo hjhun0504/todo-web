@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useRef, useCallback } from 'react';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
+import Title from '@components/Title/Title';
 import TodoList from '@components/TodoList/TodoList';
 import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
 import { TodoData, SidebarItems } from '@interfaces/index';
@@ -121,6 +122,7 @@ const App = (): JSX.Element => {
           onChangeSidebarMenu={handleChangeSidebarMenu}
         />
         <section className="section">
+          <Title currentMenu={sidebar} />
           <TodoList
             todos={todos}
             onEditTodoText={handleEditTodoText}
