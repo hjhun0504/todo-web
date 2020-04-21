@@ -9,11 +9,27 @@
 
   display: flex;
   align-items: center;
-  justify-content: center;
+
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    margin-right: 12px;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .menu:hover {
+    background-color: rgb(49, 77, 161);
+  }
 
   .search {
     width: 230px;
-    height: 30px;
+    height: 28px;
     padding-left: 36px;
     font-size: 14px;
     border-radius: 1px;
