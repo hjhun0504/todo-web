@@ -3,10 +3,10 @@ import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import TodoList from '@components/TodoList/TodoList';
 import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
+import { TodoData, SidebarItems } from '@interfaces/index';
+import { todoDummy } from '~/fakeData';
 
 import './App.scss';
-import { TodoData } from '@interfaces/index';
-import { todoDummy } from '~/fakeData';
 
 type Action =
   | { type: 'add'; todo: TodoData }
@@ -55,6 +55,7 @@ const contextMenuDisable = {
 const App = (): JSX.Element => {
   const [todos, dispatch] = useReducer(todoReducer, todoDummy);
   const [contextMenu, setContextMenu] = useState(contextMenuDisable);
+  const [sidebar, setSidebar] = useState<SidebarItems>('today');
   const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
@@ -103,6 +104,10 @@ const App = (): JSX.Element => {
     setContextMenu({ id, active: true, posX, posY });
   };
 
+  const handleChangeSidebarMenu = (menu: SidebarItems): void => {
+    setSidebar(menu);
+  };
+
   const closeContextMenu = (): void => {
     setContextMenu(contextMenuDisable);
   };
@@ -111,7 +116,10 @@ const App = (): JSX.Element => {
     <div className="App" onClick={closeContextMenu}>
       <Header />
       <main className="main">
-        <Sidebar />
+        <Sidebar
+          currentMenu={sidebar}
+          onChangeSidebarMenu={handleChangeSidebarMenu}
+        />
         <section className="section">
           <TodoList
             todos={todos}

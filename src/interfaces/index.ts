@@ -5,3 +5,5 @@ export interface TodoData {
   startTime?: Date;
   finishTime?: Date;
 }
+
+export type SidebarItems = 'today' | 'history';

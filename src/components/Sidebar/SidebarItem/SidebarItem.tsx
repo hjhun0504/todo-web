@@ -1,17 +1,21 @@
 import React from 'react';
-import './SidebarItem.scss';
+import cn from 'classnames';
+import { SidebarItems } from '@interfaces/index';
 
+import './SidebarItem.scss';
 import { FaRegCalendar, FaHistory } from 'react-icons/fa';
 
 interface Props {
-  icon: 'today' | 'history';
+  item: SidebarItems;
   text: string;
+  isActive: boolean;
+  onChangeSidebarMenu: (menu: SidebarItems) => void;
 }
 
 const SidebarItem = (props: Props): JSX.Element => {
-  const { icon, text } = props;
+  const { item, text, isActive, onChangeSidebarMenu } = props;
   let svgIcon;
-  switch (icon) {
+  switch (item) {
     case 'today':
       svgIcon = <FaRegCalendar />;
       break;
@@ -21,7 +25,10 @@ const SidebarItem = (props: Props): JSX.Element => {
   }
 
   return (
-    <div className="SidebarItem">
+    <div
+      className={cn('SidebarItem', { active: isActive })}
+      onClick={(): void => onChangeSidebarMenu(item)}
+    >
       {svgIcon}
       <span>{text}</span>
     </div>

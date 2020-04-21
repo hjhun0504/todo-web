@@ -12,6 +12,10 @@
     margin-left: 12px;
     margin-right: 12px;
   }
+
+  &.active {
+    background: #bdc3c7;
+  }
 }
 
 .SidebarItem:hover {
