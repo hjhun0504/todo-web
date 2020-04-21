@@ -28,7 +28,7 @@ const Sidebar = (props: Props): JSX.Element => {
       {items.map((item, index) => (
         <SidebarItem
           key={index}
-          item={item.type}
+          type={item.type}
           text={item.text}
           isActive={currentMenu === item.type}
           onChangeSidebarMenu={onChangeSidebarMenu}
