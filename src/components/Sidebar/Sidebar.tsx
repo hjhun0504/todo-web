@@ -25,7 +25,7 @@ const Sidebar = (props: Props): JSX.Element => {
   const { sidebar, onChangeSidebarMenu } = props;
 
   return (
-    <aside className={cn('Sidebar', { invisible: !sidebar.isActive })}>
+    <aside className={cn('Sidebar', { visible: sidebar.isActive })}>
       {items.map((item, index) => (
         <SidebarItem
           key={index}

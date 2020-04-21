@@ -1,5 +1,12 @@
 .Sidebar {
   padding-top: 20px;
   background: #ecf0f1;
-  width: 170px;
+  width: 0px;
+
+  transition: width 0.25s;
+  overflow: hidden;
+
+  &.visible {
+    width: 170px;
+  }
 }
