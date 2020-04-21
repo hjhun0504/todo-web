@@ -1,14 +1,20 @@
 import React from 'react';
 
-import './Header.scss';
-
 import { FaSearch } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 
-const Header = (): JSX.Element => {
+import './Header.scss';
+
+interface Props {
+  onToggleSidebar: () => void;
+}
+
+const Header = (props: Props): JSX.Element => {
+  const { onToggleSidebar } = props;
+
   return (
     <header className="Header">
-      <div className="menu">
+      <div className="menu" onClick={(): void => onToggleSidebar()}>
         <MdMenu />
       </div>
       <div>

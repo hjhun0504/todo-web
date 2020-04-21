@@ -4,7 +4,7 @@ import Sidebar from '@components/Sidebar/Sidebar';
 import Title from '@components/Title/Title';
 import TodoList from '@components/TodoList/TodoList';
 import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
-import { TodoData, SidebarItems } from '@interfaces/index';
+import { TodoData, SidebarData, SidebarItems } from '@interfaces/index';
 import { todoDummy } from '~/fakeData';
 
 import './App.scss';
@@ -56,7 +56,10 @@ const contextMenuDisable = {
 const App = (): JSX.Element => {
   const [todos, dispatch] = useReducer(todoReducer, todoDummy);
   const [contextMenu, setContextMenu] = useState(contextMenuDisable);
-  const [sidebar, setSidebar] = useState<SidebarItems>('today');
+  const [sidebar, setSidebar] = useState<SidebarData>({
+    currentItem: 'today',
+    isActive: true,
+  });
   const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
@@ -105,8 +108,12 @@ const App = (): JSX.Element => {
     setContextMenu({ id, active: true, posX, posY });
   };
 
-  const handleChangeSidebarMenu = (menu: SidebarItems): void => {
-    setSidebar(menu);
+  const handleChangeSidebarMenu = (item: SidebarItems): void => {
+    setSidebar({ ...sidebar, currentItem: item });
+  };
+
+  const handleToggleSidebar = (): void => {
+    setSidebar({ ...sidebar, isActive: !sidebar.isActive });
   };
 
   const closeContextMenu = (): void => {
@@ -115,14 +122,14 @@ const App = (): JSX.Element => {
 
   return (
     <div className="App" onClick={closeContextMenu}>
-      <Header />
+      <Header onToggleSidebar={handleToggleSidebar} />
       <main className="main">
         <Sidebar
-          currentMenu={sidebar}
+          sidebar={sidebar}
           onChangeSidebarMenu={handleChangeSidebarMenu}
         />
         <section className="section">
-          <Title currentMenu={sidebar} />
+          <Title currentItem={sidebar.currentItem} />
           <TodoList
             todos={todos}
             onEditTodoText={handleEditTodoText}

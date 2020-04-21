@@ -4,7 +4,7 @@ import { SidebarItems } from '@interfaces/index';
 import './Title.scss';
 
 interface Props {
-  currentMenu: SidebarItems;
+  currentItem: SidebarItems;
 }
 
 const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -34,9 +34,9 @@ const getTitle = (menu: SidebarItems): JSX.Element => {
 };
 
 const Title = (props: Props): JSX.Element => {
-  const { currentMenu } = props;
+  const { currentItem } = props;
 
-  return <div className="Title">{getTitle(currentMenu)}</div>;
+  return <div className="Title">{getTitle(currentItem)}</div>;
 };
 
 export default Title;

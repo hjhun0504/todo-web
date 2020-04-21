@@ -15,21 +15,21 @@ const getIcon = (type: SidebarItems): JSX.Element => {
 };
 
 interface Props {
-  type: SidebarItems;
+  item: SidebarItems;
   text: string;
   isActive: boolean;
   onChangeSidebarMenu: (menu: SidebarItems) => void;
 }
 
 const SidebarItem = (props: Props): JSX.Element => {
-  const { type, text, isActive, onChangeSidebarMenu } = props;
+  const { item, text, isActive, onChangeSidebarMenu } = props;
 
   return (
     <div
       className={cn('SidebarItem', { active: isActive })}
-      onClick={(): void => onChangeSidebarMenu(type)}
+      onClick={(): void => onChangeSidebarMenu(item)}
     >
-      {getIcon(type)}
+      {getIcon(item)}
       <span>{text}</span>
     </div>
   );

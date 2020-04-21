@@ -7,3 +7,8 @@ export interface TodoData {
 }
 
 export type SidebarItems = 'today' | 'history';
+
+export interface SidebarData {
+  currentItem: SidebarItems;
+  isActive: boolean;
+}

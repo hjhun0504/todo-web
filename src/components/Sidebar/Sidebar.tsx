@@ -1,36 +1,37 @@
 import React from 'react';
+import cn from 'classnames';
 import SidebarItem from '@components/Sidebar/SidebarItem/SidebarItem';
-import { SidebarItems } from '@interfaces/index';
+import { SidebarData, SidebarItems } from '@interfaces/index';
 
 import './Sidebar.scss';
 
 interface Items {
-  type: SidebarItems;
+  item: SidebarItems;
   text: string;
   isActive?: boolean;
 }
 
 const items: Items[] = [
-  { type: 'today', text: '오늘' },
-  { type: 'history', text: '기록' },
+  { item: 'today', text: '오늘' },
+  { item: 'history', text: '기록' },
 ];
 
 interface Props {
-  currentMenu: SidebarItems;
-  onChangeSidebarMenu: (menu: SidebarItems) => void;
+  sidebar: SidebarData;
+  onChangeSidebarMenu: (item: SidebarItems) => void;
 }
 
 const Sidebar = (props: Props): JSX.Element => {
-  const { currentMenu, onChangeSidebarMenu } = props;
+  const { sidebar, onChangeSidebarMenu } = props;
 
   return (
-    <aside className="Sidebar">
+    <aside className={cn('Sidebar', { invisible: !sidebar.isActive })}>
       {items.map((item, index) => (
         <SidebarItem
           key={index}
-          type={item.type}
+          item={item.item}
           text={item.text}
-          isActive={currentMenu === item.type}
+          isActive={sidebar.currentItem === item.item}
           onChangeSidebarMenu={onChangeSidebarMenu}
         />
       ))}
