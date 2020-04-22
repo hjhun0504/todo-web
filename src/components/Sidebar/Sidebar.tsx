@@ -25,7 +25,22 @@ const Sidebar = (props: Props): JSX.Element => {
   const { sidebar, onChangeSidebarMenu } = props;
 
   return (
-    <aside className={cn('Sidebar', { visible: sidebar.isActive })}>
+    <aside
+      className={cn(
+        'Sidebar',
+        {
+          visible:
+            (sidebar.isActive &&
+              document.documentElement.className !== 'overlaid') ||
+            sidebar.isOverlaidActive, // 가로폭이 좁을때 사이드바를 켜두었으면 표시한다.
+        },
+        {
+          overlaid:
+            sidebar.isOverlaidActive &&
+            document.documentElement.className === 'overlaid',
+        }, // 가로폭이 좁을때 사이드바가 켜져있으면 overlaid 하게 사이드바를 스타일링한다.
+      )}
+    >
       {items.map((item, index) => (
         <SidebarItem
           key={index}

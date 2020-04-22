@@ -6,6 +6,7 @@ import TodoList from '@components/TodoList/TodoList';
 import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
 import { TodoData, SidebarData, SidebarItems } from '@interfaces/index';
 import { todoDummy } from '~/fakeData';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import './App.scss';
 
@@ -59,7 +60,13 @@ const App = (): JSX.Element => {
   const [sidebar, setSidebar] = useState<SidebarData>({
     currentItem: 'today',
     isActive: true,
+    isOverlaidActive: false,
   });
+
+  // 가로폭이 좁으면(768이하) overlaid 상태가 된다.
+  const overlaid = useMediaQuery('(max-width:769px)');
+  document.documentElement.className = overlaid ? 'overlaid' : '';
+
   const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
@@ -113,7 +120,26 @@ const App = (): JSX.Element => {
   };
 
   const handleToggleSidebar = (): void => {
-    setSidebar({ ...sidebar, isActive: !sidebar.isActive });
+    if (!overlaid) {
+      // 가로폭이 좁을 때 사이드바를 켜두었으면 사이드바를 끈다.
+      if (sidebar.isOverlaidActive) {
+        setSidebar({
+          ...sidebar,
+          isActive: false,
+          isOverlaidActive: false,
+        });
+      } else {
+        setSidebar({
+          ...sidebar,
+          isActive: !sidebar.isActive,
+        });
+      }
+    } else {
+      setSidebar({
+        ...sidebar,
+        isOverlaidActive: !sidebar.isOverlaidActive,
+      });
+    }
   };
 
   const closeContextMenu = (): void => {

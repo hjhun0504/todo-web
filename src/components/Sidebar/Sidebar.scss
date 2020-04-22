@@ -9,4 +9,10 @@
   &.visible {
     width: 170px;
   }
+
+  &.overlaid {
+    position: fixed;
+    height: 100vh;
+    width: 170px;
+  }
 }
