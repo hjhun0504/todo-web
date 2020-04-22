@@ -1,4 +1,5 @@
 import React, { useReducer, useState, useRef, useCallback } from 'react';
+import cn from 'classnames';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import Title from '@components/Title/Title';
@@ -150,6 +151,12 @@ const App = (): JSX.Element => {
     <div className="App" onClick={closeContextMenu}>
       <Header onToggleSidebar={handleToggleSidebar} />
       <main className="main">
+        <div
+          className={cn('sidebar-overlay', {
+            visible: sidebar.isOverlaidActive && overlaid,
+          })}
+          onClick={(): void => handleToggleSidebar()}
+        ></div>
         <Sidebar
           sidebar={sidebar}
           onChangeSidebarMenu={handleChangeSidebarMenu}

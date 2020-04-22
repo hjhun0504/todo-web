@@ -15,4 +15,17 @@
       flex: 1;
     }
   }
+
+  .sidebar-overlay {
+    position: fixed;
+    width: 0;
+    height: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    z-index: 100;
+
+    &.visible {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
