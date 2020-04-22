@@ -117,7 +117,12 @@ const App = (): JSX.Element => {
   };
 
   const handleChangeSidebarMenu = (item: SidebarItems): void => {
-    setSidebar({ ...sidebar, currentItem: item });
+    // 가로폭이 좁을 때 메뉴 변경시 사이드바를 끈다.
+    if (overlaid) {
+      setSidebar({ ...sidebar, currentItem: item, isOverlaidActive: false });
+    } else {
+      setSidebar({ ...sidebar, currentItem: item });
+    }
   };
 
   const handleToggleSidebar = (): void => {
