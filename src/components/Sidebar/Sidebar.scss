@@ -3,9 +3,9 @@
   background: #ecf0f1;
   width: 0px;
   z-index: 200;
+  overflow: hidden;
 
   transition: width 0.25s;
-  overflow: hidden;
 
   &.visible {
     width: 170px;
@@ -24,8 +24,8 @@
     transition: width 0s;
 
     &.hide {
-      width: 0px;
       transition: width 0.25s;
+      width: 0px;
     }
   }
 }
