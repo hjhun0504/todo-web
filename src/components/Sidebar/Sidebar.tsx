@@ -35,10 +35,11 @@ const Sidebar = (props: Props): JSX.Element => {
             sidebar.isOverlaidActive, // 가로폭이 좁을때 사이드바를 켜두었으면 표시한다.
         },
         {
-          overlaid:
-            sidebar.isOverlaidActive &&
-            document.documentElement.className === 'overlaid',
+          overlaid: document.documentElement.className === 'overlaid',
         }, // 가로폭이 좁을때 사이드바가 켜져있으면 overlaid 하게 사이드바를 스타일링한다.
+        {
+          hide: !sidebar.isOverlaidActive,
+        },
       )}
     >
       {items.map((item, index) => (

@@ -12,8 +12,20 @@
   }
 
   &.overlaid {
+    transition: width 0.25s;
     position: fixed;
     height: 100vh;
     width: 170px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Sidebar {
+    transition: width 0s;
+
+    &.hide {
+      width: 0px;
+      transition: width 0.25s;
+    }
   }
 }
