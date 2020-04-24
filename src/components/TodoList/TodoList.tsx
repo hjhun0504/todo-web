@@ -98,7 +98,7 @@ const TodoList = (props: Props): JSX.Element => {
             </div>
           )}
         </Droppable>
-        <TodoAdd onAddTodo={onAddTodo} />
+        {currentItem === 'today' ? <TodoAdd onAddTodo={onAddTodo} /> : <></>}
       </div>
     </DragDropContext>
   );
