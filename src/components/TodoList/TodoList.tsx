@@ -79,13 +79,13 @@ const TodoList = (props: Props): JSX.Element => {
       onDragEnd={handleDragEnd}
     >
       <div className="TodoList">
-        <Droppable droppableId="todo">
+        <Droppable droppableId={currentItem}>
           {(provided): JSX.Element => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {currentTodos.map((todo, index) => (
+              {currentTodos.map((todo) => (
                 <TodoListItem
                   key={todo.id}
-                  index={index}
+                  index={todo.id}
                   todo={todo}
                   onEditTodoText={onEditTodoText}
                   onEditTodoTime={onEditTodoTime}
