@@ -52,7 +52,7 @@ const TodoList = (props: Props): JSX.Element => {
     onReorderTodo(source.index, destination.index);
   };
 
-  let currentTodos: TodoData[] = [];
+  let currentTodos: TodoData[];
 
   switch (currentItem) {
     case 'today':
