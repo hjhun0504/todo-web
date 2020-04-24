@@ -169,6 +169,7 @@ const App = (): JSX.Element => {
         <section className="section">
           <Title currentItem={sidebar.currentItem} />
           <TodoList
+            currentItem={sidebar.currentItem}
             todos={todos}
             onEditTodoText={handleEditTodoText}
             onEditTodoTime={handleEditTodoTime}
