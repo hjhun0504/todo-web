@@ -1,5 +1,6 @@
 import React from 'react';
 import { SidebarItems } from '@interfaces/index';
+import { IoIosMore } from 'react-icons/io';
 
 import './Title.scss';
 
@@ -8,10 +9,6 @@ interface Props {
 }
 
 const week = ['일', '월', '화', '수', '목', '금', '토'];
-
-const titleElem = (title: string): JSX.Element => (
-  <div className="title">{title}</div>
-);
 
 const getTitle = (menu: SidebarItems): JSX.Element => {
   switch (menu) {
@@ -22,14 +19,23 @@ const getTitle = (menu: SidebarItems): JSX.Element => {
       const day = week[time.getDay()];
       return (
         <>
-          {titleElem('오늘')}
+          <div className="title">
+            <span className="text">오늘</span>
+            <IoIosMore className="today-icon icon" />
+          </div>
           <div className="date">
             {month}월 {date}일, {day}요일
           </div>
         </>
       );
     case 'history':
-      return <>{titleElem('기록')}</>;
+      return (
+        <>
+          <div className="title">
+            <span className="text">기록</span>
+          </div>
+        </>
+      );
   }
 };
 

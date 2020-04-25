@@ -3,8 +3,18 @@
   padding-top: 20px;
 
   .title {
+    display: flex;
+    align-items: center;
     font-size: 20px;
-    font-weight: 400;
+
+    .text {
+      font-weight: 400;
+    }
+
+    .icon {
+      color: gray;
+      margin-left: 5px;
+    }
   }
 
   .date {
