@@ -17,6 +17,10 @@ const isToday = (date: Date): boolean => {
 };
 
 interface Props {
+  search: {
+    isActive: boolean;
+    keyword: string;
+  };
   currentItem: SidebarItems;
   todos: TodoData[];
   config: ConfigData;
@@ -32,6 +36,7 @@ interface Props {
 
 const TodoList = (props: Props): JSX.Element => {
   const {
+    search,
     currentItem,
     todos,
     config,
@@ -55,27 +60,40 @@ const TodoList = (props: Props): JSX.Element => {
 
   let currentTodos: TodoData[];
 
-  switch (currentItem) {
-    case 'today':
-      // 끝나지 않았거나, 오늘 끝난 작업들
+  if (search.isActive) {
+    // 검색어가 빈 문자열인 경우 빈 배열 리턴
+    if (!search.keyword) {
+      currentTodos = [];
+    } else {
       currentTodos = produce(todos, (draft) => {
         return draft.filter((todo) => {
-          if (config.showTodayFinish) {
-            return !todo.finishTime || isToday(todo.finishTime);
-          } else {
-            return !todo.finishTime;
-          }
+          return todo.text.includes(search.keyword);
         });
       });
-      break;
-    case 'history':
-      // 완료된 작업들 (오늘 완료된 작업은 제외)
-      currentTodos = produce(todos, (draft) => {
-        return draft.filter((todo) => {
-          return todo.finishTime && !isToday(todo.finishTime);
+    }
+  } else {
+    switch (currentItem) {
+      case 'today':
+        // 끝나지 않았거나, 오늘 끝난 작업들
+        currentTodos = produce(todos, (draft) => {
+          return draft.filter((todo) => {
+            if (config.showTodayFinish) {
+              return !todo.finishTime || isToday(todo.finishTime);
+            } else {
+              return !todo.finishTime;
+            }
+          });
         });
-      });
-      break;
+        break;
+      case 'history':
+        // 완료된 작업들 (오늘 완료된 작업은 제외)
+        currentTodos = produce(todos, (draft) => {
+          return draft.filter((todo) => {
+            return todo.finishTime && !isToday(todo.finishTime);
+          });
+        });
+        break;
+    }
   }
 
   return (
@@ -103,7 +121,11 @@ const TodoList = (props: Props): JSX.Element => {
             </div>
           )}
         </Droppable>
-        {currentItem === 'today' ? <TodoAdd onAddTodo={onAddTodo} /> : <></>}
+        {!search.isActive && currentItem === 'today' ? (
+          <TodoAdd onAddTodo={onAddTodo} />
+        ) : (
+          <></>
+        )}
       </div>
     </DragDropContext>
   );

@@ -79,6 +79,7 @@ const App = (): JSX.Element => {
     isOverlaidActive: false,
   });
   const [config, setConfig] = useState<ConfigData>({ showTodayFinish: true });
+  const [search, setSearch] = useState({ isActive: false, keyword: '' });
 
   // 가로폭이 좁으면(768이하) overlaid 상태가 된다.
   const overlaid = useMediaQuery('(max-width:769px)');
@@ -191,13 +192,28 @@ const App = (): JSX.Element => {
     setContextualMenu({ isActive: true, items, posX, posY });
   };
 
+  const handleChangeSearchKeyword = (keyword: string): void => {
+    setSearch({ isActive: true, keyword });
+  };
+
+  const handleDisableSearchMode = (): void => {
+    setSearch({ isActive: false, keyword: '' });
+  };
+
   const handleClick = (): void => {
     setContextualMenu(contextualMenuDisable);
+    if (!search.keyword) {
+      handleDisableSearchMode();
+    }
   };
 
   return (
     <div className="App" onClick={handleClick}>
-      <Header onToggleSidebar={handleToggleSidebar} />
+      <Header
+        onToggleSidebar={handleToggleSidebar}
+        onChangeSearchKeyword={handleChangeSearchKeyword}
+        onDisableSearchMode={handleDisableSearchMode}
+      />
       <main className="main">
         <div
           className={cn('sidebar-overlay', {
@@ -211,10 +227,12 @@ const App = (): JSX.Element => {
         />
         <section className="section">
           <Title
+            search={search}
             currentItem={sidebar.currentItem}
             onTitleOptionsClick={handleTitleOptionsClick}
           />
           <TodoList
+            search={search}
             currentItem={sidebar.currentItem}
             todos={todos}
             config={config}

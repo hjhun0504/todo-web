@@ -5,6 +5,10 @@ import { IoIosMore } from 'react-icons/io';
 import './Title.scss';
 
 interface Props {
+  search: {
+    isActive: boolean;
+    keyword: string;
+  };
   currentItem: SidebarItems;
   onTitleOptionsClick: (posX: number, posY: number) => void;
 }
@@ -12,7 +16,7 @@ interface Props {
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Title = (props: Props): JSX.Element => {
-  const { currentItem, onTitleOptionsClick } = props;
+  const { search, currentItem, onTitleOptionsClick } = props;
   const moreButton = React.createRef<HTMLDivElement>();
 
   const handleClick = (
@@ -26,6 +30,16 @@ const Title = (props: Props): JSX.Element => {
       );
     }
   };
+
+  if (search.isActive) {
+    return (
+      <div className="Title">
+        <div className="title">
+          <span className="search">&quot;{search.keyword}&quot; 검색 중</span>
+        </div>
+      </div>
+    );
+  }
 
   switch (currentItem) {
     case 'today':
