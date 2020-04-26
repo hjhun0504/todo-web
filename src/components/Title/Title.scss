@@ -9,11 +9,16 @@
 
     .text {
       font-weight: 400;
+      margin-right: 4px;
     }
 
     .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
       color: gray;
-      margin-left: 5px;
     }
   }
 
