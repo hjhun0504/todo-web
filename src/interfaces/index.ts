@@ -13,3 +13,13 @@ export interface SidebarData {
   isActive: boolean;
   isOverlaidActive: boolean;
 }
+
+export type ContextualMenuItem = ContextualMenuItemData | 'separator';
+
+export type ContextualMenuItemIcon = 'delete';
+
+interface ContextualMenuItemData {
+  icon: ContextualMenuItemIcon;
+  text: string;
+  onClick: () => void;
+}

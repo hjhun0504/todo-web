@@ -1,15 +1,20 @@
 import React, { useReducer, useState, useRef, useCallback } from 'react';
 import cn from 'classnames';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import Title from '@components/Title/Title';
 import TodoList from '@components/TodoList/TodoList';
-import TodoContextMenu from '@components/TodoContextMenu/TodoContextMenu';
-import { TodoData, SidebarData, SidebarItems } from '@interfaces/index';
-import { todoDummy } from '~/fakeData';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ContextualMenu from '@components/ContextualMenu/ContextualMenu';
+import {
+  TodoData,
+  SidebarData,
+  SidebarItems,
+  ContextualMenuItem,
+} from '@interfaces/index';
 
 import './App.scss';
+import { todoDummy } from '~/fakeData';
 
 type Action =
   | { type: 'add'; todo: TodoData }
@@ -48,16 +53,25 @@ const todoReducer = (todos: TodoData[], action: Action): TodoData[] => {
   }
 };
 
-const contextMenuDisable = {
-  id: -1,
-  active: false,
+interface ContextualMenuData {
+  isActive: boolean;
+  items: ContextualMenuItem[];
+  posX: number;
+  posY: number;
+}
+
+const contextualMenuDisable: ContextualMenuData = {
+  isActive: false,
+  items: [],
   posX: 0,
   posY: 0,
 };
 
 const App = (): JSX.Element => {
   const [todos, dispatch] = useReducer(todoReducer, todoDummy);
-  const [contextMenu, setContextMenu] = useState(contextMenuDisable);
+  const [contextualMenu, setContextualMenu] = useState<ContextualMenuData>(
+    contextualMenuDisable,
+  );
   const [sidebar, setSidebar] = useState<SidebarData>({
     currentItem: 'today',
     isActive: true,
@@ -108,14 +122,6 @@ const App = (): JSX.Element => {
     [],
   );
 
-  const handleTodoContextMenu = (
-    id: number,
-    posX: number,
-    posY: number,
-  ): void => {
-    setContextMenu({ id, active: true, posX, posY });
-  };
-
   const handleChangeSidebarMenu = (item: SidebarItems): void => {
     // 가로폭이 좁을 때 메뉴 변경시 사이드바를 끈다.
     if (overlaid) {
@@ -148,12 +154,27 @@ const App = (): JSX.Element => {
     }
   };
 
-  const closeContextMenu = (): void => {
-    setContextMenu(contextMenuDisable);
+  const handleTodoRightClick = (
+    id: number,
+    posX: number,
+    posY: number,
+  ): void => {
+    const items: ContextualMenuItem[] = [
+      {
+        icon: 'delete',
+        text: '작업 삭제',
+        onClick: (): void => handleDeleteTodo(id),
+      },
+    ];
+    setContextualMenu({ isActive: true, items, posX, posY });
+  };
+
+  const handleClick = (): void => {
+    setContextualMenu(contextualMenuDisable);
   };
 
   return (
-    <div className="App" onClick={closeContextMenu}>
+    <div className="App" onClick={handleClick}>
       <Header onToggleSidebar={handleToggleSidebar} />
       <main className="main">
         <div
@@ -177,17 +198,16 @@ const App = (): JSX.Element => {
             onFinishTodo={handleFinishTodo}
             onAddTodo={handleAddTodo}
             onReorderTodo={handleReorderTodo}
-            onContextMenu={handleTodoContextMenu}
-            onCloseContextMenu={closeContextMenu}
+            onContextMenu={handleTodoRightClick}
+            onCloseContextMenu={handleClick}
           />
         </section>
       </main>
-      <TodoContextMenu
-        id={contextMenu.id}
-        active={contextMenu.active}
-        posX={contextMenu.posX}
-        posY={contextMenu.posY}
-        onDeleteTodo={handleDeleteTodo}
+      <ContextualMenu
+        isActive={contextualMenu.isActive}
+        items={contextualMenu.items}
+        posX={contextualMenu.posX}
+        posY={contextualMenu.posY}
       />
     </div>
   );
