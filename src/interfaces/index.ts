@@ -16,10 +16,11 @@ export interface SidebarData {
 
 export type ContextualMenuItem = ContextualMenuItemData | 'separator';
 
-export type ContextualMenuItemIcon = 'delete';
+export type ContextualMenuItemIcon = 'delete' | 'check';
 
 interface ContextualMenuItemData {
-  icon: ContextualMenuItemIcon;
+  isTitle: boolean;
   text: string;
-  onClick: () => void;
+  icon?: ContextualMenuItemIcon;
+  onClick?: () => void;
 }

@@ -6,18 +6,25 @@ import './Title.scss';
 
 interface Props {
   currentItem: SidebarItems;
+  onTitleOptionsClick: (posX: number, posY: number) => void;
 }
 
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Title = (props: Props): JSX.Element => {
-  const { currentItem } = props;
+  const { currentItem, onTitleOptionsClick } = props;
   const moreButton = React.createRef<HTMLDivElement>();
 
   const handleClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ): void => {
     event.stopPropagation();
+    if (moreButton.current) {
+      onTitleOptionsClick(
+        moreButton.current?.getBoundingClientRect().left,
+        moreButton.current?.getBoundingClientRect().bottom,
+      );
+    }
   };
 
   switch (currentItem) {

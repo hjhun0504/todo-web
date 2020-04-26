@@ -161,9 +161,26 @@ const App = (): JSX.Element => {
   ): void => {
     const items: ContextualMenuItem[] = [
       {
+        isTitle: false,
         icon: 'delete',
         text: '작업 삭제',
         onClick: (): void => handleDeleteTodo(id),
+      },
+    ];
+    setContextualMenu({ isActive: true, items, posX, posY });
+  };
+
+  const handleTitleOptionsClick = (posX: number, posY: number): void => {
+    const items: ContextualMenuItem[] = [
+      {
+        isTitle: true,
+        text: '목록 옵션',
+      },
+      {
+        isTitle: false,
+        icon: 'check',
+        text: '완료한 작업 숨기기',
+        onClick: (): void => console.log('hello'),
       },
     ];
     setContextualMenu({ isActive: true, items, posX, posY });
@@ -188,7 +205,10 @@ const App = (): JSX.Element => {
           onChangeSidebarMenu={handleChangeSidebarMenu}
         />
         <section className="section">
-          <Title currentItem={sidebar.currentItem} />
+          <Title
+            currentItem={sidebar.currentItem}
+            onTitleOptionsClick={handleTitleOptionsClick}
+          />
           <TodoList
             currentItem={sidebar.currentItem}
             todos={todos}
