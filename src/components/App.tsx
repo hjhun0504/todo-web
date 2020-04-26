@@ -11,6 +11,7 @@ import {
   SidebarData,
   SidebarItems,
   ContextualMenuItem,
+  ConfigData,
 } from '@interfaces/index';
 
 import './App.scss';
@@ -77,6 +78,7 @@ const App = (): JSX.Element => {
     isActive: true,
     isOverlaidActive: false,
   });
+  const [config, setConfig] = useState<ConfigData>({ showTodayFinish: true });
 
   // 가로폭이 좁으면(768이하) overlaid 상태가 된다.
   const overlaid = useMediaQuery('(max-width:769px)');
@@ -179,8 +181,11 @@ const App = (): JSX.Element => {
       {
         isTitle: false,
         icon: 'check',
-        text: '완료한 작업 숨기기',
-        onClick: (): void => console.log('hello'),
+        text: config.showTodayFinish
+          ? '완료한 작업 숨기기'
+          : '완료된 작업 표시',
+        onClick: (): void =>
+          setConfig({ ...config, showTodayFinish: !config.showTodayFinish }),
       },
     ];
     setContextualMenu({ isActive: true, items, posX, posY });
@@ -212,6 +217,7 @@ const App = (): JSX.Element => {
           <TodoList
             currentItem={sidebar.currentItem}
             todos={todos}
+            config={config}
             onEditTodoText={handleEditTodoText}
             onEditTodoTime={handleEditTodoTime}
             onStartTodo={handleStartTodo}

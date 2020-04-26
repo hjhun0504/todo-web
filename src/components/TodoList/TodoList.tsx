@@ -3,8 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import produce from 'immer';
 import TodoListItem from '@components/TodoList/TodoListItem/TodoListItem';
 import TodoAdd from '@components/TodoList/TodoAdd/TodoAdd';
-
-import { TodoData, SidebarItems } from '@interfaces/index';
+import { TodoData, SidebarItems, ConfigData } from '@interfaces/index';
 
 import './TodoList.scss';
 
@@ -20,6 +19,7 @@ const isToday = (date: Date): boolean => {
 interface Props {
   currentItem: SidebarItems;
   todos: TodoData[];
+  config: ConfigData;
   onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
   onStartTodo: (id: number) => void;
@@ -34,6 +34,7 @@ const TodoList = (props: Props): JSX.Element => {
   const {
     currentItem,
     todos,
+    config,
     onEditTodoText,
     onEditTodoTime,
     onStartTodo,
@@ -59,7 +60,11 @@ const TodoList = (props: Props): JSX.Element => {
       // 끝나지 않았거나, 오늘 끝난 작업들
       currentTodos = produce(todos, (draft) => {
         return draft.filter((todo) => {
-          return !todo.finishTime || isToday(todo.finishTime);
+          if (config.showTodayFinish) {
+            return !todo.finishTime || isToday(todo.finishTime);
+          } else {
+            return !todo.finishTime;
+          }
         });
       });
       break;
