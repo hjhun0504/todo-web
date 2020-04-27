@@ -67,7 +67,10 @@ const TodoList = (props: Props): JSX.Element => {
     } else {
       currentTodos = produce(todos, (draft) => {
         return draft.filter((todo) => {
-          return todo.text.includes(search.keyword);
+          // search NOT cAsE sEnSiTiVe
+          const todoText = todo.text.toLowerCase();
+          const keyword = search.keyword.toLowerCase();
+          return todoText.includes(keyword);
         });
       });
     }
