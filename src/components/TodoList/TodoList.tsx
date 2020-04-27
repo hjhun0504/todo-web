@@ -100,11 +100,11 @@ const TodoList = (props: Props): JSX.Element => {
   }
 
   return (
-    <DragDropContext
-      onDragStart={(): void => onCloseContextMenu()}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="TodoList">
+    <div className="TodoList">
+      <DragDropContext
+        onDragStart={(): void => onCloseContextMenu()}
+        onDragEnd={handleDragEnd}
+      >
         <Droppable droppableId={currentItem}>
           {(provided): JSX.Element => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -124,13 +124,13 @@ const TodoList = (props: Props): JSX.Element => {
             </div>
           )}
         </Droppable>
-        {!search.isActive && currentItem === 'today' ? (
-          <TodoAdd onAddTodo={onAddTodo} />
-        ) : (
-          <></>
-        )}
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+      {!search.isActive && currentItem === 'today' ? (
+        <TodoAdd onAddTodo={onAddTodo} />
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 
