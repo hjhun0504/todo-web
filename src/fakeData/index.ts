@@ -103,7 +103,7 @@ export const todoDummy2: TodoData[] = [
   },
   {
     id: 7,
-    text: 'Task 7',
+    text: 'Task 8',
     targetMinutes: 10,
     startTime: new Date(`2020-${month}-${date}T21:02:00`),
     finishTime: new Date(`2020-${month}-${date}T23:45:00`),
@@ -111,7 +111,7 @@ export const todoDummy2: TodoData[] = [
 
   {
     id: 8,
-    text: 'Task 7',
+    text: 'Task 9',
     targetMinutes: 10,
     startTime: new Date(`2020-${month}-${date}T21:02:00`),
     finishTime: new Date(`2020-${month}-${date}T23:45:00`),
@@ -119,6 +119,13 @@ export const todoDummy2: TodoData[] = [
   {
     id: 9,
     text: '과거 완료',
+    targetMinutes: 10,
+    startTime: new Date(`2020-04-20T06:25:00`),
+    finishTime: new Date(`2020-04-20T08:45:00`),
+  },
+  {
+    id: 10,
+    text: '과거 완료2',
     targetMinutes: 10,
     startTime: new Date(`2020-04-20T06:25:00`),
     finishTime: new Date(`2020-04-20T08:45:00`),
