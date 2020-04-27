@@ -290,7 +290,11 @@ const App = (): JSX.Element => {
             currentItem={sidebar.currentItem}
             onTitleOptionsClick={handleTitleOptionsClick}
           />
-          <Timeline todos={propsTodo} />
+          {!search.isActive && sidebar.currentItem === 'today' ? (
+            <Timeline todos={propsTodo} />
+          ) : (
+            <></>
+          )}
           <TodoList
             todos={propsTodo}
             isSearchActive={search.isActive}
