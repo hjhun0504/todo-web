@@ -52,7 +52,9 @@ const Timeline = (props: Props): JSX.Element => {
 
   const currentHour = new Date().getHours() + 2;
   const timelineStartTime =
-    sortedTodos[sortedTodos.length - 1].startTime?.getHours() || 0;
+    sortedTodos.length > 0
+      ? sortedTodos[sortedTodos.length - 1].startTime?.getHours() || 0
+      : 0;
   const timelineEndTime = 24 > currentHour ? currentHour : 24;
 
   return (
