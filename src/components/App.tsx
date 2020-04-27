@@ -4,6 +4,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Header from '@components/Header/Header';
 import Sidebar from '@components/Sidebar/Sidebar';
 import Title from '@components/Title/Title';
+import Timeline from '@components/Timeline/Timeline';
 import TodoList from '@components/TodoList/TodoList';
 import ContextualMenu from '@components/ContextualMenu/ContextualMenu';
 import {
@@ -15,7 +16,7 @@ import {
 } from '@interfaces/index';
 
 import './App.scss';
-import { todoDummy } from '~/fakeData';
+import { todoDummy2 } from '~/fakeData';
 
 type Action =
   | { type: 'add'; todo: TodoData }
@@ -69,7 +70,7 @@ const contextualMenuDisable: ContextualMenuData = {
 };
 
 const App = (): JSX.Element => {
-  const [todos, dispatch] = useReducer(todoReducer, todoDummy);
+  const [todos, dispatch] = useReducer(todoReducer, todoDummy2);
   const [contextualMenu, setContextualMenu] = useState<ContextualMenuData>(
     contextualMenuDisable,
   );
@@ -85,7 +86,7 @@ const App = (): JSX.Element => {
   const overlaid = useMediaQuery('(max-width:769px)');
   document.documentElement.className = overlaid ? 'overlaid' : '';
 
-  const nextId = useRef(todoDummy.length);
+  const nextId = useRef(todoDummy2.length);
 
   const handleAddTodo = useCallback(
     (text: string, targetMinutes: number): void => {
@@ -234,6 +235,7 @@ const App = (): JSX.Element => {
             currentItem={sidebar.currentItem}
             onTitleOptionsClick={handleTitleOptionsClick}
           />
+          <Timeline todos={todos} />
           <TodoList
             search={search}
             currentItem={sidebar.currentItem}

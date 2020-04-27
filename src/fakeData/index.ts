@@ -46,3 +46,81 @@ export const todoDummy: TodoData[] = [
   //   targetMinutes: 20,
   // },
 ];
+
+const today = new Date();
+const month = (today.getMonth() + 1).toString().padStart(2, '0');
+const date = today.getDate().toString().padStart(2, '0');
+
+export const todoDummy2: TodoData[] = [
+  {
+    id: 0,
+    text: 'Task 1',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T07:25:00`),
+    finishTime: new Date(`2020-${month}-${date}T08:45:00`),
+  },
+  {
+    id: 1,
+    text: 'Task 2',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T09:06:00`),
+    finishTime: new Date(`2020-${month}-${date}T11:45:00`),
+  },
+  {
+    id: 2,
+    text: 'Task 3',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T12:30:00`),
+    finishTime: new Date(`2020-${month}-${date}T13:45:00`),
+  },
+  {
+    id: 3,
+    text: 'Task 4',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T14:55:00`),
+    finishTime: new Date(`2020-${month}-${date}T15:00:00`),
+  },
+  {
+    id: 4,
+    text: 'Task 5',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T16:47:00`),
+    finishTime: new Date(`2020-${month}-${date}T17:19:00`),
+  },
+  {
+    id: 5,
+    text: 'Task 6',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T19:35:00`),
+    finishTime: new Date(`2020-${month}-${date}T20:45:00`),
+  },
+  {
+    id: 6,
+    text: 'Task 7',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T21:02:00`),
+    finishTime: new Date(`2020-${month}-${date}T23:45:00`),
+  },
+  {
+    id: 7,
+    text: 'Task 7',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T21:02:00`),
+    finishTime: new Date(`2020-${month}-${date}T23:45:00`),
+  },
+
+  {
+    id: 8,
+    text: 'Task 7',
+    targetMinutes: 10,
+    startTime: new Date(`2020-${month}-${date}T21:02:00`),
+    finishTime: new Date(`2020-${month}-${date}T23:45:00`),
+  },
+  {
+    id: 9,
+    text: '과거 완료',
+    targetMinutes: 10,
+    startTime: new Date(`2020-04-20T06:25:00`),
+    finishTime: new Date(`2020-04-20T08:45:00`),
+  },
+];
