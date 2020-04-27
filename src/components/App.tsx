@@ -219,16 +219,16 @@ const App = (): JSX.Element => {
     }
   };
 
-  // 현재 컨텍스트에 따라 props로 내려줄 todo
-  let propsTodo: TodoData[];
+  // 할 일 목록에 내려줄 todo
+  let todolistTodo: TodoData[];
 
   // 검색모드가 활성화되어 있으면 검색결과에 맞는 todo를 내려줌
   if (search.isActive) {
     // 검색어가 빈 문자열인 경우 빈 배열 리턴
     if (!search.keyword) {
-      propsTodo = [];
+      todolistTodo = [];
     } else {
-      propsTodo = produce(todos, (draft) => {
+      todolistTodo = produce(todos, (draft) => {
         return draft.filter((todo) => {
           // search NOT cAsE sEnSiTiVe
           const todoText = todo.text.toLowerCase();
@@ -243,7 +243,7 @@ const App = (): JSX.Element => {
     switch (sidebar.currentItem) {
       case 'today':
         // 끝나지 않았거나, 오늘 끝난 작업들
-        propsTodo = produce(todos, (draft) => {
+        todolistTodo = produce(todos, (draft) => {
           return draft.filter((todo) => {
             if (config.showTodayFinish) {
               return !todo.finishTime || isToday(todo.finishTime);
@@ -255,13 +255,22 @@ const App = (): JSX.Element => {
         break;
       case 'history':
         // 완료된 작업들 (오늘 완료된 작업은 제외)
-        propsTodo = produce(todos, (draft) => {
+        todolistTodo = produce(todos, (draft) => {
           return draft.filter((todo) => {
             return todo.finishTime && !isToday(todo.finishTime);
           });
         });
         break;
     }
+  }
+
+  // 타임라인에 내려줄 todo (RFT: 최적화 필요)
+  let timelineTodo: TodoData[] = [];
+
+  if (!search.isActive && sidebar.currentItem === 'today') {
+    timelineTodo = todos.filter((todo) => {
+      return todo.startTime && isToday(todo.startTime);
+    });
   }
 
   return (
@@ -291,12 +300,12 @@ const App = (): JSX.Element => {
             onTitleOptionsClick={handleTitleOptionsClick}
           />
           {!search.isActive && sidebar.currentItem === 'today' ? (
-            <Timeline todos={propsTodo} />
+            <Timeline todos={timelineTodo} />
           ) : (
             <></>
           )}
           <TodoList
-            todos={propsTodo}
+            todos={todolistTodo}
             isSearchActive={search.isActive}
             currentItem={sidebar.currentItem}
             onEditTodoText={handleEditTodoText}
