@@ -17,12 +17,13 @@ const items: Items[] = [
 ];
 
 interface Props {
+  isSearchMode: boolean;
   sidebar: SidebarData;
   onChangeSidebarMenu: (item: SidebarItems) => void;
 }
 
 const Sidebar = (props: Props): JSX.Element => {
-  const { sidebar, onChangeSidebarMenu } = props;
+  const { isSearchMode, sidebar, onChangeSidebarMenu } = props;
   const overlaid =
     document.documentElement.className === 'overlaid' ? true : false;
 
@@ -46,7 +47,7 @@ const Sidebar = (props: Props): JSX.Element => {
           key={index}
           item={item.item}
           text={item.text}
-          isActive={sidebar.currentItem === item.item}
+          isActive={sidebar.currentItem === item.item && !isSearchMode}
           onChangeSidebarMenu={onChangeSidebarMenu}
         />
       ))}

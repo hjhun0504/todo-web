@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FaSearch } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
@@ -6,13 +6,19 @@ import { MdMenu } from 'react-icons/md';
 import './Header.scss';
 
 interface Props {
+  isSearchMode: boolean;
   onChangeSearchKeyword: (keyword: string) => void;
   onDisableSearchMode: () => void;
   onToggleSidebar: () => void;
 }
 
 const Header = (props: Props): JSX.Element => {
-  const { onToggleSidebar, onChangeSearchKeyword, onDisableSearchMode } = props;
+  const {
+    isSearchMode,
+    onToggleSidebar,
+    onChangeSearchKeyword,
+    onDisableSearchMode,
+  } = props;
   const [keyword, setKeyword] = useState<string>('');
   const searchRef = React.createRef<HTMLInputElement>();
 
@@ -30,6 +36,12 @@ const Header = (props: Props): JSX.Element => {
       searchRef.current?.blur();
     }
   };
+
+  useEffect(() => {
+    if (!isSearchMode) {
+      setKeyword('');
+    }
+  }, [isSearchMode]);
 
   return (
     <header className="Header">

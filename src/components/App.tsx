@@ -125,6 +125,14 @@ const App = (): JSX.Element => {
     [],
   );
 
+  const handleChangeSearchKeyword = (keyword: string): void => {
+    setSearch({ isActive: true, keyword });
+  };
+
+  const handleDisableSearchMode = (): void => {
+    setSearch({ isActive: false, keyword: '' });
+  };
+
   const handleChangeSidebarMenu = (item: SidebarItems): void => {
     // 가로폭이 좁을 때 메뉴 변경시 사이드바를 끈다.
     if (overlaid) {
@@ -132,6 +140,7 @@ const App = (): JSX.Element => {
     } else {
       setSidebar({ ...sidebar, currentItem: item });
     }
+    handleDisableSearchMode();
   };
 
   const handleToggleSidebar = (): void => {
@@ -192,14 +201,6 @@ const App = (): JSX.Element => {
     setContextualMenu({ isActive: true, items, posX, posY });
   };
 
-  const handleChangeSearchKeyword = (keyword: string): void => {
-    setSearch({ isActive: true, keyword });
-  };
-
-  const handleDisableSearchMode = (): void => {
-    setSearch({ isActive: false, keyword: '' });
-  };
-
   const handleClick = (): void => {
     setContextualMenu(contextualMenuDisable);
     if (!search.keyword) {
@@ -210,6 +211,7 @@ const App = (): JSX.Element => {
   return (
     <div className="App" onClick={handleClick}>
       <Header
+        isSearchMode={search.isActive}
         onToggleSidebar={handleToggleSidebar}
         onChangeSearchKeyword={handleChangeSearchKeyword}
         onDisableSearchMode={handleDisableSearchMode}
@@ -222,6 +224,7 @@ const App = (): JSX.Element => {
           onClick={(): void => handleToggleSidebar()}
         ></div>
         <Sidebar
+          isSearchMode={search.isActive}
           sidebar={sidebar}
           onChangeSidebarMenu={handleChangeSidebarMenu}
         />
