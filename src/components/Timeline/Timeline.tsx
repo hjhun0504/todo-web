@@ -51,11 +51,21 @@ const Timeline = (props: Props): JSX.Element => {
   });
 
   const currentHour = new Date().getHours() + 2;
-  const timelineStartTime =
-    sortedTodos.length > 0
-      ? sortedTodos[sortedTodos.length - 1].startTime?.getHours() || 0
-      : 0;
-  const timelineEndTime = 24 > currentHour ? currentHour : 24;
+  // const timelineStartTime =
+  //   sortedTodos.length > 0
+  //     ? sortedTodos[sortedTodos.length - 1].startTime?.getHours() || 0
+  //     : 0;
+  // const timelineEndTime = 24 > currentHour ? currentHour : 24;
+  const timelineStartTime = 0;
+  const timelineEndTime = 24;
+  const timeRuler: JSX.Element[] = [];
+  for (let i = timelineStartTime; i <= timelineEndTime; i++) {
+    timeRuler.push(
+      <div key={i} className="time">
+        {i}
+      </div>,
+    );
+  }
 
   return (
     <div className="Timeline">
@@ -84,10 +94,7 @@ const Timeline = (props: Props): JSX.Element => {
           </div>
         ))}
         <div className="line"></div>
-        <div className="timebox">
-          <div className="time">{timelineStartTime}:00</div>
-          <div className="time">{timelineEndTime}:00</div>
-        </div>
+        <div className="timebox">{timeRuler.map((value) => value)}</div>
       </div>
     </div>
   );
