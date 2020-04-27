@@ -1,4 +1,5 @@
 import React, { useReducer, useState, useRef, useCallback } from 'react';
+import produce from 'immer';
 import cn from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Header from '@components/Header/Header';
@@ -17,6 +18,15 @@ import {
 
 import './App.scss';
 import { todoDummy2 } from '~/fakeData';
+
+const isToday = (date: Date): boolean => {
+  const today = new Date();
+  return (
+    today.getFullYear() === date.getFullYear() &&
+    today.getMonth() === date.getMonth() &&
+    today.getDate() === date.getDate()
+  );
+};
 
 type Action =
   | { type: 'add'; todo: TodoData }
@@ -209,6 +219,51 @@ const App = (): JSX.Element => {
     }
   };
 
+  // 현재 컨텍스트에 따라 props로 내려줄 todo
+  let propsTodo: TodoData[];
+
+  // 검색모드가 활성화되어 있으면 검색결과에 맞는 todo를 내려줌
+  if (search.isActive) {
+    // 검색어가 빈 문자열인 경우 빈 배열 리턴
+    if (!search.keyword) {
+      propsTodo = [];
+    } else {
+      propsTodo = produce(todos, (draft) => {
+        return draft.filter((todo) => {
+          // search NOT cAsE sEnSiTiVe
+          const todoText = todo.text.toLowerCase();
+          const keyword = search.keyword.toLowerCase();
+          return todoText.includes(keyword);
+        });
+      });
+    }
+  }
+  // 검색모드가 비활성화 되어 있으면 사이드바 메뉴에 맞는 todo를 내려줌
+  else {
+    switch (sidebar.currentItem) {
+      case 'today':
+        // 끝나지 않았거나, 오늘 끝난 작업들
+        propsTodo = produce(todos, (draft) => {
+          return draft.filter((todo) => {
+            if (config.showTodayFinish) {
+              return !todo.finishTime || isToday(todo.finishTime);
+            } else {
+              return !todo.finishTime;
+            }
+          });
+        });
+        break;
+      case 'history':
+        // 완료된 작업들 (오늘 완료된 작업은 제외)
+        propsTodo = produce(todos, (draft) => {
+          return draft.filter((todo) => {
+            return todo.finishTime && !isToday(todo.finishTime);
+          });
+        });
+        break;
+    }
+  }
+
   return (
     <div className="App" onClick={handleClick}>
       <Header
@@ -235,12 +290,11 @@ const App = (): JSX.Element => {
             currentItem={sidebar.currentItem}
             onTitleOptionsClick={handleTitleOptionsClick}
           />
-          <Timeline todos={todos} />
+          <Timeline todos={propsTodo} />
           <TodoList
-            search={search}
+            todos={propsTodo}
+            isSearchActive={search.isActive}
             currentItem={sidebar.currentItem}
-            todos={todos}
-            config={config}
             onEditTodoText={handleEditTodoText}
             onEditTodoTime={handleEditTodoTime}
             onStartTodo={handleStartTodo}

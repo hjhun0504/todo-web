@@ -1,29 +1,15 @@
 import React from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import produce from 'immer';
 import TodoListItem from '@components/TodoList/TodoListItem/TodoListItem';
 import TodoAdd from '@components/TodoList/TodoAdd/TodoAdd';
-import { TodoData, SidebarItems, ConfigData } from '@interfaces/index';
+import { TodoData, SidebarItems } from '@interfaces/index';
 
 import './TodoList.scss';
 
-const isToday = (date: Date): boolean => {
-  const today = new Date();
-  return (
-    today.getFullYear() === date.getFullYear() &&
-    today.getMonth() === date.getMonth() &&
-    today.getDate() === date.getDate()
-  );
-};
-
 interface Props {
-  search: {
-    isActive: boolean;
-    keyword: string;
-  };
-  currentItem: SidebarItems;
   todos: TodoData[];
-  config: ConfigData;
+  isSearchActive: boolean;
+  currentItem: SidebarItems;
   onEditTodoText: (id: number, editedText: string) => void;
   onEditTodoTime: (id: number, editedTime: number) => void;
   onStartTodo: (id: number) => void;
@@ -36,10 +22,9 @@ interface Props {
 
 const TodoList = (props: Props): JSX.Element => {
   const {
-    search,
-    currentItem,
+    isSearchActive,
     todos,
-    config,
+    currentItem,
     onEditTodoText,
     onEditTodoTime,
     onStartTodo,
@@ -58,57 +43,16 @@ const TodoList = (props: Props): JSX.Element => {
     onReorderTodo(source.index, destination.index);
   };
 
-  let currentTodos: TodoData[];
-
-  if (search.isActive) {
-    // 검색어가 빈 문자열인 경우 빈 배열 리턴
-    if (!search.keyword) {
-      currentTodos = [];
-    } else {
-      currentTodos = produce(todos, (draft) => {
-        return draft.filter((todo) => {
-          // search NOT cAsE sEnSiTiVe
-          const todoText = todo.text.toLowerCase();
-          const keyword = search.keyword.toLowerCase();
-          return todoText.includes(keyword);
-        });
-      });
-    }
-  } else {
-    switch (currentItem) {
-      case 'today':
-        // 끝나지 않았거나, 오늘 끝난 작업들
-        currentTodos = produce(todos, (draft) => {
-          return draft.filter((todo) => {
-            if (config.showTodayFinish) {
-              return !todo.finishTime || isToday(todo.finishTime);
-            } else {
-              return !todo.finishTime;
-            }
-          });
-        });
-        break;
-      case 'history':
-        // 완료된 작업들 (오늘 완료된 작업은 제외)
-        currentTodos = produce(todos, (draft) => {
-          return draft.filter((todo) => {
-            return todo.finishTime && !isToday(todo.finishTime);
-          });
-        });
-        break;
-    }
-  }
-
   return (
     <div className="TodoList">
       <DragDropContext
         onDragStart={(): void => onCloseContextMenu()}
         onDragEnd={handleDragEnd}
       >
-        <Droppable droppableId={currentItem}>
+        <Droppable droppableId="todo">
           {(provided): JSX.Element => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {currentTodos.map((todo) => (
+              {todos.map((todo) => (
                 <TodoListItem
                   key={todo.id}
                   index={todo.id}
@@ -125,7 +69,7 @@ const TodoList = (props: Props): JSX.Element => {
           )}
         </Droppable>
       </DragDropContext>
-      {!search.isActive && currentItem === 'today' ? (
+      {!isSearchActive && currentItem === 'today' ? (
         <TodoAdd onAddTodo={onAddTodo} />
       ) : (
         <></>
