@@ -43,14 +43,14 @@
     flex: 1;
 
     .text {
-      font-size: 20px;
+      font-size: $todo-text-size;
       width: 100%;
     }
   }
 
   .time,
   .action {
-    width: 90px;
+    width: $todo-right-column-size;
     align-items: center;
   }
 

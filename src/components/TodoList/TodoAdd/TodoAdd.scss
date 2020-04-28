@@ -1,34 +1,12 @@
 @import '../../../styles/variables.scss';
 
 .TodoAdd {
-  .add-button {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 300;
-    color: #7f8c8d;
-    width: 90%;
-    height: 40px;
-    cursor: pointer;
-
-    .add-icon {
-      color: #3498db;
-      font-size: 18px;
-      // margin-bottom: -1px;
-      margin-right: 3px;
-    }
-  }
-
-  .add-button:hover {
-    color: #3498db;
-  }
-
   .add-form {
     display: flex;
     flex-direction: column;
 
     .todo-input {
-      width: 90%;
+      width: calc(100% - #{$todo-right-column-size});
       display: flex;
       border: $todo-list-border;
       border-radius: 3px;
@@ -36,8 +14,8 @@
 
       .text,
       .time {
-        font-size: 16px;
-        padding: 7px;
+        padding: 5px;
+        font-size: $todo-text-size;
       }
 
       .text {
@@ -46,7 +24,12 @@
       }
 
       .time {
-        width: 100px;
+        text-align: center;
+        width: $todo-right-column-size;
+      }
+
+      .time::placeholder {
+        font-size: 14px;
       }
     }
 
@@ -71,5 +54,27 @@
         color: black;
       }
     }
+  }
+
+  .add-button {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 300;
+    color: #7f8c8d;
+    width: 90%;
+    height: 40px;
+    cursor: pointer;
+
+    .add-icon {
+      color: #3498db;
+      font-size: 18px;
+      // margin-bottom: -1px;
+      margin-right: 3px;
+    }
+  }
+
+  .add-button:hover {
+    color: #3498db;
   }
 }
