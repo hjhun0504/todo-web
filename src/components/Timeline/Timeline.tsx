@@ -1,5 +1,7 @@
 import React from 'react';
 import produce from 'immer';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import { TodoData } from '@interfaces/index';
 
 import './Timeline.scss';
@@ -73,24 +75,26 @@ const Timeline = (props: Props): JSX.Element => {
       <div className="graph">
         {sortedTodos.map((todo, index) => (
           <div key={index}>
-            <div
-              className="item"
-              style={{
-                left: getPosition(
-                  todo.startTime || new Date(),
-                  timelineStartTime,
-                  timelineEndTime,
-                ),
-                width: getWidth(
-                  todo.startTime || new Date(),
-                  todo.finishTime || new Date(),
-                  timelineStartTime,
-                  timelineEndTime,
-                ),
-              }}
-            >
-              <div className="item-text">{todo.text}</div>
-            </div>
+            <Tippy content={`${todo.text}`}>
+              <div
+                className="item"
+                style={{
+                  left: getPosition(
+                    todo.startTime || new Date(),
+                    timelineStartTime,
+                    timelineEndTime,
+                  ),
+                  width: getWidth(
+                    todo.startTime || new Date(),
+                    todo.finishTime || new Date(),
+                    timelineStartTime,
+                    timelineEndTime,
+                  ),
+                }}
+              >
+                <div className="item-text">{todo.text}</div>
+              </div>
+            </Tippy>
           </div>
         ))}
         <div className="line"></div>

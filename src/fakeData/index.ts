@@ -17,8 +17,8 @@ export const todoDummy: TodoData[] = [
     id: 4,
     text: '완료된 작업입니다.',
     targetMinutes: 45,
-    startTime: new Date(),
-    finishTime: new Date(Date.now() + 350000),
+    startTime: new Date(Date.now() - 3500000),
+    finishTime: new Date(Date.now()),
   },
   {
     id: 5,
