@@ -19,7 +19,7 @@
     .item {
       cursor: default;
       position: relative;
-      background: #27ae60;
+      background: #2c3e50;
       height: 12px;
       left: 50%;
 
@@ -32,6 +32,10 @@
         color: white;
         overflow: hidden;
       }
+    }
+
+    .done {
+      background: #27ae60;
     }
 
     .line {

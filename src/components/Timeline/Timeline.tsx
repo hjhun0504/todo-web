@@ -1,5 +1,6 @@
 import React from 'react';
 import produce from 'immer';
+import cn from 'classnames';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { TodoData } from '@interfaces/index';
@@ -69,30 +70,40 @@ const Timeline = (props: Props): JSX.Element => {
     <div className="Timeline">
       {/* <div className="title">타임라인</div> */}
       <div className="graph">
-        {sortedTodos.map((todo, index) => (
-          <div key={index}>
-            <Tippy content={`${todo.text}`}>
-              <div
-                className="item"
-                style={{
-                  left: getPosition(
-                    todo.startTime || new Date(),
-                    timelineStartTime,
-                    timelineEndTime,
-                  ),
-                  width: getWidth(
-                    todo.startTime || new Date(),
-                    todo.finishTime || new Date(),
-                    timelineStartTime,
-                    timelineEndTime,
-                  ),
-                }}
-              >
-                <div className="item-text">{todo.text}</div>
-              </div>
-            </Tippy>
-          </div>
-        ))}
+        {sortedTodos.map((todo, index) => {
+          if (!todo.startTime) return; // 시작시간이 없는 todo data는 없다.
+          let objectTime;
+          if (todo.finishTime) {
+            objectTime = todo.finishTime;
+          } else {
+            objectTime = new Date(todo.startTime.getTime());
+            objectTime.setMinutes(objectTime.getMinutes() + todo.targetMinutes);
+          }
+          return (
+            <div key={index}>
+              <Tippy content={`${todo.text}`}>
+                <div
+                  className={cn('item', { done: todo.finishTime })}
+                  style={{
+                    left: getPosition(
+                      todo.startTime,
+                      timelineStartTime,
+                      timelineEndTime,
+                    ),
+                    width: getWidth(
+                      todo.startTime,
+                      objectTime,
+                      timelineStartTime,
+                      timelineEndTime,
+                    ),
+                  }}
+                >
+                  <div className="item-text">{todo.text}</div>
+                </div>
+              </Tippy>
+            </div>
+          );
+        })}
         <div className="line"></div>
         <div className="timebox">{timeRuler.map((value) => value)}</div>
       </div>
