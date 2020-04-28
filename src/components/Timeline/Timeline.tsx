@@ -39,10 +39,6 @@ const Timeline = (props: Props): JSX.Element => {
 
   // 완료된 작업들을 시작한 시간순으로 오름차순으로 정렬한다.
   const sortedTodos = produce(todos, (draft) => {
-    draft = draft.filter((todo) => {
-      return todo.startTime && todo.finishTime;
-    });
-
     return draft.sort((a, b) => {
       if (a.startTime && b.startTime) {
         return b.startTime?.getTime() - a.startTime?.getTime();
