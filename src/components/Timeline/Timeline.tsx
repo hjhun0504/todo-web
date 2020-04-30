@@ -15,9 +15,9 @@ const getPosition = (
   startTime: Date,
   timelineStartTime: number,
   timelineEndTime: number,
-): string => {
+): number => {
   const hours = getHours(startTime) - timelineStartTime;
-  return `${(hours / (timelineEndTime - timelineStartTime)) * 100}%`;
+  return (hours / (timelineEndTime - timelineStartTime)) * 100;
 };
 
 const getWidth = (
@@ -25,10 +25,10 @@ const getWidth = (
   finishTime: Date,
   timelineStartTime: number,
   timelineEndTime: number,
-): string => {
+): number => {
   const consumedTime = getHours(finishTime) - getHours(startTime);
   const width = (consumedTime / (timelineEndTime - timelineStartTime)) * 100;
-  return `${width > 1 ? width : 1}%`; // 최소 1%의 폭을 가진다.
+  return width > 1 ? width : 1; // 최소 1%의 폭을 가진다.
 };
 
 interface Props {
@@ -68,35 +68,39 @@ const Timeline = (props: Props): JSX.Element => {
 
   return (
     <div className="Timeline">
-      {/* <div className="title">타임라인</div> */}
       <div className="graph">
         {sortedTodos.map((todo, index) => {
-          if (!todo.startTime) return; // 시작시간이 없는 todo data는 없다.
+          // 타임라인에 표시되는 모든 todo는 startTime을 가지고 있음 (타입체킹용)
+          if (!todo.startTime) {
+            return;
+          }
           let objectTime;
           if (todo.finishTime) {
             objectTime = todo.finishTime;
           } else {
-            objectTime = new Date(todo.startTime.getTime());
+            objectTime = new Date(todo.startTime);
             objectTime.setMinutes(objectTime.getMinutes() + todo.targetMinutes);
           }
+
+          const left = getPosition(
+            todo.startTime,
+            timelineStartTime,
+            timelineEndTime,
+          );
+
+          const width = getWidth(
+            todo.startTime,
+            objectTime,
+            timelineStartTime,
+            timelineEndTime,
+          );
+
           return (
             <div key={index}>
               <Tippy content={`${todo.text}`}>
                 <div
                   className={cn('item', { done: todo.finishTime })}
-                  style={{
-                    left: getPosition(
-                      todo.startTime,
-                      timelineStartTime,
-                      timelineEndTime,
-                    ),
-                    width: getWidth(
-                      todo.startTime,
-                      objectTime,
-                      timelineStartTime,
-                      timelineEndTime,
-                    ),
-                  }}
+                  style={{ left: `${left}%`, width: `${width}%` }}
                 >
                   <div className="item-text">{todo.text}</div>
                 </div>
