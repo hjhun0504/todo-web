@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import produce from 'immer';
 import cn from 'classnames';
 import Tippy from '@tippyjs/react';
@@ -49,7 +49,7 @@ const Timeline = (props: Props): JSX.Element => {
     });
   });
 
-  const currentHour = new Date().getHours() + 2;
+  // const currentHour = new Date().getHours() + 2;
   // const timelineStartTime =
   //   sortedTodos.length > 0
   //     ? sortedTodos[sortedTodos.length - 1].startTime?.getHours() || 0
@@ -66,48 +66,84 @@ const Timeline = (props: Props): JSX.Element => {
     );
   }
 
+  const [items, setItems] = useState<(JSX.Element | undefined)[]>();
+
+  useEffect(() => {
+    const loop = setInterval(() => {
+      const result = sortedTodos.map((todo, index) => {
+        if (!todo.startTime) return;
+        let objectTime;
+        let result;
+        let progress = <></>;
+        if (todo.finishTime) {
+          objectTime = todo.finishTime;
+        } else {
+          objectTime = new Date(todo.startTime);
+          objectTime.setMinutes(objectTime.getMinutes() + todo.targetMinutes);
+
+          const elapsedMinutes =
+            (new Date().getTime() - todo.startTime.getTime()) / 60000;
+          const percent = (elapsedMinutes / todo.targetMinutes) * 100;
+
+          if (percent < 100) {
+            result = percent;
+          } else {
+            const realSize = (elapsedMinutes / (60 * 24)) * 100;
+            const targetRealSize = (todo.targetMinutes / (60 * 24)) * 100;
+            const targetSize = targetRealSize > 1 ? targetRealSize : 1;
+            if (realSize > targetSize) {
+              result = (realSize / targetSize) * 100;
+            } else {
+              result = 100;
+            }
+          }
+
+          progress = (
+            <div
+              className={cn('progress', { exceed: percent >= 100 })}
+              style={{ width: `${result}%` }}
+            ></div>
+          );
+        }
+
+        const left = getPosition(
+          todo.startTime,
+          timelineStartTime,
+          timelineEndTime,
+        );
+
+        const width = getWidth(
+          todo.startTime,
+          objectTime,
+          timelineStartTime,
+          timelineEndTime,
+        );
+
+        return (
+          <div key={index}>
+            <Tippy content={`${todo.text}`}>
+              <div
+                className={cn('item', { done: todo.finishTime })}
+                style={{ left: `${left}%`, width: `${width}%` }}
+              >
+                <div className="item-text">{todo.text}</div>
+                {progress}
+              </div>
+            </Tippy>
+          </div>
+        );
+      });
+
+      setItems(result);
+    }, 1000);
+
+    return (): void => clearInterval(loop);
+  }, [todos]);
+
   return (
     <div className="Timeline">
       <div className="graph">
-        {sortedTodos.map((todo, index) => {
-          // 타임라인에 표시되는 모든 todo는 startTime을 가지고 있음 (타입체킹용)
-          if (!todo.startTime) {
-            return;
-          }
-          let objectTime;
-          if (todo.finishTime) {
-            objectTime = todo.finishTime;
-          } else {
-            objectTime = new Date(todo.startTime);
-            objectTime.setMinutes(objectTime.getMinutes() + todo.targetMinutes);
-          }
-
-          const left = getPosition(
-            todo.startTime,
-            timelineStartTime,
-            timelineEndTime,
-          );
-
-          const width = getWidth(
-            todo.startTime,
-            objectTime,
-            timelineStartTime,
-            timelineEndTime,
-          );
-
-          return (
-            <div key={index}>
-              <Tippy content={`${todo.text}`}>
-                <div
-                  className={cn('item', { done: todo.finishTime })}
-                  style={{ left: `${left}%`, width: `${width}%` }}
-                >
-                  <div className="item-text">{todo.text}</div>
-                </div>
-              </Tippy>
-            </div>
-          );
-        })}
+        {items}
         <div className="line"></div>
         <div className="timebox">{timeRuler.map((value) => value)}</div>
       </div>
