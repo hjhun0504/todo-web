@@ -50,21 +50,26 @@ const ProgressBar = (props: Props): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    const loop = setInterval(() => {
-      const seconds = getLeftSeconds();
-      setTimeLeft(getTimeString(seconds));
-      if (seconds >= 0) {
-        if (exceed) {
-          setExceed(false);
-        }
-        setPercent((seconds / targetSeconds) * 100);
-      } else {
-        if (!exceed) {
-          setPercent(100);
-          setExceed(true);
-        }
+  const calcProgress = (): void => {
+    const seconds = getLeftSeconds();
+    setTimeLeft(getTimeString(seconds));
+    if (seconds >= 0) {
+      if (exceed) {
+        setExceed(false);
       }
+      setPercent((seconds / targetSeconds) * 100);
+    } else {
+      if (!exceed) {
+        setPercent(100);
+        setExceed(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    calcProgress();
+    const loop = setInterval(() => {
+      calcProgress();
     }, 1000);
     return (): void => clearInterval(loop);
   }, [targetTime]);
