@@ -58,8 +58,12 @@
     }
 
     .timebox {
-      display: flex;
-      justify-content: space-between;
+      position: relative;
+      height: 12px;
+    }
+
+    .time {
+      position: absolute;
     }
   }
 }

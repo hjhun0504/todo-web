@@ -37,11 +37,12 @@ const Timeline = (props: Props): JSX.Element => {
   const timelineStartTime = 0;
   const timelineEndTime = 24;
   const timeRuler: JSX.Element[] = [];
-  for (let i = timelineStartTime; i <= timelineEndTime; i++) {
+  for (let i = timelineStartTime + 1; i <= timelineEndTime - 1; i++) {
+    const left = (i / (timelineEndTime - timelineStartTime)) * 100;
     timeRuler.push(
-      <div key={i} className="time">
+      <span key={i} className="time" style={{ left: `${left}%` }}>
         {i}
-      </div>,
+      </span>,
     );
   }
 
