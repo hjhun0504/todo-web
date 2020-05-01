@@ -119,6 +119,7 @@ const Timeline = (props: Props): JSX.Element => {
   };
 
   useEffect(() => {
+    setTasks(taskElements());
     const loop = setInterval(() => {
       setTasks(taskElements());
     }, 1000);
