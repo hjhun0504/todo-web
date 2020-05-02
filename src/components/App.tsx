@@ -89,7 +89,10 @@ const App = (): JSX.Element => {
     isActive: true,
     isOverlaidActive: false,
   });
-  const [config, setConfig] = useState<ConfigData>({ showTodayFinish: true });
+  const [config, setConfig] = useState<ConfigData>({
+    showTodayFinish: true,
+    showTimeline: true,
+  });
   const [search, setSearch] = useState({ isActive: false, keyword: '' });
 
   // 가로폭이 좁으면(768이하) overlaid 상태가 된다.
@@ -212,6 +215,10 @@ const App = (): JSX.Element => {
     setContextualMenu({ isActive: true, items, posX, posY });
   };
 
+  const handleToggleTimeline = (): void => {
+    setConfig({ ...config, showTimeline: !config.showTimeline });
+  };
+
   const handleClick = (): void => {
     setContextualMenu(contextualMenuDisable);
     if (!search.keyword) {
@@ -298,8 +305,11 @@ const App = (): JSX.Element => {
             search={search}
             currentItem={sidebar.currentItem}
             onTitleOptionsClick={handleTitleOptionsClick}
+            onToggleTimeline={handleToggleTimeline}
           />
-          {!search.isActive && sidebar.currentItem === 'today' ? (
+          {config.showTimeline &&
+          !search.isActive &&
+          sidebar.currentItem === 'today' ? (
             <Timeline todos={timelineTodo} />
           ) : (
             <></>

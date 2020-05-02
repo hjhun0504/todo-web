@@ -31,4 +31,5 @@ interface ContextualMenuItemData {
 // 설정
 export interface ConfigData {
   showTodayFinish: boolean;
+  showTimeline: boolean;
 }

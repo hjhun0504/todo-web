@@ -1,6 +1,7 @@
 import React from 'react';
 import { SidebarItems } from '@interfaces/index';
 import { IoIosMore } from 'react-icons/io';
+import { MdTimeline } from 'react-icons/md';
 
 import './Title.scss';
 
@@ -11,15 +12,16 @@ interface Props {
   };
   currentItem: SidebarItems;
   onTitleOptionsClick: (posX: number, posY: number) => void;
+  onToggleTimeline: () => void;
 }
 
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Title = (props: Props): JSX.Element => {
-  const { search, currentItem, onTitleOptionsClick } = props;
+  const { search, currentItem, onTitleOptionsClick, onToggleTimeline } = props;
   const moreButton = React.createRef<HTMLDivElement>();
 
-  const handleClick = (
+  const handleMoreButtonClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ): void => {
     event.stopPropagation();
@@ -51,8 +53,17 @@ const Title = (props: Props): JSX.Element => {
         <div className="Title">
           <div className="title">
             <span className="text">오늘</span>
-            <div className="icon" ref={moreButton} onClick={handleClick}>
-              <IoIosMore />
+            <div className="icon-list">
+              <div className="icon" onClick={(): void => onToggleTimeline()}>
+                <MdTimeline />
+              </div>
+              <div
+                className="icon"
+                ref={moreButton}
+                onClick={handleMoreButtonClick}
+              >
+                <IoIosMore />
+              </div>
             </div>
           </div>
           <div className="date">

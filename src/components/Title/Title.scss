@@ -18,13 +18,21 @@
       margin-right: 4px;
     }
 
-    .icon {
+    .icon-list {
+      margin-left: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
-      color: gray;
+
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: gray;
+        font-size: 22px;
+        margin-right: 6px;
+      }
     }
   }
 
