@@ -304,6 +304,7 @@ const App = (): JSX.Element => {
           <Title
             search={search}
             currentItem={sidebar.currentItem}
+            isTimelineActive={config.showTimeline}
             onTitleOptionsClick={handleTitleOptionsClick}
             onToggleTimeline={handleToggleTimeline}
           />

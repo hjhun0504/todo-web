@@ -11,6 +11,7 @@ interface Props {
     keyword: string;
   };
   currentItem: SidebarItems;
+  isTimelineActive: boolean;
   onTitleOptionsClick: (posX: number, posY: number) => void;
   onToggleTimeline: () => void;
 }
@@ -18,7 +19,13 @@ interface Props {
 const week = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Title = (props: Props): JSX.Element => {
-  const { search, currentItem, onTitleOptionsClick, onToggleTimeline } = props;
+  const {
+    search,
+    currentItem,
+    isTimelineActive,
+    onTitleOptionsClick,
+    onToggleTimeline,
+  } = props;
   const moreButton = React.createRef<HTMLDivElement>();
 
   const handleMoreButtonClick = (
@@ -54,7 +61,11 @@ const Title = (props: Props): JSX.Element => {
           <div className="title">
             <span className="text">오늘</span>
             <div className="icon-list">
-              <div className="icon" onClick={(): void => onToggleTimeline()}>
+              <div
+                className="icon"
+                onClick={(): void => onToggleTimeline()}
+                style={{ color: isTimelineActive ? '#3498db' : 'gray' }}
+              >
                 <MdTimeline />
               </div>
               <div
