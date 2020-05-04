@@ -31,6 +31,10 @@
       .time::placeholder {
         font-size: 14px;
       }
+
+      .time::placeholder:focus {
+        color: transparent;
+      }
     }
 
     .form-action {
