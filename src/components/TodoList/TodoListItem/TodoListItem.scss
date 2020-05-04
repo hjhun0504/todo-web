@@ -59,15 +59,17 @@
       font-size: 14px;
     }
 
+    $time-font-size: 40px;
+
     .target {
-      font-size: 40px;
-      height: 40px;
+      font-size: $time-font-size;
+      height: $time-font-size;
       text-align: center;
       width: 80px;
     }
 
     .time-text {
-      font-size: 40px;
+      font-size: $time-font-size;
     }
   }
 
