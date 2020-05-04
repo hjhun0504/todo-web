@@ -1,7 +1,7 @@
 .SidebarItem {
   width: 100%;
   height: 38px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   cursor: pointer;
 
@@ -14,11 +14,11 @@
   }
 
   &.active {
-    background: #bdc3c7;
+    background: #dddddd;
     font-weight: 500;
   }
 }
 
 .SidebarItem:hover {
-  background-color: #bdc3c7;
+  background-color: #dddddd;
 }
