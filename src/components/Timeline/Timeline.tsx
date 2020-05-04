@@ -40,7 +40,11 @@ const Timeline = (props: Props): JSX.Element => {
   for (let i = timelineStartTime + 1; i <= timelineEndTime - 1; i++) {
     const left = (i / (timelineEndTime - timelineStartTime)) * 100;
     timeRuler.push(
-      <span key={i} className="time" style={{ left: `${left}%` }}>
+      <span
+        key={i}
+        className={cn('time', { even: i % 2 === 0 })}
+        style={{ left: `${left}%` }}
+      >
         {i}
       </span>,
     );
