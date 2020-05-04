@@ -1,5 +1,10 @@
 import { TodoData } from '@interfaces/index';
 
+const today = new Date();
+const year = today.getFullYear();
+const month = (today.getMonth() + 1).toString().padStart(2, '0');
+const date = today.getDate().toString().padStart(2, '0');
+
 export const todoDummy: TodoData[] = [
   {
     id: 0,
@@ -16,9 +21,9 @@ export const todoDummy: TodoData[] = [
   {
     id: 4,
     text: '완료된 작업입니다.',
-    targetMinutes: 45,
-    startTime: new Date(Date.now() - 3500000),
-    finishTime: new Date(Date.now()),
+    targetMinutes: 5,
+    startTime: new Date(`${year}-${month}-${date}T00:00:00`),
+    finishTime: new Date(`${year}-${month}-${date}T00:05:00`),
   },
   {
     id: 5,
@@ -30,26 +35,11 @@ export const todoDummy: TodoData[] = [
   {
     id: 6,
     text: '4월 22일 완료된 작업',
-    targetMinutes: 20,
+    targetMinutes: 60,
     startTime: new Date('2020-04-22T23:30:00'),
     finishTime: new Date('2020-04-22T23:40:00'),
   },
-  // { id: 6, text: '운동하기', targetMinutes: 20 },
-  // { id: 7, text: '운동하기', targetMinutes: 20 },
-  // { id: 8, text: '운동하기', targetMinutes: 20 },
-  // { id: 9, text: '운동하기', targetMinutes: 20 },
-  // { id: 10, text: '운동하기', targetMinutes: 20 },
-  // {
-  //   id: 11,
-  //   text:
-  //     'Deep work is the ability to focus without distraction on a cognitively demanding task. It’s a skill that allows you to quickly master complicated information and produce better results in less time.',
-  //   targetMinutes: 20,
-  // },
 ];
-
-const today = new Date();
-const month = (today.getMonth() + 1).toString().padStart(2, '0');
-const date = today.getDate().toString().padStart(2, '0');
 
 export const todoDummy2: TodoData[] = [
   {

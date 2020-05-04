@@ -17,7 +17,7 @@ import {
 } from '@interfaces/index';
 
 import './App.scss';
-import { todoDummy2 } from '~/fakeData';
+import { todoDummy } from '~/fakeData';
 
 const isToday = (date: Date): boolean => {
   const today = new Date();
@@ -80,7 +80,7 @@ const contextualMenuDisable: ContextualMenuData = {
 };
 
 const App = (): JSX.Element => {
-  const [todos, dispatch] = useReducer(todoReducer, todoDummy2);
+  const [todos, dispatch] = useReducer(todoReducer, todoDummy);
   const [contextualMenu, setContextualMenu] = useState<ContextualMenuData>(
     contextualMenuDisable,
   );
@@ -99,7 +99,7 @@ const App = (): JSX.Element => {
   const overlaid = useMediaQuery('(max-width:769px)');
   document.documentElement.className = overlaid ? 'overlaid' : '';
 
-  const nextId = useRef(todoDummy2.length);
+  const nextId = useRef(todoDummy.length);
 
   const handleAddTodo = useCallback(
     (text: string, targetMinutes: number): void => {
