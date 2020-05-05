@@ -2,11 +2,11 @@
 
 .TodoListItem {
   $border-radius: 3px;
-  $list-height: 70px;
+  $list-height: 56px;
 
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
   height: $list-height;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   border: $todo-list-border;
   border-radius: $border-radius;
   background: white;
@@ -35,7 +35,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 7px;
+    padding: 5px;
   }
 
   .content {
@@ -56,10 +56,10 @@
 
   .time {
     .desc {
-      font-size: 14px;
+      font-size: 12px;
     }
 
-    $time-font-size: 40px;
+    $time-font-size: 30px;
 
     .target {
       font-size: $time-font-size;
@@ -77,8 +77,8 @@
     justify-content: center;
 
     @mixin button($background) {
-      width: 64px;
-      height: 38px;
+      width: 56px;
+      height: 32px;
       background: $background;
     }
 
