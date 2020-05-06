@@ -126,7 +126,7 @@ const TodoAdd = (props: Props): JSX.Element => {
         </div>
         <div className="form-action">
           <button
-            className="submit"
+            className="submit button"
             type="submit"
             disabled={Boolean(!text) || Boolean(!targetTime)}
             onClick={handleSubmit}

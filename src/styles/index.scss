@@ -7,7 +7,7 @@
   font-weight: 300;
 }
 
-button {
+.button {
   outline: none;
   border: none;
   border-radius: 3px;
@@ -18,7 +18,7 @@ button {
   cursor: pointer;
 }
 
-button:disabled {
+.button:disabled {
   background: #b8c8d3;
 }
 

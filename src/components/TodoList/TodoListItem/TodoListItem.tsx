@@ -37,7 +37,7 @@ const actionColumnMaker = (
 ): JSX.Element => {
   return (
     <div className="action column">
-      <button className={type} onClick={onClick}>
+      <button className={cn(type, 'button')} onClick={onClick}>
         {text}
       </button>
     </div>
