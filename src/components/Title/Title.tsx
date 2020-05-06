@@ -1,7 +1,7 @@
 import React from 'react';
 import { SidebarItems } from '@interfaces/index';
 import { IoIosMore } from 'react-icons/io';
-import { MdTimeline } from 'react-icons/md';
+import { MdTimeline, MdToday } from 'react-icons/md';
 
 import './Title.scss';
 
@@ -14,6 +14,7 @@ interface Props {
   isTimelineActive: boolean;
   onTitleOptionsClick: (posX: number, posY: number) => void;
   onToggleTimeline: () => void;
+  onCalendarClick: (posX: number, posY: number) => void;
 }
 
 const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -25,8 +26,10 @@ const Title = (props: Props): JSX.Element => {
     isTimelineActive,
     onTitleOptionsClick,
     onToggleTimeline,
+    onCalendarClick,
   } = props;
   const moreButton = React.createRef<HTMLDivElement>();
+  const calendarButton = React.createRef<HTMLDivElement>();
 
   const handleMoreButtonClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -36,6 +39,18 @@ const Title = (props: Props): JSX.Element => {
       onTitleOptionsClick(
         moreButton.current?.getBoundingClientRect().left,
         moreButton.current?.getBoundingClientRect().bottom,
+      );
+    }
+  };
+
+  const handleCalendarClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ): void => {
+    event.stopPropagation();
+    if (calendarButton.current) {
+      onCalendarClick(
+        calendarButton.current?.getBoundingClientRect().left,
+        calendarButton.current?.getBoundingClientRect().bottom,
       );
     }
   };
@@ -87,6 +102,15 @@ const Title = (props: Props): JSX.Element => {
         <div className="Title">
           <div className="title">
             <span className="text">기록</span>
+            <div className="icon-list">
+              <div
+                className="icon"
+                ref={calendarButton}
+                onClick={handleCalendarClick}
+              >
+                <MdToday />
+              </div>
+            </div>
           </div>
         </div>
       );

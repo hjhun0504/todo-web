@@ -8,6 +8,9 @@ import Title from '@components/Title/Title';
 import Timeline from '@components/Timeline/Timeline';
 import TodoList from '@components/TodoList/TodoList';
 import ContextualMenu from '@components/ContextualMenu/ContextualMenu';
+import Calendar from 'react-calendar';
+import '@styles/calendar.scss';
+
 import {
   TodoData,
   SidebarData,
@@ -94,6 +97,11 @@ const App = (): JSX.Element => {
     showTimeline: true,
   });
   const [search, setSearch] = useState({ isActive: false, keyword: '' });
+  const [calendar, setCalendar] = useState({
+    isActive: false,
+    posX: 0,
+    posY: 0,
+  });
 
   // 가로폭이 좁으면(768이하) overlaid 상태가 된다.
   const overlaid = useMediaQuery('(max-width:769px)');
@@ -219,8 +227,17 @@ const App = (): JSX.Element => {
     setConfig({ ...config, showTimeline: !config.showTimeline });
   };
 
+  const handleCalendarClick = (posX: number, posY: number): void => {
+    setCalendar({ isActive: true, posX, posY });
+  };
+
   const handleClick = (): void => {
-    setContextualMenu(contextualMenuDisable);
+    if (contextualMenu.isActive) {
+      setContextualMenu(contextualMenuDisable);
+    }
+    if (calendar.isActive) {
+      setCalendar({ ...calendar, isActive: false });
+    }
     if (!search.keyword) {
       handleDisableSearchMode();
     }
@@ -307,6 +324,7 @@ const App = (): JSX.Element => {
             isTimelineActive={config.showTimeline}
             onTitleOptionsClick={handleTitleOptionsClick}
             onToggleTimeline={handleToggleTimeline}
+            onCalendarClick={handleCalendarClick}
           />
           {config.showTimeline &&
           !search.isActive &&
@@ -336,6 +354,19 @@ const App = (): JSX.Element => {
         posX={contextualMenu.posX}
         posY={contextualMenu.posY}
       />
+      <div
+        className="calendar-wrapper"
+        style={{
+          display: calendar.isActive ? '' : 'none',
+          left: calendar.posX,
+          top: calendar.posY,
+        }}
+        onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void =>
+          event.stopPropagation()
+        }
+      >
+        <Calendar />
+      </div>
     </div>
   );
 };
