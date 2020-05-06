@@ -3,4 +3,11 @@
   padding: 10px;
   overflow-y: auto;
   overflow-x: hidden;
+
+  .search-empty {
+    position: relative;
+    top: 30%;
+    text-align: center;
+    font-size: 16px;
+  }
 }

@@ -74,6 +74,11 @@ const TodoList = (props: Props): JSX.Element => {
       ) : (
         <></>
       )}
+      {isSearchActive && todos.length === 0 ? (
+        <div className="search-empty">검색어와 일치하는 내용이 없습니다.</div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
