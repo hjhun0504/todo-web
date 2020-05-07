@@ -75,7 +75,12 @@ const TodoList = (props: Props): JSX.Element => {
         <></>
       )}
       {isSearchActive && todos.length === 0 ? (
-        <div className="search-empty">검색어와 일치하는 내용이 없습니다.</div>
+        <div className="not-found">검색어와 일치하는 내용이 없습니다.</div>
+      ) : (
+        <></>
+      )}
+      {!isSearchActive && currentItem === 'history' && todos.length === 0 ? (
+        <div className="not-found">완료된 작업이 없습니다.</div>
       ) : (
         <></>
       )}
