@@ -1,5 +1,5 @@
 import React from 'react';
-import { SidebarItems } from '@interfaces/index';
+import { SidebarItems, CalendarData } from '@interfaces/index';
 import { IoIosMore } from 'react-icons/io';
 import { MdTimeline, MdToday } from 'react-icons/md';
 
@@ -10,6 +10,7 @@ interface Props {
     isActive: boolean;
     keyword: string;
   };
+  calendar: CalendarData;
   currentItem: SidebarItems;
   isTimelineActive: boolean;
   onTitleOptionsClick: (posX: number, posY: number) => void;
@@ -22,6 +23,7 @@ const week = ['일', '월', '화', '수', '목', '금', '토'];
 const Title = (props: Props): JSX.Element => {
   const {
     search,
+    calendar,
     currentItem,
     isTimelineActive,
     onTitleOptionsClick,
@@ -53,6 +55,11 @@ const Title = (props: Props): JSX.Element => {
         calendarButton.current?.getBoundingClientRect().bottom,
       );
     }
+  };
+
+  const getCalendarDate = (): string => {
+    return `${calendar.date.getFullYear()}년 ${calendar.date.getMonth() + 1}월 
+    ${calendar.date.getDate()}일 ${week[calendar.date.getDay()]}요일`;
   };
 
   if (search.isActive) {
@@ -112,6 +119,7 @@ const Title = (props: Props): JSX.Element => {
               </div>
             </div>
           </div>
+          <div className="date">{getCalendarDate()}</div>
         </div>
       );
   }

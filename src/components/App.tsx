@@ -17,6 +17,7 @@ import {
   SidebarItems,
   ContextualMenuItem,
   ConfigData,
+  CalendarData,
 } from '@interfaces/index';
 
 import './App.scss';
@@ -97,8 +98,9 @@ const App = (): JSX.Element => {
     showTimeline: true,
   });
   const [search, setSearch] = useState({ isActive: false, keyword: '' });
-  const [calendar, setCalendar] = useState({
+  const [calendar, setCalendar] = useState<CalendarData>({
     isActive: false,
+    date: new Date('2020-05-04'),
     posX: 0,
     posY: 0,
   });
@@ -228,7 +230,7 @@ const App = (): JSX.Element => {
   };
 
   const handleCalendarClick = (posX: number, posY: number): void => {
-    setCalendar({ isActive: true, posX, posY });
+    setCalendar({ ...calendar, isActive: true, posX, posY });
   };
 
   const handleClick = (): void => {
@@ -278,10 +280,22 @@ const App = (): JSX.Element => {
         });
         break;
       case 'history':
-        // 완료된 작업들 (오늘 완료된 작업은 제외)
+        // 달력으로 선택된 날짜에 시작된 작업들
+        const year = calendar.date.getFullYear();
+        const month = calendar.date.getMonth();
+        const date = calendar.date.getDate();
         todolistTodo = produce(todos, (draft) => {
           return draft.filter((todo) => {
-            return todo.finishTime && !isToday(todo.finishTime);
+            if (todo.startTime) {
+              if (
+                todo.startTime.getFullYear() === year &&
+                todo.startTime.getMonth() === month &&
+                todo.startTime.getDate() === date
+              ) {
+                return true;
+              }
+            }
+            return false;
           });
         });
         break;
@@ -320,6 +334,7 @@ const App = (): JSX.Element => {
         <section className="section">
           <Title
             search={search}
+            calendar={calendar}
             currentItem={sidebar.currentItem}
             isTimelineActive={config.showTimeline}
             onTitleOptionsClick={handleTitleOptionsClick}
@@ -365,7 +380,14 @@ const App = (): JSX.Element => {
           event.stopPropagation()
         }
       >
-        <Calendar />
+        <Calendar
+          value={calendar.date}
+          onChange={(value: Date | Date[]): void => {
+            if (!Array.isArray(value)) {
+              setCalendar({ ...calendar, date: value, isActive: false });
+            }
+          }}
+        />
       </div>
     </div>
   );

@@ -33,3 +33,11 @@ export interface ConfigData {
   showTodayFinish: boolean;
   showTimeline: boolean;
 }
+
+// 캘린더
+export interface CalendarData {
+  isActive: boolean;
+  date: Date;
+  posX: number;
+  posY: number;
+}
