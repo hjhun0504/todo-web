@@ -286,7 +286,7 @@ const App = (): JSX.Element => {
         const date = calendar.date.getDate();
         todolistTodo = produce(todos, (draft) => {
           return draft.filter((todo) => {
-            if (todo.startTime) {
+            if (todo.startTime && todo.finishTime) {
               if (
                 todo.startTime.getFullYear() === year &&
                 todo.startTime.getMonth() === month &&
