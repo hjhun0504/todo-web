@@ -1,15 +1,12 @@
 import React from 'react';
-import { SidebarItems, CalendarData } from '@interfaces/index';
+import { SidebarItems, SearchData, CalendarData } from '@interfaces/index';
 import { IoIosMore } from 'react-icons/io';
 import { MdTimeline, MdToday } from 'react-icons/md';
 
 import './Title.scss';
 
 interface Props {
-  search: {
-    isActive: boolean;
-    keyword: string;
-  };
+  search: SearchData;
   calendar: CalendarData;
   currentItem: SidebarItems;
   isTimelineActive: boolean;

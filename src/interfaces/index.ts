@@ -34,6 +34,12 @@ export interface ConfigData {
   showTimeline: boolean;
 }
 
+// 검색
+export interface SearchData {
+  isActive: boolean;
+  keyword: string;
+}
+
 // 캘린더
 export interface CalendarData {
   isActive: boolean;

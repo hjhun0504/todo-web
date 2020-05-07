@@ -17,6 +17,7 @@ import {
   SidebarItems,
   ContextualMenuItem,
   ConfigData,
+  SearchData,
   CalendarData,
 } from '@interfaces/index';
 
@@ -97,7 +98,10 @@ const App = (): JSX.Element => {
     showTodayFinish: true,
     showTimeline: true,
   });
-  const [search, setSearch] = useState({ isActive: false, keyword: '' });
+  const [search, setSearch] = useState<SearchData>({
+    isActive: false,
+    keyword: '',
+  });
   const [calendar, setCalendar] = useState<CalendarData>({
     isActive: false,
     date: new Date('2020-05-04'),
