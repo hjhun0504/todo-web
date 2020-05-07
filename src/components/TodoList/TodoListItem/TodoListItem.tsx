@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import ProgressBar from '@components/ProgressBar/ProgressBar';
+import ProgressBar from '@components/TodoList/TodoListItem/ProgressBar/ProgressBar';
 import cn from 'classnames';
 
 import './TodoListItem.scss';
