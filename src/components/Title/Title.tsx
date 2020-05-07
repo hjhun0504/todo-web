@@ -114,6 +114,7 @@ const Title = (props: Props): JSX.Element => {
                 className="icon"
                 ref={calendarButton}
                 onClick={handleCalendarClick}
+                style={{ marginBottom: '-2px' }}
               >
                 <MdToday />
               </div>
