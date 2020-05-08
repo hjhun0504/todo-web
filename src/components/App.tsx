@@ -211,22 +211,31 @@ const App = (): JSX.Element => {
   };
 
   const handleTitleOptionsClick = (posX: number, posY: number): void => {
-    const items: ContextualMenuItem[] = [
-      {
-        isTitle: true,
-        text: '목록 옵션',
-      },
-      {
-        isTitle: false,
-        icon: 'check',
-        text: config.showTodayFinish
-          ? '완료한 작업 숨기기'
-          : '완료된 작업 표시',
-        onClick: (): void =>
-          setConfig({ ...config, showTodayFinish: !config.showTodayFinish }),
-      },
-    ];
-    setContextualMenu({ isActive: true, items, posX, posY });
+    // 컨텍스트 메뉴가 활성화되어 있고, 활성화된 메뉴가 타이틀의 옵션 버튼이라면
+    if (
+      contextualMenu.isActive &&
+      contextualMenu.items[0] !== 'separator' &&
+      contextualMenu.items[0].text === '목록 옵션'
+    ) {
+      setContextualMenu({ ...contextualMenu, isActive: false });
+    } else {
+      const items: ContextualMenuItem[] = [
+        {
+          isTitle: true,
+          text: '목록 옵션',
+        },
+        {
+          isTitle: false,
+          icon: 'check',
+          text: config.showTodayFinish
+            ? '완료한 작업 숨기기'
+            : '완료된 작업 표시',
+          onClick: (): void =>
+            setConfig({ ...config, showTodayFinish: !config.showTodayFinish }),
+        },
+      ];
+      setContextualMenu({ isActive: true, items, posX, posY });
+    }
   };
 
   const handleToggleTimeline = (): void => {
