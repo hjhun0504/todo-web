@@ -234,7 +234,11 @@ const App = (): JSX.Element => {
   };
 
   const handleCalendarClick = (posX: number, posY: number): void => {
-    setCalendar({ ...calendar, isActive: true, posX, posY });
+    if (calendar.isActive) {
+      setCalendar({ ...calendar, isActive: false });
+    } else {
+      setCalendar({ ...calendar, isActive: true, posX, posY });
+    }
   };
 
   const handleClick = (): void => {
