@@ -82,3 +82,13 @@
     color: #3498db;
   }
 }
+
+@media (max-width: $res-ref-size) {
+  .TodoAdd {
+    .add-form {
+      .todo-input {
+        width: calc(100vw - #{$todo-right-column-size} - 20);
+      }
+    }
+  }
+}
