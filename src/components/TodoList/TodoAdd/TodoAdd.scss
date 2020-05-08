@@ -87,8 +87,7 @@
   .TodoAdd {
     .add-form {
       .todo-input {
-        width: calc(100vw - 78px - 20px); // padding * 2
-        // width: calc(100vw - #{$todo-right-column-size} - 20px); // padding * 2
+        width: calc(100vw - #{$todo-right-column-size} - 20px); // padding * 2
       }
     }
   }
