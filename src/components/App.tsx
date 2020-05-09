@@ -139,7 +139,7 @@ const App = (): JSX.Element => {
     if (prevTodos.length === 0) {
       setCalendar({
         ...calendar,
-        date: new Date(`${year}-${month}-${date - 1}`),
+        date: new Date(`${year}-${month + 1}-${date - 1}`),
       });
     } else {
       const sortedArray = prevTodos.sort((a, b) => {
