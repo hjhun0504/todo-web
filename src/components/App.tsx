@@ -1,4 +1,10 @@
-import React, { useReducer, useState, useRef, useCallback } from 'react';
+import React, {
+  useReducer,
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from 'react';
 import produce from 'immer';
 import cn from 'classnames';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -104,7 +110,7 @@ const App = (): JSX.Element => {
   });
   const [calendar, setCalendar] = useState<CalendarData>({
     isActive: false,
-    date: new Date('2020-05-04'),
+    date: new Date(),
     posX: 0,
     posY: 0,
   });
@@ -114,6 +120,40 @@ const App = (): JSX.Element => {
   document.documentElement.className = overlaid ? 'overlaid' : '';
 
   const nextId = useRef(todoDummy.length);
+
+  useEffect(() => {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const date = new Date().getDate();
+    const today = new Date(`${year}-${month + 1}-${date}`);
+    // 오늘 전에 완료된 작업들을 추려낸다.
+    const prevTodos = todos.filter((todo) => {
+      if (!todo.startTime) return false;
+      if (!todo.finishTime) return false;
+      return today.getTime() - todo.startTime.getTime();
+    });
+
+    console.log(prevTodos);
+
+    // 이전에 완료된 작업이 없으면 전날을 캘린더 초기 날짜로 세팅한다.
+    if (prevTodos.length === 0) {
+      setCalendar({
+        ...calendar,
+        date: new Date(`${year}-${month}-${date - 1}`),
+      });
+    } else {
+      const sortedArray = prevTodos.sort((a, b) => {
+        if (a.startTime && b.startTime) {
+          return b.startTime.getTime() - a.startTime.getTime();
+        } else {
+          return 0;
+        }
+      });
+      const calendarDate = sortedArray[0].startTime;
+      if (!calendarDate) return;
+      setCalendar({ ...calendar, date: calendarDate });
+    }
+  }, []);
 
   const handleAddTodo = useCallback(
     (text: string, targetMinutes: number): void => {
