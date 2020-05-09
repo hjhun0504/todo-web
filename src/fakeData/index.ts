@@ -4,6 +4,7 @@ const today = new Date();
 const year = today.getFullYear();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
 const date = today.getDate().toString().padStart(2, '0');
+const prevDate = (today.getDate() - 1).toString().padStart(2, '0');
 
 export const todoDummy: TodoData[] = [
   {
@@ -27,17 +28,10 @@ export const todoDummy: TodoData[] = [
   },
   {
     id: 5,
-    text: '4월 23일 완료된 작업',
-    targetMinutes: 20,
-    startTime: new Date('2020-04-23T23:30:00'),
-    finishTime: new Date('2020-04-23T23:40:00'),
-  },
-  {
-    id: 6,
-    text: '4월 22일 완료된 작업',
-    targetMinutes: 60,
-    startTime: new Date('2020-04-22T23:30:00'),
-    finishTime: new Date('2020-04-22T23:40:00'),
+    text: '이전에 완료된 작업',
+    targetMinutes: 30,
+    startTime: new Date(`${year}-${month}-${prevDate}T16:30:00`),
+    finishTime: new Date(`${year}-${month}-${prevDate}T17:05:00`),
   },
 ];
 
