@@ -133,8 +133,6 @@ const App = (): JSX.Element => {
       return today.getTime() - todo.startTime.getTime();
     });
 
-    console.log(prevTodos);
-
     // 이전에 완료된 작업이 없으면 전날을 캘린더 초기 날짜로 세팅한다.
     if (prevTodos.length === 0) {
       setCalendar({
