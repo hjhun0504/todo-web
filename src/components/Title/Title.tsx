@@ -1,7 +1,12 @@
 import React from 'react';
 import { SidebarItems, SearchData, CalendarData } from '@interfaces/index';
 import { IoIosMore } from 'react-icons/io';
-import { MdTimeline, MdToday } from 'react-icons/md';
+import {
+  MdTimeline,
+  MdToday,
+  MdNavigateBefore,
+  MdNavigateNext,
+} from 'react-icons/md';
 
 import './Title.scss';
 
@@ -13,6 +18,7 @@ interface Props {
   onTitleOptionsClick: (posX: number, posY: number) => void;
   onToggleTimeline: () => void;
   onCalendarClick: (posX: number, posY: number) => void;
+  onAddCalendarDate: (isPositive?: boolean) => void;
 }
 
 const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -26,6 +32,7 @@ const Title = (props: Props): JSX.Element => {
     onTitleOptionsClick,
     onToggleTimeline,
     onCalendarClick,
+    onAddCalendarDate,
   } = props;
   const moreButton = React.createRef<HTMLDivElement>();
   const calendarButton = React.createRef<HTMLDivElement>();
@@ -117,7 +124,20 @@ const Title = (props: Props): JSX.Element => {
               </div>
             </div>
           </div>
-          <div className="date">{getCalendarDate()}</div>
+          <div className="date">
+            {getCalendarDate()}
+            <div className="nav">
+              <div
+                className="icon"
+                onClick={(): void => onAddCalendarDate(false)}
+              >
+                <MdNavigateBefore />
+              </div>
+              <div className="icon" onClick={(): void => onAddCalendarDate()}>
+                <MdNavigateNext />
+              </div>
+            </div>
+          </div>
         </div>
       );
   }

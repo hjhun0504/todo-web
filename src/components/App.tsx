@@ -290,6 +290,21 @@ const App = (): JSX.Element => {
     }
   };
 
+  const handleAddCalendarDate = (isPositive = true): void => {
+    const calendarDate = new Date(calendar.date);
+    if (isPositive) {
+      setCalendar({
+        ...calendar,
+        date: new Date(calendarDate.setDate(calendarDate.getDate() + 1)),
+      });
+    } else {
+      setCalendar({
+        ...calendar,
+        date: new Date(calendarDate.setDate(calendarDate.getDate() - 1)),
+      });
+    }
+  };
+
   const handleClick = (): void => {
     if (contextualMenu.isActive) {
       setContextualMenu(contextualMenuDisable);
@@ -397,6 +412,7 @@ const App = (): JSX.Element => {
             onTitleOptionsClick={handleTitleOptionsClick}
             onToggleTimeline={handleToggleTimeline}
             onCalendarClick={handleCalendarClick}
+            onAddCalendarDate={handleAddCalendarDate}
           />
           {config.showTimeline &&
           !search.isActive &&

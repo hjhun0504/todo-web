@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .Title {
   padding: 10px;
   padding-top: 20px;
@@ -40,5 +42,21 @@
     margin-top: 4px;
     font-size: 14px;
     color: grey;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav {
+    margin-left: 2px;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      margin-bottom: -2px;
+    }
+
+    .icon:hover {
+      color: $hover-color;
+    }
   }
 }
