@@ -140,6 +140,15 @@ const Title = (props: Props): JSX.Element => {
           </div>
         </div>
       );
+    case 'stats':
+      return (
+        <div className="Title">
+          <div className="title">
+            <span className="text">통계</span>
+            <div className="icon-list"></div>
+          </div>
+        </div>
+      );
   }
 };
 

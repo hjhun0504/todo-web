@@ -14,6 +14,7 @@ interface Items {
 const items: Items[] = [
   { item: 'today', text: '오늘' },
   { item: 'history', text: '기록' },
+  { item: 'stats', text: '통계' },
 ];
 
 interface Props {

@@ -316,7 +316,7 @@ const App = (): JSX.Element => {
   };
 
   // 할 일 목록에 내려줄 todo
-  let todolistTodo: TodoData[];
+  let todolistTodo: TodoData[] = [];
 
   // 검색모드가 활성화되어 있으면 검색결과에 맞는 todo를 내려줌
   if (search.isActive) {

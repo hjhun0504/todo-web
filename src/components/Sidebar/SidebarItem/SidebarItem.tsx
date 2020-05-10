@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { SidebarItems } from '@interfaces/index';
 
 import './SidebarItem.scss';
-import { FaRegCalendar, FaHistory } from 'react-icons/fa';
+import { FaRegCalendar, FaHistory, FaFlask } from 'react-icons/fa';
 
 const getIcon = (type: SidebarItems): JSX.Element => {
   switch (type) {
@@ -11,6 +11,8 @@ const getIcon = (type: SidebarItems): JSX.Element => {
       return <FaRegCalendar />;
     case 'history':
       return <FaHistory />;
+    case 'stats':
+      return <FaFlask />;
   }
 };
 

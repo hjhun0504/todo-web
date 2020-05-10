@@ -8,7 +8,7 @@ export interface TodoData {
 }
 
 // 사이드바
-export type SidebarItems = 'today' | 'history';
+export type SidebarItems = 'today' | 'history' | 'stats';
 
 export interface SidebarData {
   currentItem: SidebarItems;
