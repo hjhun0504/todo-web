@@ -1,6 +1,8 @@
+@import '../../styles/variables.scss';
+
 .TodoList {
   flex: 1;
-  padding: 10px;
+  padding: $main-padding;
   overflow-y: auto;
   overflow-x: hidden;
 
