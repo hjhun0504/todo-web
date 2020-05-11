@@ -420,7 +420,7 @@ const App = (): JSX.Element => {
           ) : (
             <></>
           )}
-          {sidebar.currentItem === 'stats' ? (
+          {sidebar.currentItem === 'stats' && !search.isActive ? (
             <Stats />
           ) : (
             <TodoList
