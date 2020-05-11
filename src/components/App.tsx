@@ -13,6 +13,7 @@ import Sidebar from '@components/Sidebar/Sidebar';
 import Title from '@components/Title/Title';
 import Timeline from '@components/Timeline/Timeline';
 import TodoList from '@components/TodoList/TodoList';
+import Stats from '@components/Stats/Stats';
 import ContextualMenu from '@components/ContextualMenu/ContextualMenu';
 import Calendar from 'react-calendar';
 import '@styles/calendar.scss';
@@ -419,19 +420,23 @@ const App = (): JSX.Element => {
           ) : (
             <></>
           )}
-          <TodoList
-            todos={todolistTodo}
-            isSearchActive={search.isActive}
-            currentItem={sidebar.currentItem}
-            onEditTodoText={handleEditTodoText}
-            onEditTodoTime={handleEditTodoTime}
-            onStartTodo={handleStartTodo}
-            onFinishTodo={handleFinishTodo}
-            onAddTodo={handleAddTodo}
-            onReorderTodo={handleReorderTodo}
-            onContextMenu={handleTodoRightClick}
-            onCloseContextMenu={handleClick}
-          />
+          {sidebar.currentItem === 'stats' ? (
+            <Stats />
+          ) : (
+            <TodoList
+              todos={todolistTodo}
+              isSearchActive={search.isActive}
+              currentItem={sidebar.currentItem}
+              onEditTodoText={handleEditTodoText}
+              onEditTodoTime={handleEditTodoTime}
+              onStartTodo={handleStartTodo}
+              onFinishTodo={handleFinishTodo}
+              onAddTodo={handleAddTodo}
+              onReorderTodo={handleReorderTodo}
+              onContextMenu={handleTodoRightClick}
+              onCloseContextMenu={handleClick}
+            />
+          )}
         </section>
       </main>
       <ContextualMenu
