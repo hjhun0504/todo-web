@@ -45,8 +45,8 @@ const Stats = (props: Props): JSX.Element => {
     for (const key in data) {
       count += data[key].count;
       minutes += data[key].minutes;
-      if (count > maxCount) {
-        maxCount = count;
+      if (maxCount < data[key].count) {
+        maxCount = data[key].count;
       }
       dayCount++;
     }
