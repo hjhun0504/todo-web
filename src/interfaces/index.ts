@@ -40,6 +40,11 @@ export interface SearchData {
   keyword: string;
 }
 
+// 통계 데이터
+export interface StatsData {
+  [key: string]: Record<string, number>;
+}
+
 // 캘린더
 export interface CalendarData {
   isActive: boolean;
