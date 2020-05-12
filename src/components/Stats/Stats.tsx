@@ -58,7 +58,11 @@ const Stats = (props: Props): JSX.Element => {
 
   return (
     <div className="Stats">
-      <StatsCalendar todos={todos} onChangeDate={handleChangeDate} />
+      <StatsCalendar
+        todos={todos}
+        statsData={statsData}
+        onChangeDate={handleChangeDate}
+      />
       {statsData.average ? (
         <div>
           <div>하루 평균 작업 개수: {statsData.average.count}</div>
