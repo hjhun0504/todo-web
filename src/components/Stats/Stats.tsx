@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StatsCalendar from '@components/Stats/StatsCalendar/StatsCalendar';
 
 import './Stats.scss';
@@ -12,11 +12,15 @@ interface Props {
 const Stats = (props: Props): JSX.Element => {
   const { todos } = props;
 
-  console.log(todos);
+  const [date, setDate] = useState<Date | null>(null);
+
+  const handleChangeDate = (date: Date): void => {
+    setDate(date);
+  };
 
   return (
     <div className="Stats">
-      <StatsCalendar todos={todos} />
+      <StatsCalendar todos={todos} onChangeDate={handleChangeDate} />
     </div>
   );
 };

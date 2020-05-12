@@ -8,24 +8,26 @@ import { TodoData } from '@interfaces/index';
 
 interface DayProps {
   date: Date;
+  onChangeDate: (date: Date) => void;
 }
 
 const Day = (props: DayProps): JSX.Element => {
-  const { date } = props;
+  const { date, onChangeDate } = props;
 
   return (
     <Tippy content={date.toString()}>
-      <div className="day"></div>
+      <div className="day" onClick={(): void => onChangeDate(date)}></div>
     </Tippy>
   );
 };
 
 interface Props {
   todos: TodoData[];
+  onChangeDate: (date: Date) => void;
 }
 
 const StatsCalendar = (props: Props): JSX.Element => {
-  const { todos } = props;
+  const { todos, onChangeDate } = props;
 
   const today = new Date();
   const startDate = new Date(
@@ -45,7 +47,13 @@ const StatsCalendar = (props: Props): JSX.Element => {
   let index = 0;
   let count = 0;
   while (startDate.getTime() < today.getTime()) {
-    days.push(<Day key={index} date={new Date(startDate)} />);
+    days.push(
+      <Day
+        key={index}
+        date={new Date(startDate)}
+        onChangeDate={onChangeDate}
+      />,
+    );
 
     startDate.setDate(startDate.getDate() + 1);
     count++;
@@ -61,8 +69,6 @@ const StatsCalendar = (props: Props): JSX.Element => {
       count = 0;
     }
   }
-
-  console.log(weeks.length);
 
   return (
     <div className="StatsCalendar">
