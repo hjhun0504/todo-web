@@ -4,18 +4,20 @@ import 'tippy.js/dist/tippy.css';
 
 import './StatsCalendar.scss';
 
+import { isSameDate } from '@utils/index';
 import { TodoData } from '@interfaces/index';
 
 interface DayProps {
   date: Date;
+  completeTodos: number;
   onChangeDate: (date: Date) => void;
 }
 
 const Day = (props: DayProps): JSX.Element => {
-  const { date, onChangeDate } = props;
+  const { date, completeTodos, onChangeDate } = props;
 
   return (
-    <Tippy content={date.toString()}>
+    <Tippy content={`${completeTodos}, ${date}`}>
       <div className="day" onClick={(): void => onChangeDate(date)}></div>
     </Tippy>
   );
@@ -47,10 +49,18 @@ const StatsCalendar = (props: Props): JSX.Element => {
   let index = 0;
   let count = 0;
   while (startDate.getTime() < today.getTime()) {
+    const completeTodos = todos.filter(
+      (todo) =>
+        todo.startTime &&
+        todo.finishTime &&
+        isSameDate(todo.startTime, startDate),
+    ).length;
+
     days.push(
       <Day
         key={index}
         date={new Date(startDate)}
+        completeTodos={completeTodos}
         onChangeDate={onChangeDate}
       />,
     );
