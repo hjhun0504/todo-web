@@ -4,7 +4,7 @@ import 'tippy.js/dist/tippy.css';
 
 import './StatsCalendar.scss';
 
-import { isSameDate } from '@utils/index';
+import { isSameDate, getDateText } from '@utils/index';
 import { TodoData } from '@interfaces/index';
 
 interface DayProps {
@@ -17,7 +17,7 @@ const Day = (props: DayProps): JSX.Element => {
   const { date, completeTodos, onChangeDate } = props;
 
   return (
-    <Tippy content={`${completeTodos}, ${date}`}>
+    <Tippy content={`${completeTodos} 작업 완료, ${getDateText(date)}`}>
       <div className="day" onClick={(): void => onChangeDate(date)}></div>
     </Tippy>
   );
