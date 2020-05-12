@@ -10,15 +10,20 @@ import { TodoData, StatsData } from '@interfaces/index';
 interface DayProps {
   date: Date;
   completeTodos: number;
+  color: string;
   onChangeDate: (date: Date) => void;
 }
 
 const Day = (props: DayProps): JSX.Element => {
-  const { date, completeTodos, onChangeDate } = props;
+  const { date, completeTodos, color, onChangeDate } = props;
 
   return (
     <Tippy content={`${completeTodos} 작업 완료, ${getDateText(date)}`}>
-      <div className="day" onClick={(): void => onChangeDate(date)}></div>
+      <div
+        className="day"
+        onClick={(): void => onChangeDate(date)}
+        style={{ background: color }}
+      ></div>
     </Tippy>
   );
 };
@@ -31,6 +36,24 @@ interface Props {
 
 const StatsCalendar = (props: Props): JSX.Element => {
   const { todos, statsData, onChangeDate } = props;
+
+  const getColor = (count: number): string => {
+    if (!statsData.stats) return '';
+    const averageCount = statsData.stats.averageCount;
+    const maxCount = statsData.stats.maxCount;
+
+    if (count >= maxCount * 0.8) {
+      return '#196127';
+    } else if (count >= maxCount * 0.6) {
+      return '#239a3b';
+    } else if (count >= averageCount) {
+      return '#7bc96f';
+    } else if (count >= 1) {
+      return '#c6e48b';
+    } else {
+      return '#ebedf0';
+    }
+  };
 
   const today = new Date();
   const startDate = new Date(
@@ -60,6 +83,7 @@ const StatsCalendar = (props: Props): JSX.Element => {
         key={index}
         date={new Date(startDate)}
         completeTodos={completeTodos}
+        color={getColor(completeTodos)}
         onChangeDate={onChangeDate}
       />,
     );
