@@ -1,0 +1,14 @@
+.StatsCalendar {
+  .day-list {
+    display: flex;
+    width: 100%;
+  }
+
+  .day {
+    width: 10px;
+    height: 10px;
+    background: #7bc96f;
+
+    margin: 2px;
+  }
+}

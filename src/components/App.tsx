@@ -421,7 +421,7 @@ const App = (): JSX.Element => {
             <></>
           )}
           {sidebar.currentItem === 'stats' && !search.isActive ? (
-            <Stats />
+            <Stats todos={todos} />
           ) : (
             <TodoList
               todos={todolistTodo}
