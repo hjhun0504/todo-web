@@ -72,6 +72,21 @@ const StatsCalendar = (props: Props): JSX.Element => {
   let days: JSX.Element[] = [];
   let index = 0;
   let count = 0;
+  let month = null;
+  let monthStr = '';
+
+  weeks.push(
+    <span key={index} className="week">
+      <div className="month"></div>
+      <div className="day"></div>
+      <div className="day">월</div>
+      <div className="day"></div>
+      <div className="day">수</div>
+      <div className="day"></div>
+      <div className="day">금</div>
+      <div className="day"></div>
+    </span>,
+  );
 
   while (startDate.getTime() < today.getTime()) {
     const completeTodos = statsData[getDateId(startDate)]
@@ -88,6 +103,16 @@ const StatsCalendar = (props: Props): JSX.Element => {
       />,
     );
 
+    // 이번 주, 저번 주 첫번째 날의 달을 비교해서 다르면 월 텍스트를 추가한다.
+    if (count === 0) {
+      if (month !== startDate.getMonth()) {
+        monthStr = `${startDate.getMonth() + 1}월`;
+        month = startDate.getMonth();
+      } else {
+        monthStr = '';
+      }
+    }
+
     startDate.setDate(startDate.getDate() + 1);
     count++;
     index++;
@@ -95,6 +120,7 @@ const StatsCalendar = (props: Props): JSX.Element => {
     if (count === 7 || startDate.getTime() > today.getTime()) {
       weeks.push(
         <span key={index} className="week">
+          <div className="month">{monthStr}</div>
           {days.map((day) => day)}
         </span>,
       );
