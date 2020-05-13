@@ -132,8 +132,11 @@ const StatsCalendar = (props: Props): JSX.Element => {
   return (
     <div className="StatsCalendar">
       <div className="calendar-container">
-        <div className="day-list">{weeks}</div>
-        <div className="years"></div>
+        <div className="years">
+          <div>2020년</div>
+          <div>2019년</div>
+        </div>
+        <div className="day-list">{weeks.reverse()}</div>
       </div>
     </div>
   );

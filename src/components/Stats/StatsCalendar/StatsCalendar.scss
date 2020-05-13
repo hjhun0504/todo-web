@@ -1,18 +1,36 @@
+@import '../../../styles/variables.scss';
+
 .StatsCalendar {
-  .day-list {
+  width: calc(100vw - #{$sidebar-width} - 20px);
+
+  .calendar-container {
     display: flex;
-  }
+    justify-content: flex-end;
+    direction: rtl;
 
-  .day,
-  .month {
-    font-size: 10px;
-    white-space: nowrap;
-    width: 10px;
-    height: 10px;
-    margin: 2px;
-  }
+    .day-list {
+      display: flex;
+      max-width: 756px;
+      overflow-x: hidden;
 
-  .month {
-    margin-bottom: 6px;
+      .day,
+      .month {
+        font-size: 10px;
+        white-space: nowrap;
+        width: 10px;
+        height: 10px;
+        margin: 2px;
+      }
+
+      .month {
+        margin-bottom: 6px;
+      }
+    }
+  }
+}
+
+@media (max-width: $res-ref-size) {
+  .StatsCalendar {
+    width: calc(100vw - 20px);
   }
 }
