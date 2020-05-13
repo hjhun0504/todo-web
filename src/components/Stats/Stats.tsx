@@ -13,7 +13,7 @@ interface Props {
 const Stats = (props: Props): JSX.Element => {
   const { todos } = props;
 
-  const [date, setDate] = useState<Date | null>(null);
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
   const [statsData, setStatsData] = useState<StatsData>({});
 
   useEffect(() => {
@@ -61,12 +61,17 @@ const Stats = (props: Props): JSX.Element => {
   }, []);
 
   const handleChangeDate = (date: Date): void => {
-    setDate(date);
+    if (currentDate?.getTime() === date.getTime()) {
+      setCurrentDate(null);
+    } else {
+      setCurrentDate(date);
+    }
   };
 
   return (
     <div className="Stats">
       <StatsCalendar
+        currentDate={currentDate}
         todos={todos}
         statsData={statsData}
         onChangeDate={handleChangeDate}

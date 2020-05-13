@@ -1,5 +1,6 @@
 import React from 'react';
 import Tippy from '@tippyjs/react';
+import cn from 'classnames';
 import 'tippy.js/dist/tippy.css';
 
 import './StatsCalendar.scss';
@@ -9,18 +10,19 @@ import { TodoData, StatsData } from '@interfaces/index';
 
 interface DayProps {
   date: Date;
+  active: boolean;
   completeTodos: number;
   color: string;
   onChangeDate: (date: Date) => void;
 }
 
 const Day = (props: DayProps): JSX.Element => {
-  const { date, completeTodos, color, onChangeDate } = props;
+  const { date, active, completeTodos, color, onChangeDate } = props;
 
   return (
     <Tippy content={`${completeTodos} 작업 완료, ${getDateText(date)}`}>
       <div
-        className="day"
+        className={cn('day', { active })}
         onClick={(): void => onChangeDate(date)}
         style={{ background: color }}
       ></div>
@@ -29,13 +31,14 @@ const Day = (props: DayProps): JSX.Element => {
 };
 
 interface Props {
+  currentDate: Date | null;
   todos: TodoData[];
   statsData: StatsData;
   onChangeDate: (date: Date) => void;
 }
 
 const StatsCalendar = (props: Props): JSX.Element => {
-  const { todos, statsData, onChangeDate } = props;
+  const { currentDate, todos, statsData, onChangeDate } = props;
 
   const getColor = (count: number): string => {
     if (!statsData.stats) return '';
@@ -97,6 +100,7 @@ const StatsCalendar = (props: Props): JSX.Element => {
       <Day
         key={index}
         date={new Date(startDate)}
+        active={currentDate?.getTime() === startDate.getTime()}
         completeTodos={completeTodos}
         color={getColor(completeTodos)}
         onChangeDate={onChangeDate}
