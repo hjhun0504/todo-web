@@ -40,10 +40,10 @@ const Stats = (props: Props): JSX.Element => {
 
     let dayCount = 0;
     let minutes = 0;
-    let count = 0;
+    let totalCount = 0;
     let maxCount = 0;
     for (const key in data) {
-      count += data[key].count;
+      totalCount += data[key].count;
       minutes += data[key].minutes;
       if (maxCount < data[key].count) {
         maxCount = data[key].count;
@@ -52,9 +52,10 @@ const Stats = (props: Props): JSX.Element => {
     }
 
     data.stats = {
-      averageCount: count / dayCount,
+      averageCount: totalCount / dayCount,
       averageMinutes: minutes / dayCount,
       maxCount,
+      totalCount,
     };
 
     setStatsData(data);
@@ -78,6 +79,7 @@ const Stats = (props: Props): JSX.Element => {
       />
       {statsData.stats ? (
         <div>
+          <div>완료한 총 작업 개수: {statsData.stats.totalCount}</div>
           <div>하루 평균 작업 개수: {statsData.stats.averageCount}</div>
           <div>하루 평균 작업 시간(분): {statsData.stats.averageMinutes}</div>
         </div>
