@@ -136,9 +136,11 @@ const App = (): JSX.Element => {
 
     // 이전에 완료된 작업이 없으면 전날을 캘린더 초기 날짜로 세팅한다.
     if (prevTodos.length === 0) {
+      const date = new Date();
+      date.setDate(date.getDate() - 1);
       setCalendar({
         ...calendar,
-        date: new Date(`${year}-${month + 1}-${date - 1}`),
+        date,
       });
     } else {
       const sortedArray = prevTodos.sort((a, b) => {
