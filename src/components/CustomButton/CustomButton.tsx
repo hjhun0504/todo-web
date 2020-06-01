@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import './CustomButton.scss';
 
 interface Props {
-  value: string;
+  children: ReactNode;
 }
 
 const CustomButton = (props: Props): JSX.Element => {
-  const { value } = props;
+  const { children } = props;
 
-  return <button className="CustomButton">{value}</button>;
+  return <button className="CustomButton">{children}</button>;
 };
 
 export default CustomButton;

@@ -64,7 +64,7 @@ const Header = (props: Props): JSX.Element => {
         </div>
       </div>
       <div className="right-menu">
-        <CustomButton value="로그인" />
+        <CustomButton>로그인</CustomButton>
       </div>
     </header>
   );
