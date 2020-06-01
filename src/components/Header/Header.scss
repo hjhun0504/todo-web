@@ -9,38 +9,54 @@
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
 
-  .menu {
+  .left {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-left: 12px;
-    margin-right: 12px;
-    width: 30px;
-    height: 30px;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
+
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .menu:hover {
+      background-color: rgb(49, 77, 161);
+    }
+
+    .search-box {
+      margin-left: 12px;
+      position: relative;
+
+      .search {
+        width: 230px;
+        height: 28px;
+        padding-left: 36px;
+        font-size: 14px;
+        border-radius: 1px;
+      }
+
+      .icon {
+        font-size: 16px;
+        color: #2980b9;
+        position: absolute;
+        margin-left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
   }
 
-  .menu:hover {
-    background-color: rgb(49, 77, 161);
-  }
-
-  .search {
-    width: 230px;
-    height: 28px;
-    padding-left: 36px;
-    font-size: 14px;
-    border-radius: 1px;
-  }
-
-  .icon {
+  .right-menu {
     font-size: 16px;
-    color: #2980b9;
-    position: absolute;
-    margin-left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    font-weight: 400;
+    color: white;
   }
 }

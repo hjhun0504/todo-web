@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 
+import CustomButton from '@components/CustomButton/CustomButton';
+
 import './Header.scss';
 
 interface Props {
@@ -45,19 +47,24 @@ const Header = (props: Props): JSX.Element => {
 
   return (
     <header className="Header">
-      <div className="menu" onClick={(): void => onToggleSidebar()}>
-        <MdMenu />
+      <div className="left">
+        <div className="menu" onClick={(): void => onToggleSidebar()}>
+          <MdMenu />
+        </div>
+        <div className="search-box">
+          <FaSearch className="icon" />
+          <input
+            className="search edit-box"
+            placeholder="검색"
+            value={keyword}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            ref={searchRef}
+          />
+        </div>
       </div>
-      <div>
-        <FaSearch className="icon" />
-        <input
-          className="search edit-box"
-          placeholder="검색"
-          value={keyword}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          ref={searchRef}
-        />
+      <div className="right-menu">
+        <CustomButton value="로그인" />
       </div>
     </header>
   );
