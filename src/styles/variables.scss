@@ -6,13 +6,15 @@ $main-padding: 10px;
 
 $header-height: 46px;
 
-$border-radius: 3px;
-
 $sidebar-width: 150px;
 
 $todo-list-border: 1px solid #c2c2c2;
 $todo-text-size: 14px;
 $todo-right-column-size: 78px;
+
+// border
+$border: 1px solid #c2c2c2;
+$border-radius: 3px;
 
 @mixin main-content {
   flex: 1;

@@ -77,14 +77,30 @@ const Stats = (props: Props): JSX.Element => {
         statsData={statsData}
         onChangeDate={handleChangeDate}
       />
-      {statsData.stats ? (
-        <div>
-          <div>완료한 총 작업 개수: {statsData.stats.totalCount}</div>
-          <div>하루 평균 작업 개수: {statsData.stats.averageCount}</div>
-          <div>하루 평균 작업 시간(분): {statsData.stats.averageMinutes}</div>
+      {statsData.stats && (
+        <div className="stats-container">
+          <div className="stats">
+            <div className="emoji">✍️</div>
+            <dl>
+              <dd>{statsData.stats.totalCount}</dd>
+              <dt>완료한 총 작업 수</dt>
+            </dl>
+          </div>
+          <div className="stats">
+            <div className="emoji">🎉</div>
+            <dl>
+              <dd>{statsData.stats.averageCount}</dd>
+              <dt>하루 평균 작업 수</dt>
+            </dl>
+          </div>
+          <div className="stats">
+            <div className="emoji">⏳</div>
+            <dl>
+              <dd>{statsData.stats.averageMinutes}분</dd>
+              <dt>하루 평균 작업 시간</dt>
+            </dl>
+          </div>
         </div>
-      ) : (
-        <></>
       )}
     </div>
   );
