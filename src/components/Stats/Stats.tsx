@@ -59,7 +59,7 @@ const Stats = (props: Props): JSX.Element => {
     };
 
     setStatsData(data);
-  }, []);
+  }, [todos]);
 
   const handleChangeDate = (date: Date): void => {
     if (currentDate?.getTime() === date.getTime()) {
