@@ -1,1 +1,3 @@
-Todo App
+# Daily Planner
+
+https://utu.netlify.app
