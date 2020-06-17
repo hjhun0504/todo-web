@@ -89,14 +89,14 @@ const Stats = (props: Props): JSX.Element => {
           <div className="stats">
             <div className="emoji">🎉</div>
             <dl>
-              <dd>{statsData.stats.averageCount}</dd>
+              <dd>{statsData.stats.averageCount.toFixed(1)}</dd>
               <dt>하루 평균 작업 수</dt>
             </dl>
           </div>
           <div className="stats">
             <div className="emoji">⏳</div>
             <dl>
-              <dd>{statsData.stats.averageMinutes}분</dd>
+              <dd>{statsData.stats.averageMinutes.toFixed(1)}분</dd>
               <dt>하루 평균 작업 시간</dt>
             </dl>
           </div>
